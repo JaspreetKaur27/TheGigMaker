@@ -1,6 +1,6 @@
 
-const express = require('express');
-const router = express.Router();
+
+
 const db = require("../models/projects/index");
 
 const Project = require('../controllers/project');
@@ -20,8 +20,6 @@ module.exports = function(router) {
     router.get("/", function(req,res){
      res.send("hello there!");
     });
-
-
 
 
     // Gets All projects in the data base
@@ -64,8 +62,7 @@ module.exports = function(router) {
                } else {
 
                     console.log(err);
-                    res.redirect('/');
-                    
+                    res.redirect('/');   
                }
            })
         });
