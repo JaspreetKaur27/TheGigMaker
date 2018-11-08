@@ -86,7 +86,7 @@ class Dashboard extends Component {
               <Container>
                 <Row>
                 <h3>No Projects</h3>
-                  {this.state.cards.map(card => (
+                  {/* {this.state.cards.map(card => (
                     <Column key={card.id}>
                       <Card
                         id={card.id}
@@ -94,14 +94,14 @@ class Dashboard extends Component {
                         handleShow={this.handleShow}
                       />
                     </Column>
-                  ))}
+                  ))} */}
                 </Row>
               </Container>
             </Tab>
             <Tab eventKey={3} title="Other Projects">
               <Container>
                 <Row>
-                  {/* {this.state.saved.length ? (
+                  {this.state.saved.length ? (
                     <Column>
                       {this.state.saved.map((saved) => (
                         <Thumbnail>
@@ -114,7 +114,7 @@ class Dashboard extends Component {
                     </Column>
                   ) : (
                       <h3>No projects </h3>
-                    )} */}
+                    )}
 
                 </Row>
               </Container>
