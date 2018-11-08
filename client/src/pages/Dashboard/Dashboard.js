@@ -101,7 +101,7 @@ class Dashboard extends Component {
             <Tab eventKey={3} title="Other Projects">
               <Container>
                 <Row>
-                  {/* {this.state.saved.length ? (
+                  {this.state.saved.length ? (
                     <Column>
                       {this.state.saved.map((saved) => (
                         <Thumbnail>
@@ -114,7 +114,7 @@ class Dashboard extends Component {
                     </Column>
                   ) : (
                       <h3>No projects </h3>
-                    )} */}
+                    )}
 
                 </Row>
               </Container>

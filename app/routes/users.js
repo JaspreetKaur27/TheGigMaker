@@ -1,14 +1,134 @@
 
 const express = require('express');
 const router = express.Router();
-const db = require("../models/projects/index")
-const User = require('../controllers/users')
+const db = require("../models/projects/index");
+const User = require('../controllers/users');
+const userModel = require('../models/projects/users');
+const localStrategy = require('passport-local').Strategy;
 
 
 
 
 module.exports = function(router) {
 
+
+//********************Authentification*********************** */
+
+
+//Register User
+
+// router.get('/register',function (req,res){
+
+//     var name = req.body.name;
+//     var email = req.body.email;
+//     var username = req.body.username;
+//     var password = req.body.password;
+//     var password2 = req.body.password2;
+
+//     console.log(name);
+
+
+//     // validation
+
+//     router.post('/register', function (req, res) {
+//         var name = req.body.name;
+//         var email = req.body.email;
+//         var username = req.body.username;
+//         var password = req.body.password;
+//         var password2 = req.body.password2;
+    
+//         // Validation
+//         req.checkBody('name', 'Name is required').notEmpty();
+//         req.checkBody('email', 'Email is required').notEmpty();
+//         req.checkBody('email', 'Email is not valid').isEmail();
+//         req.checkBody('username', 'Username is required').notEmpty();
+//         req.checkBody('password', 'Password is required').notEmpty();
+//         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+    
+//         var errors = req.validationErrors();
+    
+//         if (errors) {
+//             res.render('register', {
+//                 errors: errors
+//             });
+//         }
+//         else {
+//             //checking for email and username are already taken
+//             userModel.findOne({ username: { 
+//                 "$regex": "^" + username + "\\b", "$options": "i"
+//         }}, function (err, user) {
+//                 userModel.findOne({ email: { 
+//                     "$regex": "^" + email + "\\b", "$options": "i"
+//             }}, function (err, mail) {
+//                     if (user || mail) {
+//                         res.render('register', {
+//                             user: user,
+//                             mail: mail
+//                         });
+//                     }
+//                     else {
+//                         var newUser = new userModel({
+//                             name: name,
+//                             email: email,
+//                             username: username,
+//                             password: password
+//                         });
+//                         userModel.create(newUser, function (err, user) {
+//                             if (err) throw err;
+//                             console.log(user);
+//                         });
+//                  req.flash('success_msg', 'You are registered and can now login');
+//                         res.redirect('/users/login'); // create a login page***************************
+//                     }
+//                 });
+//             });
+//         }
+//     });
+
+// //Login
+
+// passport.use(new LocalStrategy(
+// 	function (username, password, done) {
+// 		User.getUserByUsername(username, function (err, user) {
+// 			if (err) throw err;
+// 			if (!user) {
+// 				return done(null, false, { message: 'Unknown User' });
+// 			}
+
+// 			userModel.comparePassword(password, userModel.password, function (err, isMatch) {
+// 				if (err) throw err;
+// 				if (isMatch) {
+// 					return done(null, user);
+// 				} else {
+// 					return done(null, false, { message: 'Invalid password' });
+// 				}
+// 			});
+// 		});
+// 	}));
+
+// passport.serializeUser(function (user, done) {
+// 	done(null, user.id);
+// });
+
+// passport.deserializeUser(function (id, done) {
+// 	userModel.getUserById(id, function (err, user) {
+// 		done(err, user);
+// 	});
+// });
+
+// router.post('/login',
+// 	passport.authenticate('local', { successRedirect: '/', failureRedirect: '/users/login', failureFlash: true }),
+// 	function (req, res) {
+// 		res.redirect('/');
+// 	});
+
+// router.get('/logout', function (req, res) {
+// 	req.logout();
+
+// 	req.flash('success_msg', 'You are logged out');
+
+// 	res.redirect('/users/login');
+// });
 
 
 // see all user  saved Projects 
@@ -27,7 +147,6 @@ router.get("/api/createdProjects", function (req, res) {
     });
 });
 
-
 // see all user collaborations 
 //collaborations
 router.get("/api/savedCollaborations", function (req, res) {
@@ -41,9 +160,6 @@ router.get("/api/savedCollaborations", function (req, res) {
         }
     });
 });
-
-
-
 
 
 // get user info 
@@ -67,7 +183,6 @@ router.post("/api/get-dbuser/:id", function (req, res){
 
     })    
 });
-
 
 // Create User
 router.post("/api/create-user", function (req, res) {
