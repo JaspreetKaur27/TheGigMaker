@@ -88,45 +88,6 @@ class AddProject extends Component {
       })
   }
 
-    // postData = (e) => {
-    //   e.preventDefault();
-
-    //   const title = this.state.title
-    //   const description = this.state.description
-    //   const location = this.state.location
-    //   const startDate = this.state.startDate
-    //   const endDate = this.state.endDate
-    //   const imageUrl = this.state.imageUrl
-    //   const amount = this.state.amount
-
-    //   this.setState({
-    //     loading:true
-    //   })
-
-    //   const userInput = {
-    //     title,
-    //     description,
-    //     location,
-    //     startDate,
-    //     endDate,
-    //     imageUrl,
-    //     amount
-    //   }
-
-    //   axios.post("/t/px6v2-1539295871/post", userInput)
-    //   .then(response => {
-    //     this.setState({
-    //       loading:false,
-    //       message: response.userInput
-    //     })
-    //   })
-    //   .catch(err => {
-    //     this.setState({
-    //       loading: false
-    //     })
-    //   })
-    // }
-
     handleShowRadioChange = () => {
       this.setState({
         show: true
