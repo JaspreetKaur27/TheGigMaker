@@ -86,7 +86,7 @@ class Dashboard extends Component {
               <Container>
                 <Row>
                 <h3>No Projects</h3>
-                  {this.state.cards.map(card => (
+                  {/* {this.state.cards.map(card => (
                     <Column key={card.id}>
                       <Card
                         id={card.id}
@@ -94,7 +94,7 @@ class Dashboard extends Component {
                         handleShow={this.handleShow}
                       />
                     </Column>
-                  ))}
+                  ))} */}
                 </Row>
               </Container>
             </Tab>
