@@ -86,15 +86,6 @@ class Dashboard extends Component {
               <Container>
                 <Row>
                 <h3>No Projects</h3>
-                  {/* {this.state.cards.map(card => (
-                    <Column key={card.id}>
-                      <Card
-                        id={card.id}
-                        image={card.image}
-                        handleShow={this.handleShow}
-                      />
-                    </Column>
-                  ))} */}
                 </Row>
               </Container>
             </Tab>

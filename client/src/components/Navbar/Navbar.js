@@ -9,7 +9,7 @@ const Navbar = () => (
     <a className="navbar-brand" href="/AddProject">
      Create New Gig
     </a>
-    <a className="navbar-brand" href="/">
+    <a className="navbar-brand" href="/Login">
       Logout
     </a>
   </nav>
