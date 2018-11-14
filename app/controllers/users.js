@@ -26,6 +26,7 @@ get: function (query,cb){
     console.log(query);
    
     User.find(query)
+    .populate('Project')
     .sort({
         _id: -1
     })

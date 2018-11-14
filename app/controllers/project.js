@@ -2,6 +2,7 @@
 // Project controller
 
 var Project = require("../models/projects/projects");
+var User = require("../models/projects/users");
 
 module.exports = {
     create : function (query, cb){
@@ -13,6 +14,16 @@ module.exports = {
                 cb(err,docs,query);
             });
     },
+
+    //logined user
+    //passport gives you the user ID to be referenced later
+    // const project = new Project({
+    //     name: req.body.name
+    // }).save(function(err, saved_project){
+    //     User.findOneandUpdate({_id: req.user.id}, {$push: {projects: saved_project._id}}), function(err, user){
+            
+    //     })
+    // })
 
 
 
@@ -41,6 +52,13 @@ update : function(query,cb){
 collab : function(query,cb){
     // project id is passed to recognize what project the use wants to collab
     console.log(query);
+
+    User.updateOne({_id:query.userId},{
+        // a gigster request is added to the array of gigsters for that project and his user Id updates the collaborator schema,
+        // which references the user model ( himself)
+           $push: { collaboration : {userId : query.userId} }
+        });
+
     Project.updateOne({_id:query._id},{
     // a gigster request is added to the array of gigsters for that project and his user Id updates the collaborator schema,
     // which references the user model ( himself)

@@ -3,7 +3,8 @@
 
 const db = require("../models/projects/index");
 
-const Project = require('../controllers/project');
+const Project = require('../models/projects/projects');
+const User = require('../models/projects/users')
 
 
 
@@ -50,23 +51,74 @@ module.exports = function(router) {
 
 
 
+       //logined user
+    //passport gives you the user ID to be referenced later, need to send a key of UserID
+    // const project = new Project({
+    //     name: req.body.name
+    // }).save(function(err, saved_project){
+    //     User.findOneandUpdate({_id: req.user.id}, {$push: {projects: saved_project._id}}), function(err, user){
+            
+    //     })
+    // })
 
-    // create new project (creator)
+
+
+    // create new project and save it in the users projects array (creator)
     router.post("/api/create-project", function (req, res){
         var query = req.body;
-           Project.create(query, function (err, docs, data){
-               console.log(docs);
-               if (docs.result.ok) {
-                   console.log("project created");
-                    res.status(200).json(data);
-               } else {
 
-                    console.log(err);
-                    res.redirect('/');   
-               }
-           })
+        Project.collection.insertOne(query, {new :true},function (err, saved_project){
+
+          
+
+    
+
+            console.log("saved project" +  saved_project.ops[0]);
+            if (err) throw err;
+
+
+         User.collection.findOneAndUpdate({_id : saved_project.ops[0].userId  }, {$push: {projects: saved_project.ops[0]._id}}, function (err, user){
+                
+                console.log(user);
+                if (err) throw err;
+                //send back all user projects
+                console.log('Project Created' + user);
+                res.json(user);
+            });
+           
         });
+        
+    
+    });
+        // all the projects contain the User id (gigmaker)
+    // front end passport sends project Id and User ID
+    // The gigmaker get a request in the projects updated gigster arrays
 
+
+    router.post("/api/project-collab-pending", function (req, res){
+        console.log(req.body)
+        var query = req.body;
+        
+        Project.UpdateOne({_id : query._id}, {$push:{gigster : query.userId, approved:false}}, {new:true})
+        
+        // userId was passed from the front end
+        .save(function (err,saved_project){
+            User.findOneandUpdate({_id : query.userId}, {$push:{collaboration:saved_project._id}}), function (err, user){
+                console.log(user);
+                if (err) throw err;
+
+                console.log("user" + user.username + "want to collab on project" + saved_project.title + saved_project._id);
+                
+                // returns the User profile to then be sent to the original gigmaker
+                res.redirect(user);
+
+            }
+        })
+    });
+
+    
+
+    
 
 
     // delete project (creator)

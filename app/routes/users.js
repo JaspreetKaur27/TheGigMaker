@@ -164,7 +164,7 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 // get user info 
 
-router.post("/api/get-dbuser/:id", function (req, res){
+router.get("/api/get-dbuser", function (req, res){
     var query = {}
     if ( req.params.id) {
         query._id = req.params.id;

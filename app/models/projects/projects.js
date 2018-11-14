@@ -1,104 +1,105 @@
-const mongoose = require('mongoose');
+  const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+  const Schema = mongoose.Schema;
 
-const collaboratorSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  },
-  approved: Boolean,
-});
+  const collaboratorSchema = new Schema({
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    approved: Boolean,
+  });
 
-var ProjectSchema = new Schema({
+  var ProjectSchema = new Schema({
 
-  title: {
-    type: String,
-    trim: true,
-    required: "Title is required",
-    validate: [
-      function (input) {
-        return input.length > 0;
-      },
-      "A title is required"
-    ]
-  },
-  //based on postal code  7 characters 6 characters plus space
-  location: {
-    type: String,
-    trim: true,
-    required: "Address is required",
+    // whoever created the project
 
+    // userId : {
+    //   type: Schema.Types.ObjectId
+    // },
 
-    validate: [
-
-      function (input) {
-        return input.length <= 7;
-      },
-
-      "Location is required"
-    ]
-  },
-
-  imageUrl: {
-
-    type: String,
-    // required: "src is required",
-
-  },
+    title: {
+      type: String,
+      trim: true,
+      required: "Title is required",
+      validate: [
+        function (input) {
+          return input.length > 0;
+        },
+        "A title is required"
+      ]
+    },
+    //based on postal code  7 characters 6 characters plus space
+    location: {
+      type: String,
+      trim: true,
+      required: "Address is required",
 
 
+      validate: [
 
-  // default gigmaker 
-  gigmaker:
-  {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  },
+        function (input) {
+          return input.length <= 7;
+        },
+
+        "Location is required"
+      ]
+    },
+
+    imageUrl: {
+
+      type: String,
+      // required: "src is required",
+
+    },
 
 
 
-  // 0 to many gigsters
-  gigster: [collaboratorSchema],// [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
+    // default gigmaker 
+  
 
 
-  description: {
-    type: String,
-    trim: true,
-    required: "Description is required",
-    validate: [
-
-      function (input) {
-        return input.length <= 400;
-      },
-
-      "Location is required"
-    ]
-  },
-
-  // iso format date
-  startDate: {
-    type: Date
-  },
-
-  // iso format date
-  endDate: {
-    type: Date,
-  },
+    // 0 to many gigsters
+    gigster: [collaboratorSchema],// [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
 
 
-  duration: {
-    start: Date
-  },
+    description: {
+      type: String,
+      trim: true,
+      required: "Description is required",
+      validate: [
 
-  projectCreated: {
-    type: Date,
-    default: Date.now
-  },
-})
+        function (input) {
+          return input.length <= 400;
+        },
+
+        "Location is required"
+      ]
+    },
+
+    // iso format date
+    startDate: {
+      type: Date
+    },
+
+    // iso format date
+    endDate: {
+      type: Date,
+    },
 
 
-var Project = mongoose.model("Project", ProjectSchema);
-var Collaborator = mongoose.model("ProjectCollaborators", collaboratorSchema);
+    duration: {
+      start: Date
+    },
 
-module.exports =  Project, Collaborator;
+    projectCreated: {
+      type: Date,
+      default: Date.now
+    },
+  })
+
+
+  var Project = mongoose.model("Project", ProjectSchema);
+  var Collaborator = mongoose.model("ProjectCollaborators", collaboratorSchema);
+
+  module.exports =  Project;
