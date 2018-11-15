@@ -1,10 +1,10 @@
 
 const express = require('express');
 const router = express.Router();
-const db = require("../models/projects/index");
-const User = require('../controllers/users');
-const userModel = require('../models/projects/users');
-const localStrategy = require('passport-local').Strategy;
+
+const User = require('../models/users');
+
+const mongoose = require('mongoose')
 
 
 
@@ -12,123 +12,6 @@ const localStrategy = require('passport-local').Strategy;
 module.exports = function(router) {
 
 
-//********************Authentification*********************** */
-
-
-//Register User
-
-// router.get('/register',function (req,res){
-
-//     var name = req.body.name;
-//     var email = req.body.email;
-//     var username = req.body.username;
-//     var password = req.body.password;
-//     var password2 = req.body.password2;
-
-//     console.log(name);
-
-
-//     // validation
-
-//     router.post('/register', function (req, res) {
-//         var name = req.body.name;
-//         var email = req.body.email;
-//         var username = req.body.username;
-//         var password = req.body.password;
-//         var password2 = req.body.password2;
-    
-//         // Validation
-//         req.checkBody('name', 'Name is required').notEmpty();
-//         req.checkBody('email', 'Email is required').notEmpty();
-//         req.checkBody('email', 'Email is not valid').isEmail();
-//         req.checkBody('username', 'Username is required').notEmpty();
-//         req.checkBody('password', 'Password is required').notEmpty();
-//         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-    
-//         var errors = req.validationErrors();
-    
-//         if (errors) {
-//             res.render('register', {
-//                 errors: errors
-//             });
-//         }
-//         else {
-//             //checking for email and username are already taken
-//             userModel.findOne({ username: { 
-//                 "$regex": "^" + username + "\\b", "$options": "i"
-//         }}, function (err, user) {
-//                 userModel.findOne({ email: { 
-//                     "$regex": "^" + email + "\\b", "$options": "i"
-//             }}, function (err, mail) {
-//                     if (user || mail) {
-//                         res.render('register', {
-//                             user: user,
-//                             mail: mail
-//                         });
-//                     }
-//                     else {
-//                         var newUser = new userModel({
-//                             name: name,
-//                             email: email,
-//                             username: username,
-//                             password: password
-//                         });
-//                         userModel.create(newUser, function (err, user) {
-//                             if (err) throw err;
-//                             console.log(user);
-//                         });
-//                  req.flash('success_msg', 'You are registered and can now login');
-//                         res.redirect('/users/login'); // create a login page***************************
-//                     }
-//                 });
-//             });
-//         }
-//     });
-
-// //Login
-
-// passport.use(new LocalStrategy(
-// 	function (username, password, done) {
-// 		User.getUserByUsername(username, function (err, user) {
-// 			if (err) throw err;
-// 			if (!user) {
-// 				return done(null, false, { message: 'Unknown User' });
-// 			}
-
-// 			userModel.comparePassword(password, userModel.password, function (err, isMatch) {
-// 				if (err) throw err;
-// 				if (isMatch) {
-// 					return done(null, user);
-// 				} else {
-// 					return done(null, false, { message: 'Invalid password' });
-// 				}
-// 			});
-// 		});
-// 	}));
-
-// passport.serializeUser(function (user, done) {
-// 	done(null, user.id);
-// });
-
-// passport.deserializeUser(function (id, done) {
-// 	userModel.getUserById(id, function (err, user) {
-// 		done(err, user);
-// 	});
-// });
-
-// router.post('/login',
-// 	passport.authenticate('local', { successRedirect: '/', failureRedirect: '/users/login', failureFlash: true }),
-// 	function (req, res) {
-// 		res.redirect('/');
-// 	});
-
-// router.get('/logout', function (req, res) {
-// 	req.logout();
-
-// 	req.flash('success_msg', 'You are logged out');
-
-// 	res.redirect('/users/login');
-// });
 
 
 // see all user  saved Projects 
@@ -166,32 +49,33 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 router.get("/api/get-dbuser", function (req, res){
     var query = {}
-    if ( req.params.id) {
-        query._id = req.params.id;
+    if ( req.body.userId) {
+        query._id = req.body.userId;
     }
 
-    User.get(query, function (err,docs){
-        console.log(docs);
+    User.find(query,function (err,result){
+      
 
-        if (docs){
-            res.status(200).json(docs);
+        if (result){
+            res.status(200).json(result);
+            console.log("User" + result.username + "has been found");
         } else {
 
             console.log(err);
             res.redirect('/');
         }
 
-    })    
+    });   
 });
 
 // Create User
 router.post("/api/create-user", function (req, res) {
     var query = req.body;
-    User.create(query, function (err, docs, data) {
-        console.log(data + "data");
-        if (docs.result.ok) {
-            console.log(data)
-            res.status(200).json(docs);
+    User.create(query, function (err, dbUser) {
+        console.log("User" + dbUser.username + "has been created");
+        if (dbUser) {
+        
+            res.status(200).json(dbUser);
         } else {
             console.log(err);
             res.redirect("/");
@@ -202,12 +86,12 @@ router.post("/api/create-user", function (req, res) {
 
 
 // delete user
+//TODO fix delete routes is not going through
 router.delete("/api/delete-user/:id", function (req, res) {
-    var query = {};
-    query.id = req.params.id;
-    User.delete(query, function (err, data) {
-        if (data) {
-            res.status(200).send('User Deleted!');
+
+    User.findOneAndRemove({_id :req.params.id},function (err, dbUser) {
+        if (dbUser) {
+            res.status(200).send('User ' + dbUser.username + " has been deleted!");
         } else {
             console.log(err);
             res.redirect("/");
@@ -219,10 +103,16 @@ router.delete("/api/delete-user/:id", function (req, res) {
 // update user info
 router.put("/api/update-user", function (req, res) {
 
+    var query = req.body;
 
-    User.update(req.body, function (err, data) {
-        if (data) {
-            res.status(200).send('User updated!');
+    console.log(query);
+
+
+    User.findOneAndUpdate({_id: query.userId}, {$set:query}, {new:true})
+    .then(function (dbUser) {
+        if (dbUser) {
+            res.json(dbUser);
+            console.log("User " + dbUser.username + " has been updated!");
            } else {
             console.log(err);
             res.redirect("/");
@@ -232,13 +122,16 @@ router.put("/api/update-user", function (req, res) {
 });
 
 
-// get project specific information or all users
-router.get("/api/project/:project_id?", function (req, res) {
-    var query = {};
-    if (req.params.project_id) {
-        query._id = req.params.project_id;
-    }
-    Project.get(query, function (err, data) {
+// get project specific information or all project from a user
+
+// we need user Id to know the owner of the project
+// we need the project Id that we need to update
+// we need the user id of the user to update in his collabs
+
+router.get("/api/get-project", function (req, res) {
+    var query = req.body;
+  
+    User.findOne({_id : query.userId}, function (err, data) {
         if (data) {
             res.json(data);
             res.status(200).send('User Search was a success!');

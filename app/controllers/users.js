@@ -1,10 +1,11 @@
 var User = require("../models/projects/users")
+const mongoose = require('mongoose');
 
 module.exports = {
 create : function (query, cb){
 //   Project.saved = true;
     console.log(query);
- return   User.collection.insertOne(query, {ordered: false}, function(err,docs){
+ return   User.collection.save(query, {ordered: false}, function(err,docs){
         // returns any errors without blocking the scraping
 
         console.log(docs + "Docs");
