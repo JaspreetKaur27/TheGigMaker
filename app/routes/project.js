@@ -5,8 +5,8 @@ const db = require("../models/index");
 
 const mongoose = require('mongoose');
 
-const User = require('../models/users')
-
+const Project = require('../models/projects');
+const User = require('../models/users');
 
 
 // Project Crud actions
@@ -72,19 +72,47 @@ module.exports = function (router) {
 
 
     // create new project and save it in the users projects array (creator)
+
+    //
     router.post("/api/create-project", function (req, res) {
-        query = req.body;
+        const newProject = req.body;
 
-        console.log(query);
+        Project.create(newProject)
+        .then((err,dbProject) => {
 
-        User.findOneAndUpdate({ _id: query.userId }, { $push: { projects: query } }, { new: true })
-            .then(function (record) {
-                res.json(record);
+            User.insertOne({_id : req.body.userId, {}})
 
-            });
 
+
+            if (dbProject) {
+                 res.status(200).json({
+                    message: "Project was created succesfully!"
+                });
+
+            } else {
+
+                res.status(500).json({
+                    message: "Project was not created please try again"
+                })
+                    
+            }
+
+
+            
+
+
+
+         
+            if (dbProject) {
+            
+                res.status(200).json(dbProject);
+                console.log("Project " + dbProject.title + " has been created");
+            } else {
+                console.log(err);
+                res.redirect("/");
+            }
+        }).then
     });
-
 
 
 
@@ -102,11 +130,11 @@ module.exports = function (router) {
         console.log(req.body)
         var query = req.body;
 
-        User.findOneandUpdate({ _id: query.userId }, { $set: { projects: query.userId, approved: false } }, { new: true })
+        Project.findOneandUpdate({ _id: query.userId }, { $set: { projects: query.userId, approved: false } }, { new: true })
 
             // userId was passed from the front end
             .save(function (err, saved_project) {
-                User.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
+                Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
                     console.log(user);
                     if (err) throw err;
 
@@ -127,7 +155,7 @@ module.exports = function (router) {
         query._id = req.body.id;
         console.log(query._id);
 
-        User.delete(query, function (err, data) {
+        Post.delete(query, function (err, data) {
             if (data) {
                 res.status(200).send('project has been deleted');
             } else {
@@ -143,7 +171,7 @@ module.exports = function (router) {
     // update content (creator)
     // do we need to send back updated info?
     router.put("/api/update-project", function (req, res) {
-        User.update(req.body, function (err, data) {
+        Post.update(req.body, function (err, data) {
             if (data) {
                 res.status(200).json("project has been updated");
             } else {
@@ -166,7 +194,7 @@ module.exports = function (router) {
         console.log(req.body)
         var query = req.body;
 
-        Project.collab(query, function (err, data) {
+        Post.collab(query, function (err, data) {
             if (data) {
                 res.json(data);
             } else {
@@ -177,45 +205,45 @@ module.exports = function (router) {
         });
     });
 
-    // Creator approval button route
-    router.put("/api/project-collab-pending", function (req, res) {
-        console.log(req.body)
-        var query = req.body;
+    // // Creator approval button route
+    // router.put("/api/project-collab-pending", function (req, res) {
+    //     console.log(req.body)
+    //     var query = req.body;
 
-        User.approve(query, function (err, data) {
+    //     User.approve(query, function (err, data) {
 
-            if (data) {
-                res.status(200).json(data);
-            } else {
-                console.log(err);
-                res.redirect("/");
+    //         if (data) {
+    //             res.status(200).json(data);
+    //         } else {
+    //             console.log(err);
+    //             res.redirect("/");
 
-            }
-        });
-    });
+    //         }
+    //     });
+    // });
 
     // see all collaborator within a project
-    router.post("/api/get-projectCollaborators/:id?", function (req, res) {
-        var query = {}
-        if (req.params.id) {
-            query._id = req.params.id;
-        }
+    // router.post("/api/get-projectCollaborators/:id?", function (req, res) {
+    //     var query = {}
+    //     if (req.params.id) {
+    //         query._id = req.params.id;
+    //     }
 
-        User.getSpecific(query, function (err, docs, data) {
+    //     User.getSpecific(query, function (err, docs, data) {
 
-            console.log(docs);
+    //         console.log(docs);
 
-            if (docs) {
+    //         if (docs) {
 
-                res.status(200).json(data);
+    //             res.status(200).json(data);
 
-            } else {
-                console.log(err);
-                res.redirect("/");
+    //         } else {
+    //             console.log(err);
+    //             res.redirect("/");
 
-            }
-        });
-    });
+    //         }
+    //     });
+    // });
 
 }
 
