@@ -12,6 +12,8 @@
 
   var ProjectSchema = new Schema({
 
+  _id : mongoose.Schema.Types.ObjectId,
+
   title: {
     type: String,
     trim: true,
@@ -56,7 +58,7 @@
 
 
   // 0 to many gigsters
-  gigster: [],// [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
+  gigster: [collaboratorSchema],// [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
 
 
   description: {

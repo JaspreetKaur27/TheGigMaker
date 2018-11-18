@@ -23,35 +23,44 @@ module.exports = function (router) {
     });
 
 
-    // Gets All projects in the data base
-    // Upon click the id headline belonging to a project is sent
-    // the database sends back specific info for that project
 
 
-    // Project.updateOne({_id:query._id},{
-    //     // a gigster request is added to the array of gigsters for that project and his user Id updates the collaborator schema,
-    //     // which references the user model ( himself)
-    //        $push: { gigster : {userId : query.userId, approved:false} }
-    //     }, {}, cb);
+// getting all or a particular project based on Id
 
-
-// getting all projects from a Users account
     router.get("/api/get-dbprojects", function (req, res) {
-        var query = req.body;
+        var query = {};
 
-        User.find({_id : query.userId} ,function (err, dbProjects) {
+        if ( req.body.projectId){
+            query._id = req.body.projectId;
+        }
+
+        console.log(query);
+        Project.find(query)
+        .then(dbProjects => {
 
         
-            if (dbProjects) {
+            if (dbProjects.length >= 1 ) {
 
-                res.status(200).json(dbProjects);
+                res.status(200).json({
+                    message: 'Search has been succesful!',
+                    search: dbProjects
+                });
 
             } else {
-                console.log(err);
-                res.redirect("/");
+         
+                res.status(404).json({
+                    message: "Project doesnt exist",
+                  
+                })
 
             }
-        });
+        })
+        .catch( err => {
+            res.status(500).json({
+                message: "Project was not found",
+                error : err
+            })
+        })
     });
 
 
@@ -68,53 +77,36 @@ module.exports = function (router) {
 
 
 
-
-
-
     // create new project and save it in the users projects array (creator)
 
-    //
     router.post("/api/create-project", function (req, res) {
         const newProject = req.body;
 
+        console.log(newProject);
+
         Project.create(newProject)
-        .then((err,dbProject) => {
+        .then(dbProject => {
 
-            User.insertOne({_id : req.body.userId, {}})
+            User.findOneAndUpdate({_id : req.body.userId}, {$push:{projects:dbProject}}, {new : true})
+            .then(dbUser => {
+                res.status(200).json({
 
-
-
-            if (dbProject) {
-                 res.status(200).json({
-                    message: "Project was created succesfully!"
+                    message: "Project was created succesfully!",
+                    Project : dbUser
                 });
+            });
+        })
+        .catch( err => {
 
-            } else {
+            res.status(500).json({
 
-                res.status(500).json({
-                    message: "Project was not created please try again"
-                })
-                    
-            }
+                message: "Project was not created succesfully please try again",
+                error : err
+            });
 
+        });
 
-            
-
-
-
-         
-            if (dbProject) {
-            
-                res.status(200).json(dbProject);
-                console.log("Project " + dbProject.title + " has been created");
-            } else {
-                console.log(err);
-                res.redirect("/");
-            }
-        }).then
     });
-
-
 
 
 
@@ -127,24 +119,32 @@ module.exports = function (router) {
     // need gigster userId
 
     router.post("/api/project-collab-pending", function (req, res) {
-        console.log(req.body)
+        var query = {};
+
+        if (req.body.projectId){
+            query._id = req.body.projectId
+        }
         var query = req.body;
+        console.log(req.body)
 
-        Project.findOneandUpdate({ _id: query.userId }, { $set: { projects: query.userId, approved: false } }, { new: true })
+        Project.findOneAndUpdate({id :query._id}, { $push: { gigster: query} }, { new: true })
+        .then(project => {
 
+            res.status(200).json(project);
+        })
             // userId was passed from the front end
-            .save(function (err, saved_project) {
-                Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
-                    console.log(user);
-                    if (err) throw err;
+            // .then(dbProject => {
+            //     Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
+            //         console.log(user);
+            //         if (err) throw err;
 
-                    console.log("user" + user.username + "want to collab on project" + saved_project.title + saved_project._id);
+            //         console.log("user" + user.username + "want to collab on project" + saved_project.title + saved_project._id);
 
-                    // returns the User profile to then be sent to the original gigmaker
-                    res.redirect(user);
+            //         // returns the User profile to then be sent to the original gigmaker
+            //         res.redirect(user);
 
-                }
-            })
+            //     }
+            // })
     });
 
 

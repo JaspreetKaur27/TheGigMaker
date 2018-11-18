@@ -52,20 +52,34 @@ router.get("/api/get-dbuser", function (req, res){
     if ( req.body.userId) {
         query._id = req.body.userId;
     }
+    User.find(query)
+    .populate('projects')
+    .exec()
+    .then(populatedUser =>{
 
-    User.find(query,function (err,result){
-      
 
-        if (result){
-            res.status(200).json(result);
-            console.log("User" + result.username + "has been found");
-        } else {
+        
+        console.log(populatedUser.projects)
 
-            console.log(err);
-            res.redirect('/');
-        }
+        res.status(200).json({
+            
+            populatedUser:populatedUser.map(doc =>{
+                return {
+                    _id : doc._id,
+                    projects: doc.projects
+                }
 
-    });   
+            }),
+        });
+    });
+    // .then( dbUser => {
+
+    //     res.status(200).json({
+
+    //         message: "Getting User info with his corresponding projects!",
+    //         user: dbUser
+    //     })
+    // });   
 });
 
 // Create User
