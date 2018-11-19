@@ -2,17 +2,19 @@
 
   const Schema = mongoose.Schema;
 
-  const collaboratorSchema = new Schema({
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    },
-    approved: Boolean,
-  });
+  // const collaboratorSchema = new Schema({
+  //   userId: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "User"
+  //   },
+  //   approved: Boolean,
+  // });
 
   var ProjectSchema = new Schema({
 
-  _id : mongoose.Schema.Types.ObjectId,
+    // mongoose creates and Id automatically if specified you must create it before passing it to the model
+    // through new user mongoose.Types.objectId
+  // _id : mongoose.Schema.Types.ObjectId,
 
   title: {
     type: String,
@@ -58,7 +60,15 @@
 
 
   // 0 to many gigsters
-  gigster: [collaboratorSchema],// [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
+  gigster: [{  
+    
+    userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
+  approved: Boolean
+}],
+// [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
 
 
   description: {

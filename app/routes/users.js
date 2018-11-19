@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 
 
 
-module.exports = function(router) {
+
 
 
 
@@ -30,6 +30,8 @@ router.get("/api/createdProjects", function (req, res) {
     });
 });
 
+
+
 // see all user collaborations 
 //collaborations
 router.get("/api/savedCollaborations", function (req, res) {
@@ -45,9 +47,27 @@ router.get("/api/savedCollaborations", function (req, res) {
 });
 
 
-// get user info 
 
-router.get("/api/get-dbuser", function (req, res){
+// Create User
+router.post("/create", function (req, res) {
+    var query = req.body;
+    console.log(query);
+
+    User.create(query, function (err, dbUser) {
+        console.log("User" + dbUser.username + "has been created");
+        if (dbUser) {
+        
+            res.status(200).json(dbUser);
+        } else {
+            console.log(err);
+            res.redirect("/");
+        }
+    })
+});
+
+
+// get all user info & projects or a particular one
+router.get("/all", function (req, res){
     var query = {}
     if ( req.body.userId) {
         query._id = req.body.userId;
@@ -62,60 +82,58 @@ router.get("/api/get-dbuser", function (req, res){
         console.log(populatedUser.projects)
 
         res.status(200).json({
+            message:"User has been found!",
             
             populatedUser:populatedUser.map(doc =>{
                 return {
                     _id : doc._id,
-                    projects: doc.projects
+                    user : doc.username,
+                    projects: doc.projects,
+                    // url : "http://localhost:3001/projects/all/" + doc.projects._id
                 }
 
             }),
         });
-    });
-    // .then( dbUser => {
-
-    //     res.status(200).json({
-
-    //         message: "Getting User info with his corresponding projects!",
-    //         user: dbUser
-    //     })
-    // });   
-});
-
-// Create User
-router.post("/api/create-user", function (req, res) {
-    var query = req.body;
-    User.create(query, function (err, dbUser) {
-        console.log("User" + dbUser.username + "has been created");
-        if (dbUser) {
-        
-            res.status(200).json(dbUser);
-        } else {
-            console.log(err);
-            res.redirect("/");
-        }
     })
+    .catch( err => {
+
+        res.status(200).json({
+
+            message: "Server error user was not created",
+            error: err
+        })
+    });   
 });
+
+
 
 
 
 // delete user
 //TODO fix delete routes is not going through
-router.delete("/api/delete-user/:id", function (req, res) {
+router.delete("/delete/:userId", function (req, res) {
 
-    User.findOneAndRemove({_id :req.params.id},function (err, dbUser) {
-        if (dbUser) {
-            res.status(200).send('User ' + dbUser.username + " has been deleted!");
-        } else {
-            console.log(err);
-            res.redirect("/");
-        }
-    });
+    console.log(req.params.userId);
+
+    User.findOneAndDelete({_id :req.params.userId},function (dbUser) {
+        if (!dbUser) {
+            res.status(200).json({
+                message: "User has been deleted!"
+            });
+            
+        } 
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: "Server Error",
+            error : err
+        })
+    })
 });
 
 
 // update user info
-router.put("/api/update-user", function (req, res) {
+router.put("/update", function (req, res) {
 
     var query = req.body;
 
@@ -142,8 +160,10 @@ router.put("/api/update-user", function (req, res) {
 // we need the project Id that we need to update
 // we need the user id of the user to update in his collabs
 
-router.get("/api/get-project", function (req, res) {
+router.get("/get-project", function (req, res) {
     var query = req.body;
+
+    console.log(query);
   
     User.findOne({_id : query.userId}, function (err, data) {
         if (data) {
@@ -158,4 +178,5 @@ router.get("/api/get-project", function (req, res) {
     });
 });
 
-}
+
+module.exports = router;

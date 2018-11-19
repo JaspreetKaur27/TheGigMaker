@@ -1,6 +1,9 @@
 
 
 
+const express = require("express");
+const router = express.Router();
+
 const db = require("../models/index");
 
 const mongoose = require('mongoose');
@@ -15,7 +18,6 @@ const User = require('../models/users');
 // Create project
 
 
-module.exports = function (router) {
 
     // Home route
     router.get("/", function (req, res) {
@@ -27,11 +29,11 @@ module.exports = function (router) {
 
 // getting all or a particular project based on Id
 
-    router.get("/api/get-dbprojects", function (req, res) {
+    router.get("/all/:projectId?", function (req, res) {
         var query = {};
 
-        if ( req.body.projectId){
-            query._id = req.body.projectId;
+        if ( req.params.projectId){
+            query._id = req.params.projectId;
         }
 
         console.log(query);
@@ -79,7 +81,7 @@ module.exports = function (router) {
 
     // create new project and save it in the users projects array (creator)
 
-    router.post("/api/create-project", function (req, res) {
+    router.post("/create", function (req, res) {
         const newProject = req.body;
 
         console.log(newProject);
@@ -118,7 +120,7 @@ module.exports = function (router) {
     // need gigmaker userId 
     // need gigster userId
 
-    router.post("/api/project-collab-pending", function (req, res) {
+    router.put("/collab-pending", function (req, res) {
         var query = {};
 
         if (req.body.projectId){
@@ -127,7 +129,7 @@ module.exports = function (router) {
         var query = req.body;
         console.log(req.body)
 
-        Project.findOneAndUpdate({id :query._id}, { $push: { gigster: query} }, { new: true })
+        Project.findOneAndUpdate({_id :query.projectId}, { $push: { gigster: query} }, { new: true })
         .then(project => {
 
             res.status(200).json(project);
@@ -148,14 +150,12 @@ module.exports = function (router) {
     });
 
 
-    // delete project (creator)
-    router.delete("/api/delete-project", function (req, res) {
-        var query = {};
+    // delete a project by Id (creator)
+    router.delete("/delete", function (req, res) {
+   
+        console.log(req.body.projectId);
 
-        query._id = req.body.id;
-        console.log(query._id);
-
-        Post.delete(query, function (err, data) {
+        Project.remove({_id : req.body.projectId}, function (err, data) {
             if (data) {
                 res.status(200).send('project has been deleted');
             } else {
@@ -170,8 +170,12 @@ module.exports = function (router) {
 
     // update content (creator)
     // do we need to send back updated info?
-    router.put("/api/update-project", function (req, res) {
-        Post.update(req.body, function (err, data) {
+    router.put("/update", function (req, res) {
+
+        console.log(req.body.projectId);
+
+
+        Project.update({_id :req.body.projectId}, function (err, data) {
             if (data) {
                 res.status(200).json("project has been updated");
             } else {
@@ -190,7 +194,7 @@ module.exports = function (router) {
     // user is linked to the project 
     // Trello is populated upon acceptance
     // adding notes
-    router.post("/api/project-collab-pending", function (req, res) {
+    router.post("/pending", function (req, res) {
         console.log(req.body)
         var query = req.body;
 
@@ -205,45 +209,7 @@ module.exports = function (router) {
         });
     });
 
-    // // Creator approval button route
-    // router.put("/api/project-collab-pending", function (req, res) {
-    //     console.log(req.body)
-    //     var query = req.body;
+    
 
-    //     User.approve(query, function (err, data) {
 
-    //         if (data) {
-    //             res.status(200).json(data);
-    //         } else {
-    //             console.log(err);
-    //             res.redirect("/");
-
-    //         }
-    //     });
-    // });
-
-    // see all collaborator within a project
-    // router.post("/api/get-projectCollaborators/:id?", function (req, res) {
-    //     var query = {}
-    //     if (req.params.id) {
-    //         query._id = req.params.id;
-    //     }
-
-    //     User.getSpecific(query, function (err, docs, data) {
-
-    //         console.log(docs);
-
-    //         if (docs) {
-
-    //             res.status(200).json(data);
-
-    //         } else {
-    //             console.log(err);
-    //             res.redirect("/");
-
-    //         }
-    //     });
-    // });
-
-}
-
+module.exports = router;

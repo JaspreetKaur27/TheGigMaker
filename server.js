@@ -4,10 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-
 const app = express();
-const router = express.Router();
-
+const projectRoutes = require('./app/routes/project');
+const userRoutes = require('./app/routes/users');
+const collaboratorsRoutes = require('./app/routes/collaborator');
 const mongoose = require("mongoose");
 
 // global promises
@@ -57,17 +57,13 @@ var db = process.env.MONGODB_URI || "mongodb://localhost/gigmaker";
 //routes
 
 
-var projectRoutes = require("./app/routes/project")(router);
-var userRoutes = require('./app/routes/users')(router);
+app.use("/projects", projectRoutes);
+app.use("/users", userRoutes);
+app.use("/collaborators",collaboratorsRoutes);
 
 
 
 
-// require("./app/routes/project")(router);
-// // user routes
-
-// require("./app/routes/users")(router);
-app.use(router);
 
 
 app.listen(PORT, function () {

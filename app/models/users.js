@@ -93,7 +93,7 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
 
-  _id: mongoose.Schema.Types.ObjectId,
+
  
   username: {
     type: String,
@@ -115,16 +115,12 @@ var UserSchema = new Schema({
 
 
 
-  // if collaboration is true populate the user info to the creator
+ 
   projects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Project'}],
 
-  collaboration: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "ProjectCollaborators"
-      
-    }
-  ]
+
+
+  collaboration: [{ project: {type: Schema.Types.ObjectId,ref: "Collaborators"}, approved: false}]
 });
 
 
