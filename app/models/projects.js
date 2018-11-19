@@ -2,13 +2,18 @@
 
   const Schema = mongoose.Schema;
 
-  // const collaboratorSchema = new Schema({
-  //   userId: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "User"
-  //   },
-  //   approved: Boolean,
-  // });
+  const collaboratorSchema = new Schema({
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    approved: Boolean,
+    notifications :[ {
+      type: String,
+      trim: true
+  
+    }],
+  });
 
   var ProjectSchema = new Schema({
 
@@ -60,14 +65,7 @@
 
 
   // 0 to many gigsters
-  gigster: [{  
-    
-    userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  },
-  approved: Boolean
-}],
+  gigster: [collaboratorSchema],
 // [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
 
 
@@ -100,10 +98,9 @@
     start: Date
   },
 
-  projectCreated: {
-    type: Date,
-    default: Date.now
-  },
+
+
+
 })
 
 

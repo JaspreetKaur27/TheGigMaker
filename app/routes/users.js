@@ -67,11 +67,12 @@ router.post("/create", function (req, res) {
 
 
 // get all user info & projects or a particular one
-router.get("/all", function (req, res){
+router.get("/all/:userId?", function (req, res){
     var query = {}
-    if ( req.body.userId) {
-        query._id = req.body.userId;
+    if ( req.params.userId) {
+        query._id = req.params.userId;
     }
+
     User.find(query)
     .populate('projects')
     .exec()
