@@ -89,7 +89,7 @@ router.get("/all/:userId?", function (req, res) {
                 populatedUser: populatedUser.map(doc => {
                     var projectId = doc.projects.forEach(project => {
                         
-                            // projectId = project[_id]
+                          
                         
 
                     })

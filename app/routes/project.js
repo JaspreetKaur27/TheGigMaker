@@ -189,7 +189,7 @@ router.put("/update", function (req, res) {
 
 
 
-//projectId and user Id
+//projectId and user Id aka (gigster ID)
 router.post("/collab-pending", function (req, res) {
 
 
@@ -197,11 +197,19 @@ router.post("/collab-pending", function (req, res) {
      var query = req.body
     }
 // notifications the user sends a small paragraph of why they liked they are suited to participate
-    Project.findOneAndUpdate({ _id: query.projectId }, { $push: { gigster: query } }, { new: true })
+
+    Project.findOneAndUpdate({_id: query.projectId }, { $push: { gigster:{ userId:query.userId, approved:false} } }, { new: true })
         .then(doc =>  {
 
             console.log("doc collab-pending" + doc);
-            // User.findById({_id : doc.userId}, {$push:{collaborations:doc.projectId}}, {new:true});
+    
+
+            User.findByIdAndUpdate({_id : query.userId}, {$push:{collaborations:{_id :query.projectId, approved : false}}})
+            .then(gigsterCollaborator =>{
+    
+                console.log(gigsterCollaborator);
+            })
+        
 
             res.status(200).json({
                 

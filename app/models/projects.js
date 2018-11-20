@@ -5,12 +5,12 @@
   const collaboratorSchema = new Schema({
 
     //Todo change the useId name to gigsterId for confusion purposes
-    
+
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User"
     },
-    approved: Boolean,
+    approved: false,
     notifications :[ {
       type: String,
       trim: true
