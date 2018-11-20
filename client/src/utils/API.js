@@ -11,6 +11,14 @@ const api = {
 
     collabProject: (projectId) => {
         return axios.post('/api/project-collab-pending', projectId )
+    },
+
+    googleLogin: () => {
+        return axios.get('/api/auth/google/redirect');
+    },
+
+    getProfile: () => {
+        return axios.get('/api/get-dbuser');
     }
 }
 
