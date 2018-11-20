@@ -107,7 +107,10 @@ var UserSchema = new Schema({
     required: "Password is Required",
   },
 
-
+  email : {
+    type: String,
+    trim: true
+  },
 
   userCreated: {
     type: Date,

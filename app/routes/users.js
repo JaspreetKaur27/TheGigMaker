@@ -100,6 +100,7 @@ router.get("/all/:userId?", function (req, res) {
                     return {
                         _id: doc._id,
                         user: doc.username,
+                        email: doc.email,
                         collaborations: doc.collaborations,
                         projects: doc.projects,
 
