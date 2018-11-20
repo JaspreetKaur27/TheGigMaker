@@ -121,7 +121,10 @@ var UserSchema = new Schema({
 
 
 
-  collaboration: [{ project: {type: Schema.Types.ObjectId,ref: "Collaborators"}, approved: false}]
+  collaborations: [{ project: {type: Schema.Types.ObjectId,ref: "Collaborators"}, approved: false}]
+
+
+  
 });
 
 

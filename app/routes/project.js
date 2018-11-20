@@ -200,12 +200,13 @@ router.post("/collab-pending", function (req, res) {
     Project.findOneAndUpdate({ _id: query.projectId }, { $push: { gigster: query } }, { new: true })
         .then(doc =>  {
 
-            User.findById({_id : doc.userId}, {$push:{collaboration:doc.projectId}}, {new:true});
+            console.log("doc collab-pending" + doc);
+            // User.findById({_id : doc.userId}, {$push:{collaborations:doc.projectId}}, {new:true});
 
             res.status(200).json({
                 
                 message: "The Gigmaker has been notified!, ",
-                url : "http://localhost:3001/projects/all",
+                url : "head back to see all projects !http://localhost:3001/projects/all",
                 collaboration: doc
                 
             
@@ -237,22 +238,44 @@ router.post("/collab-pending", function (req, res) {
 
 
 
-// collaboration button
-// user is linked to the project 
-// Trello is populated upon acceptance
-// adding notes
-router.post("/pending", function (req, res) {
-    console.log(req.body)
-    var query = req.body;
+//gigmaker approves gigster
+// projectID
+// gigsterID
+// appproved : true
+// activate Trello?
+router.post("/collab-approval", function (req, res) {
 
-    Post.collab(query, function (err, data) {
-        if (data) {
-            res.json(data);
-        } else {
-            console.log(err);
-            res.redirect("/");
+    if (req.body.gigsterId) {
+        var query = req.body
+       }
 
-        }
+        Project.findOneAndUpdate({_id : query.projectId}, {gigster:{userId : query.gigsterId, approved:query.approved}})
+        .then( gigster => {
+
+            console.log(gigster);
+
+        // the gigster collaboration array is updated with the project Id that he is participating
+        // As well as he is array is turned to approved True
+
+        User.findByIdAndUpdate({_id : query.gigsterId}, {$push:{collaborations:{_id :gigster, approved : true}}})
+        .then(gigsterCollaborator =>{
+
+            console.log(gigsterCollaborator);
+        })
+    
+
+        res.status(200).json({
+
+            message: "You have approved the following gigster to participate in your project!",
+            gigster: gigster
+
+        });
+
+    }).catch( err => {
+        res.status(500).json({
+            message: "Approval was not sent, please try again",
+            error : err
+        });
     });
 });
 

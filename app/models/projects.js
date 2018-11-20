@@ -3,6 +3,9 @@
   const Schema = mongoose.Schema;
 
   const collaboratorSchema = new Schema({
+
+    //Todo change the useId name to gigsterId for confusion purposes
+    
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User"
