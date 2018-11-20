@@ -48,7 +48,7 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 // get user info 
 
-router.post("/api/get-dbuser/:id", function (req, res){
+router.post("/api/get-dbuser/:id", function (req, res, next){
     var query = {}
     if ( req.params.id) {
         query._id = req.params.id;

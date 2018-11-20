@@ -29,8 +29,6 @@ var UserSchema = new Schema({
     default: Date.now
   },
 
-
-
   // if collaboration is true populate the user info to the creator
   projects: [
     {
