@@ -15,7 +15,6 @@ const App = () => (
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/addproject" component={AddProject} />
-      
       </Switch>
 
   </div>

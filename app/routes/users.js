@@ -49,7 +49,7 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 
 // Create User
-router.post("/create", function (req, res) {
+router.get("/create", function (req, res) {
     var query = req.body;
     console.log(query);
 
