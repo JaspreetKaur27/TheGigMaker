@@ -2,11 +2,11 @@ require('dotenv').config()
 const axios = require('axios')
 const api = {
     createProject: (userInput) => {
-            return axios.post('/api/create-project', userInput)
+            return axios.post('projects/create', userInput);
     },
 
     getdbProjects: () => {
-        return axios.get('/api/get-dbprojects')
+        return axios.get('projects/all')
     },
 
     collabProject: (projectId) => {

@@ -16,6 +16,7 @@ class Dashboard extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.localStorage = this.localStorage.bind(this);
 
     this.state = {
       key: 1,
@@ -29,8 +30,29 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getAllSaved();
     this.getUser();
+ 
+  this.localStorage();
 
-  }
+  };
+
+
+  localStorage() {
+    // if (localStorage === "undefined" || localStorage === null) {
+    //   var LocalStorage = require('node-localstorage').LocalStorage;
+    //   localStorage = new LocalStorage('./scratch');
+    var user = localStorage.getItem('user');
+      
+      console.log(user , "local storage");
+
+    // }
+  };
+
+
+
+
+ 
+
+
 
   handleSelect(key) {
     this.setState({ key });
@@ -77,7 +99,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    // const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
       <div>
         <Navbar>
@@ -114,7 +136,7 @@ class Dashboard extends Component {
             </Tab>
             <Tab eventKey={3} title="Other Projects">
               <Container>
-                <Row>
+                {/* <Row>
                   {this.state.saved.length ? (
                     <Column>
                       {this.state.saved.map((saved) => (
@@ -130,11 +152,11 @@ class Dashboard extends Component {
                       <h3>No projects </h3>
                     )}
 
-                </Row>
+                </Row> */}
               </Container>
             </Tab>
           </Tabs>
-          <Modal
+          {/* <Modal
             {...this.props}
             show={this.state.show}
             id={this.state.saved._id}
@@ -161,7 +183,7 @@ class Dashboard extends Component {
             <Modal.Footer>
               <Button onClick={this.handleHide}>Close</Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </Container>
       </div>
     );
