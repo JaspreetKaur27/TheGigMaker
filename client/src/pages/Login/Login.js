@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Dashboard from '../Dashboard';
 import API from "../../utils/API";
 import Navbar from "../../components/Navbar";
+import "./Login.css"
 
 class Login extends Component {
 
@@ -55,14 +56,21 @@ class Login extends Component {
                     <Switch>
                         <Route exact path="/dashboard" component={Dashboard} />
                     </Switch>
-                    <div>
-                        <h1>Welcome to theGigMaker!</h1>
-                        <p><b>theGigMaker</b> is a web-based application that allows users to find short-term gigs based on their hobbies or specialities.
+                    
+
+                    <div className="site-background">
+                        <h1 className="title">Welcome to theGigMaker!</h1>
+                        <p className="title"><b>theGigMaker</b> is a web-based application that allows users to find short-term gigs based on their hobbies or specialities.
                         Login to explore and connect with fellow users.
                     </p>
-                    </div>
-
                     <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                    
+                    <video id="background-video" loop autoPlay>
+                        <source src="https://vimeo.com/92688656" type="video"/>
+                    </video>
+                      </div>
+                      
+                    {/**/}
                 </div>
             </Router>
         )
