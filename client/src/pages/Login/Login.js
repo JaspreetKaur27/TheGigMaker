@@ -11,7 +11,7 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.getUser = this.getUser.bind(this);
+        //this.getUser = this.getUser.bind(this);
         this.state = {
           isLoggedIn: false,
           user: []
@@ -19,20 +19,20 @@ class Login extends Component {
     
       }
 
-      componentDidMount()
-      {
-          this.getUser();
-      }
+    //   componentDidMount()
+    //   {
+    //       this.getUser();
+    //   }
 
-      getUser = () => {
-        API.getProfile()
-        .then(res => {
-            console.log(res);
-            this.setState({
-              user: res.data
-            })
-        }).catch(err => console.log(err));
-      }
+    //   getUser = () => {
+    //     API.getProfile()
+    //     .then(res => {
+    //         console.log(res);
+    //         this.setState({
+    //           user: res.data
+    //         })
+    //     }).catch(err => console.log(err));
+    //   }
 
      
     render() {
@@ -58,7 +58,7 @@ class Login extends Component {
                     <Switch>
                         <Route  exact path="/dashboard" component={Dashboard} />
                     </Switch>             
-                <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                <Button><a href="http://localhost:3001/users/auth/google">Sign in with Google+</a></Button>
             </div>
             </Router>
         )

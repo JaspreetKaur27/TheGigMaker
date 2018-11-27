@@ -15,7 +15,8 @@ class Dashboard extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
-    this.getUser = this.getUser.bind(this);
+    //this.getUser = this.getUser.bind(this);
+    this.getAllSaved = this.getAllSaved.bind(this);
 
     this.state = {
       key: 1,
@@ -23,13 +24,12 @@ class Dashboard extends Component {
       saved: [],
       showId: null,
       user: []
-    };
+      };
   }
 
   componentDidMount() {
     this.getAllSaved();
-    this.getUser();
-
+    //this.getUser();
   }
 
   handleSelect(key) {
@@ -44,15 +44,16 @@ class Dashboard extends Component {
     this.setState({ show: false });
   }
 
-  getUser = () => {
-    API.getProfile()
-    .then(res => {
-        console.log(res);
-        this.setState({
-          user: res.data
-        })
-    }).catch(err => console.log(err));
-  }
+  // getUser = () => {
+  //   API.getProfile()
+  //   .then(res => {
+  //       console.log(res);
+  //       this.setState({
+  //         user: res.data
+  //       });
+  //       console.log(this.state.user);
+  //   }).catch(err => console.log(err));
+  // }
   
   
   getAllSaved = () => {
@@ -77,7 +78,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    //const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
       <div>
         <Navbar>
@@ -102,6 +103,14 @@ class Dashboard extends Component {
               <Container>
                 <Row>
                   <h3>No Projects</h3>
+                  {/* {this.state.user.length ? (
+                    <p>{this.state.user.map((user) => (
+                    <h3>{user.data.populatedUser['0']._id}</h3>
+                    ))}</p>
+                  ) : (
+                    <h3>No User</h3>
+                  )} */}
+                  
                 </Row>
               </Container>
             </Tab>
@@ -134,7 +143,7 @@ class Dashboard extends Component {
               </Container>
             </Tab>
           </Tabs>
-          <Modal
+          {/* <Modal
             {...this.props}
             show={this.state.show}
             id={this.state.saved._id}
@@ -161,7 +170,7 @@ class Dashboard extends Component {
             <Modal.Footer>
               <Button onClick={this.handleHide}>Close</Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </Container>
       </div>
     );

@@ -1,18 +1,34 @@
 
 const express = require('express');
 const router = express.Router();
-
+const JWT = require('jsonwebtoken');
 const User = require('../models/users');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const passportSetup = require('../../config/passport-setup');
+const { JWT_SECRET } = require('../../config/keys');
 
-const mongoose = require('mongoose')
+signToken = user => {
+    return JWT.sign({
+        iss: 'theGigMaker',
+        sub: user.id,
+        iat: new Date().getTime(),
+        exp: new Date().setDate(new Date().getDate() + 1)
+    }, JWT_SECRET);
+}
+
+//google oauth route
+
+router.get('/auth/google', passport.authenticate('googleToken', {scope: ['profile', 'email']}), (req, res, next) => {
+    const token = signToken(req.user);
+    res.status(200).json({ token });
+});
 
 
-
-
-
-
-
-
+router.get('/secret', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    console.log('I managed to get here!');
+    res.json({ secret: "resource" });
+  });
 
 // see all user  saved Projects 
 // projects

@@ -5,8 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const passport = require('passport');
-const passportSetup = require('./config/passport-setup');
-const authRoutes = require("./app/routes/auth-routes");
+//const passportSetup = require('./config/passport-setup');
+//const authRoutes = require("./app/routes/auth-routes");
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 
@@ -18,9 +18,6 @@ const mongoose = require("mongoose");
 
 // global promises
 mongoose.Promise = global.Promise;
-
-
-
 
 // Setup express server
 const PORT = process.env.PORT || 3001;
@@ -60,10 +57,10 @@ if (process.env.NODE_ENV === "production") {
 
 var db = process.env.MONGODB_URI || "mongodb://localhost/gigmaker";
 
-app.use(cookieSession({
-  maxAge: 24 * 60 * 60 *1000,
-  keys:[keys.session.cookieKey]
-}));
+// app.use(cookieSession({
+//   maxAge: 24 * 60 * 60 *1000,
+//   keys:[keys.session.cookieKey]
+// }));
 
 //initialize passport
 
@@ -80,7 +77,7 @@ app.use("/collaborators",collaboratorsRoutes);
 
 //auth routes
 
-app.use('/api/auth', authRoutes);
+//app.use('/auth', authRoutes);
 
 
 

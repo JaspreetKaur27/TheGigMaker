@@ -1,15 +1,12 @@
 module.exports = {
     google: {
-        clientID: '450456877793-7mpe52l15fmvpml9c2tnhnbutk6j4csb.apps.googleusercontent.com',
-        clientSecret: 'y7XxJij0rQXgCl4kG9KZpkTB'
+        clientID: '715391748812-b64j240b9f1o9bfmvr02pabfscpn91qv.apps.googleusercontent.com',
+        clientSecret: 'PjcZWy-7ggrLECbRwRGWofIp'
     },
     mongodb:
     {
         dbURI:'mongodb://testoauthadmin:password1@ds157923.mlab.com:57923/test-oauth-db'
     },
-    session:
-    {
-        cookieKey: 'ILoveJavaScript Itis Awesome'
-    }
+    JWT_SECRET: 'createprojectwithgigmaker'
 };
 

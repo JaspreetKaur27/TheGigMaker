@@ -1,24 +1,14 @@
 
-
-
 const express = require("express");
 const router = express.Router();
-
 const db = require("../models/index");
-
 const mongoose = require('mongoose');
-
 const Project = require('../models/projects');
 const User = require('../models/users');
 
 
 // Project Crud actions
-
-
 // Create project
-
-
-
 // Home route
 router.get("/", function (req, res) {
     res.send("hello there!");
@@ -194,35 +184,35 @@ router.post("/collab-pending", function (req, res) {
 
 
     if (req.body.projectId) {
-     var query = req.body
+        var query = req.body
     }
-// notifications the user sends a small paragraph of why they liked they are suited to participate
+    // notifications the user sends a small paragraph of why they liked they are suited to participate
 
-    Project.findOneAndUpdate({_id: query.projectId }, { $push: { gigster:{ userId:query.userId, approved:false} } }, { new: true })
-        .then(doc =>  {
+    Project.findOneAndUpdate({ _id: query.projectId }, { $push: { gigster: { userId: query.userId, approved: false } } }, { new: true })
+        .then(doc => {
 
             console.log("doc collab-pending" + doc);
-    
 
-            User.findByIdAndUpdate({_id : query.userId}, {$push:{collaborations:{_id :query.projectId, approved : false}}})
-            .then(gigsterCollaborator =>{
-    
-                console.log(gigsterCollaborator);
-            })
-        
+
+            User.findByIdAndUpdate({ _id: query.userId }, { $push: { collaborations: { _id: query.projectId, approved: false } } })
+                .then(gigsterCollaborator => {
+
+                    console.log(gigsterCollaborator);
+                })
+
 
             res.status(200).json({
-                
+
                 message: "The Gigmaker has been notified!, ",
-                url : "head back to see all projects !http://localhost:3001/projects/all",
+                url: "head back to see all projects !http://localhost:3001/projects/all",
                 collaboration: doc
-                
-            
+
+
             });
 
             // User.findOneAndUpdate({ _id: dbProject.userId }, { $push: { collaborations: collaborator } })
         });
-    
+
     // userId was passed from the front end
     // .then(dbProject => {
     //     Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
@@ -255,36 +245,36 @@ router.post("/collab-approval", function (req, res) {
 
     if (req.body.gigsterId) {
         var query = req.body
-       }
+    }
 
-        Project.findOneAndUpdate({_id : query.projectId}, {gigster:{userId : query.gigsterId, approved:query.approved}})
-        .then( gigster => {
+    Project.findOneAndUpdate({ _id: query.projectId }, { gigster: { userId: query.gigsterId, approved: query.approved } })
+        .then(gigster => {
 
             console.log(gigster);
 
-        // the gigster collaboration array is updated with the project Id that he is participating
-        // As well as he is array is turned to approved True
+            // the gigster collaboration array is updated with the project Id that he is participating
+            // As well as he is array is turned to approved True
 
-        User.findByIdAndUpdate({_id : query.gigsterId}, {$set:{collaborations:{_id :gigster, approved : true}}})
-        .then(gigsterCollaborator =>{
+            User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
+                .then(gigsterCollaborator => {
 
-            console.log(gigsterCollaborator);
-        })
-    
+                    console.log(gigsterCollaborator);
+                })
 
-        res.status(200).json({
 
-            message: "You have approved the following gigster to participate in your project!",
-            gigster: gigster
+            res.status(200).json({
 
+                message: "You have approved the following gigster to participate in your project!",
+                gigster: gigster
+
+            });
+
+        }).catch(err => {
+            res.status(500).json({
+                message: "Approval was not sent, please try again",
+                error: err
+            });
         });
-
-    }).catch( err => {
-        res.status(500).json({
-            message: "Approval was not sent, please try again",
-            error : err
-        });
-    });
 });
 
 
