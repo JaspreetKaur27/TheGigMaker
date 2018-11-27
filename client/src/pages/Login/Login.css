@@ -3,9 +3,22 @@
  
 }
 .title{
-    color: white;
+    color: #4FA0D9;
+    font-weight: bold;
+    font-size: 75px;
+    text-shadow: 0 0 3px white;
+}
+
+.subtitle{
+    color: #4FA0D9;
+    text-shadow: 0 0 50px white;
 }
 
 .site-background{
    background: #4FA0D9;
+   background: url("https://kumdotv.com/images/financial-clipart-financial-analysis-4.png");
+   /*background: url("https://clip2art.com/images/sky-clipart-background-8.jpg");*/
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: right bottom;
 }
