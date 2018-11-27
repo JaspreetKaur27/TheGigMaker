@@ -60,10 +60,12 @@ class Login extends Component {
 
                     <div className="site-background">
                         <h1 className="title">Welcome to theGigMaker!</h1>
-                        <p className="subtitle"><b>theGigMaker</b> is a web-based application that allows users to find short-term gigs based on their hobbies or specialities.
-                        
+                        <p className="subtitle"><b>theGigMaker</b> is a web-based application that allows 
+                        <p>users to find short-term gigs based on their hobbies or specialities.</p>
+                        <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
                     </p>
-                    <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                    <div></div>
+                    
                     {/* <img src="https://clip2art.com/images/sky-clipart-background-8.jpg" alt="office-background"/> */}
                     <video id="background-video" loop autoPlay>
                         <source src="https://vimeo.com/92688656" type="video"/>
