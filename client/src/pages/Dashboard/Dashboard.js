@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Tab, Thumbnail, Image } from "react-bootstrap";
-import { Modal, Button } from "react-bootstrap";
+import { Tabs, Tab, Thumbnail, Image, Modal, Button } from "react-bootstrap";
 import Column from "../../components/Column";
 import Container from "../../components/Container";
 import Row from "../../components/Row";
@@ -30,11 +29,9 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getAllSaved();
     this.getUser();
- 
-  this.localStorage();
+    this.localStorage();
 
   };
-
 
   localStorage() {
     // if (localStorage === "undefined" || localStorage === null) {
@@ -46,14 +43,6 @@ class Dashboard extends Component {
 
     // }
   };
-
-
-
-
- 
-
-
-
   handleSelect(key) {
     this.setState({ key });
   }
@@ -99,7 +88,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    // const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    //const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
       <div>
         <Navbar>
@@ -136,7 +125,7 @@ class Dashboard extends Component {
             </Tab>
             <Tab eventKey={3} title="Other Projects">
               <Container>
-                {/* <Row>
+                <Row>
                   {this.state.saved.length ? (
                     <Column>
                       {this.state.saved.map((saved) => (
@@ -152,7 +141,7 @@ class Dashboard extends Component {
                       <h3>No projects </h3>
                     )}
 
-                </Row> */}
+                </Row>
               </Container>
             </Tab>
           </Tabs>

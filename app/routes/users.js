@@ -8,12 +8,6 @@ const mongoose = require('mongoose')
 
 
 
-
-
-
-
-
-
 // see all user  saved Projects 
 // projects
 router.get("/api/createdProjects", function (req, res) {
@@ -88,10 +82,6 @@ router.get("/all/:userId?", function (req, res) {
 
                 populatedUser: populatedUser.map(doc => {
                     var projectId = doc.projects.forEach(project => {
-                        
-                          
-                        
-
                     })
 
                     console.log(projectId);

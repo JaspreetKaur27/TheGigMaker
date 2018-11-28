@@ -65,7 +65,7 @@ class AddProject extends Component {
       const imageUrl = this.state.imageUrl
       const amount = this.state.amount
    
-      const userInput = {
+      API.createProject({
         title,
         description,
         location,
@@ -73,10 +73,6 @@ class AddProject extends Component {
         endDate,
         imageUrl,
         amount
-      }
-
-      API.createProject({
-        userInput
       })
       .then(res => {
         console.log(res);

@@ -24,9 +24,6 @@ router.get("/", function (req, res) {
     res.send("hello there!");
 });
 
-
-
-
 // getting all or a particular project based on Id
 
 router.get("/all/:projectId?", function (req, res) {
@@ -39,7 +36,6 @@ router.get("/all/:projectId?", function (req, res) {
     console.log(query);
     Project.find(query)
         .then(dbProjects => {
-
 
             if (dbProjects.length >= 1) {
 

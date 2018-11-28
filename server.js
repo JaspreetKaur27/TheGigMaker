@@ -82,9 +82,6 @@ app.use("/collaborators",collaboratorsRoutes);
 
 app.use('/api/auth', authRoutes);
 
-this.state.user['_id']
-
-
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
