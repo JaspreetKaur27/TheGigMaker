@@ -124,7 +124,7 @@ class AddProject extends Component {
         </Navbar>
           <Container>
             <Row>
-              <Column>
+            
                 <form onSubmit={this.createProject.bind(this)}>
                   <label>
                     Title:
@@ -215,7 +215,7 @@ class AddProject extends Component {
                 </form>
 
                 {this.loadOrShowMsg()}
-              </Column>
+              
             </Row>
           </Container>
         </div>
