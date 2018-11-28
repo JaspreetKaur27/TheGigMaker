@@ -9,6 +9,12 @@ const api = {
         return axios.get('projects/all')
     },
 
+
+    getUserObject: () => {
+        return axios.get('users/user-object')
+    },
+
+
     collabProject: (projectId) => {
         return axios.post('/api/project-collab-pending', projectId )
     },
