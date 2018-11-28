@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
+import Navbar from "../../components/Navbar";
 
 class AddProject extends Component {
 
@@ -114,6 +115,17 @@ class AddProject extends Component {
     render() {
       return (
         <div>
+        <Navbar>
+          <a className="navbar-brand" href="/dashboard">
+            Dashboard
+          </a>
+          <a className="navbar-brand" href="/AddProject">
+            Create New Gig
+          </a>
+          <a className="navbar-brand" href="/">
+            Logout
+          </a>
+        </Navbar>
           <Container>
             <Row>
               <Column>

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Thumbnail, Image } from "react-bootstrap";
 import { Modal, Button } from "react-bootstrap";
-import Card from "../../components/Card";
 import Column from "../../components/Column";
 import Container from "../../components/Container";
 import Row from "../../components/Row";
-import cards from "../../cards.js";
 import API from "../../utils/API";
 import { FormBtn } from "../../components/Form";
+import  Navbar  from "../../components/Navbar";
 
 class Dashboard extends Component {
   constructor(props, context) {
@@ -16,20 +15,44 @@ class Dashboard extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
+    this.getUser = this.getUser.bind(this);
+    this.localStorage = this.localStorage.bind(this);
 
     this.state = {
       key: 1,
-      cards,
       show: false,
       saved: [],
-      showId: null
+      showId: null,
+      user: []
     };
   }
 
   componentDidMount() {
     this.getAllSaved();
+    this.getUser();
  
-  }
+  this.localStorage();
+
+  };
+
+
+  localStorage() {
+    // if (localStorage === "undefined" || localStorage === null) {
+    //   var LocalStorage = require('node-localstorage').LocalStorage;
+    //   localStorage = new LocalStorage('./scratch');
+    var user = localStorage.getItem('user');
+      
+      console.log(user , "local storage");
+
+    // }
+  };
+
+
+
+
+ 
+
+
 
   handleSelect(key) {
     this.setState({ key });
@@ -43,6 +66,17 @@ class Dashboard extends Component {
     this.setState({ show: false });
   }
 
+  getUser = () => {
+    API.getProfile()
+    .then(res => {
+        console.log(res);
+        this.setState({
+          user: res.data
+        })
+    }).catch(err => console.log(err));
+  }
+  
+  
   getAllSaved = () => {
     API.getdbProjects()
       .then(res => {
@@ -55,20 +89,31 @@ class Dashboard extends Component {
       .catch(err => console.log(err));
   };
 
-  collabproject = () =>
-  {
+  collabproject = () => {
     API.collabProject()
-    .then(res => {
+      .then(res => {
         console.log(res);
         window.location.href = "/dashboard";
-    })
-    .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
-    const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    // const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
       <div>
+        <Navbar>
+          <a className="navbar-brand" href="/dashboard">
+            Dashboard
+          </a>
+          <a className="navbar-brand" href="/AddProject">
+            Create New Gig
+          </a>
+          <a className="navbar-brand" href="/">
+            Logout
+          </a>
+        </Navbar>
+        
         <Container>
           <Tabs
             activeKey={this.state.key}
@@ -85,22 +130,13 @@ class Dashboard extends Component {
             <Tab eventKey={2} title="My Collaborations">
               <Container>
                 <Row>
-                <h3>No Projects</h3>
-                  {/* {this.state.cards.map(card => (
-                    <Column key={card.id}>
-                      <Card
-                        id={card.id}
-                        image={card.image}
-                        handleShow={this.handleShow}
-                      />
-                    </Column>
-                  ))} */}
+                  <h3>No Projects</h3>
                 </Row>
               </Container>
             </Tab>
             <Tab eventKey={3} title="Other Projects">
               <Container>
-                <Row>
+                {/* <Row>
                   {this.state.saved.length ? (
                     <Column>
                       {this.state.saved.map((saved) => (
@@ -116,11 +152,11 @@ class Dashboard extends Component {
                       <h3>No projects </h3>
                     )}
 
-                </Row>
+                </Row> */}
               </Container>
             </Tab>
           </Tabs>
-          <Modal
+          {/* <Modal
             {...this.props}
             show={this.state.show}
             id={this.state.saved._id}
@@ -129,25 +165,25 @@ class Dashboard extends Component {
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-lg">
-              {showItem && <p key={showItem._id}>{showItem.userInput.title}</p>}
-            </Modal.Title>
+                {showItem && <p key={showItem._id}>{showItem.userInput.title}</p>}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {showItem && <div>
                 <p key={showItem._id}>{showItem.userInput.description}</p>
-                
-                <FormBtn onClick={() => {this.collabproject.bind(this)}}>Collaborate?</FormBtn>
+
+                <FormBtn onClick={() => { this.collabproject.bind(this) }}>Collaborate?</FormBtn>
                 <br></br>
                 <br></br>
-                
-                </div>
+
+              </div>
               }
-              
+
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.handleHide}>Close</Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
         </Container>
       </div>
     );
