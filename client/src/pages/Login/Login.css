@@ -30,7 +30,10 @@
 .main-container{
     height: 100%;
     width: 100%;
+    padding-top: -10px;
+    z-index: 50px;
 }
+
 .site-background{
     background: transparent;
    /*background: url("https://clip2art.com/images/sky-clipart-background-8.jpg");*/

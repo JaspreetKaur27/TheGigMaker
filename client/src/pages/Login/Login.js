@@ -89,7 +89,7 @@ class Login extends Component {
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
-                                    <p className="subtitle"><b>Step Two: </b>Read or write project descriptions.
+                                    <p className="subtitle"><b>Step Two: </b>Read or write the project description.
                                     <p></p>
                                         <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
                                     </p>
@@ -98,12 +98,12 @@ class Login extends Component {
                             </Carousel.Item>
 
                             <Carousel.Item>
-                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1181646/pexels-photo-1181646.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1068523/pexels-photo-1068523.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
                                     <p className="subtitle"><b>Step Three: </b> Start collaborating.
-                                    <p></p>
+                        <p></p>
                                         <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
                                     </p>
                                 </div>
