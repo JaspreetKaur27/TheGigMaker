@@ -6,7 +6,7 @@ const api = {
     },
 
     getdbProjects: () => {
-        return axios.get('projects/all')
+        return axios.get('/projects/all')
     },
 
 
