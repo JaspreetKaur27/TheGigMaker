@@ -25,7 +25,7 @@ class AddProject extends Component {
         imageUrl: "",
         message: "",
         loading: false,
-        amount: null,
+        amount: Number,
         user : []
       }
     }
@@ -39,15 +39,17 @@ class AddProject extends Component {
   getUserObject = () => {
     API.getUserObject()
     .then(res => {
-        // console.log(res);
+        console.log(res);
 
-        //  localStorage.setItem('user', res);
+         localStorage.setItem('user', res);
 
-      //  var user =  localStorage.getItem('user');
+       var user =  localStorage.getItem('user');
       
-      //   console.log(Object.values(user));
+        // console.log(Object.values(user));
         
-        // var userObject = res.data;
+    
+
+      
 
 
         this.setState({
@@ -56,7 +58,7 @@ class AddProject extends Component {
         })
 
 
-        console.log(this.state.user);
+        console.log(this.state.user._id);
     }).catch(err => console.log(err));
   };
 
@@ -89,6 +91,7 @@ class AddProject extends Component {
 
       e.preventDefault();
 
+
       const title = this.state.title
       const description = this.state.description
       const location = this.state.location
@@ -108,10 +111,11 @@ class AddProject extends Component {
         amount,
         userId
       }
+      console.log(userInput);
       console.log(userId);
-      API.createProject({
-        userInput
-      })
+      API.createProject(userInput
+  
+      )
       .then(res => {
         console.log(res);
         window.location.href = "/dashboard";

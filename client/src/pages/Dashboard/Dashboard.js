@@ -54,8 +54,7 @@ class Dashboard extends Component {
           user: res.data
 
         })
-
-        console.log(this.state.user)
+        console.log(this.state.user._id)
     }).catch(err => console.log(err));
   };
 
@@ -109,7 +108,7 @@ class Dashboard extends Component {
       <div>
         <Navbar>
         <a className="navbar-brand">
-           <h1> {this.state.user.username} </h1>
+           <h1>{this.state.user.username}</h1> 
           </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
