@@ -16,7 +16,7 @@ class Dashboard extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.localStorage = this.localStorage.bind(this);
+    this.getUserObject = this.getUserObject.bind(this);
 
     this.state = {
       key: 1,
@@ -27,32 +27,27 @@ class Dashboard extends Component {
     };
   }
 
+  componentWillMount(){
+    this.getUserObject();
+  }
+
   componentDidMount() {
     this.getAllSaved();
     this.getUser();
- 
-  this.localStorage();
-
   };
 
+  getUserObject = () => {
+    API.getUserObject()
+    .then(res => {
+        // console.log(res);
+        this.setState({
+          user: res.data
 
-  localStorage() {
-    // if (localStorage === "undefined" || localStorage === null) {
-    //   var LocalStorage = require('node-localstorage').LocalStorage;
-    //   localStorage = new LocalStorage('./scratch');
-    var user = localStorage.getItem('user');
-      
-      console.log(user , "local storage");
+        })
 
-    // }
+        console.log(this.state.user)
+    }).catch(err => console.log(err));
   };
-
-
-
-
- 
-
-
 
   handleSelect(key) {
     this.setState({ key });

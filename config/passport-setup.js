@@ -31,7 +31,7 @@ passport.use(
 
             if (currentUser) {
                 //already have a user
-                console.log('user is: '+ currentUser);
+                // console.log('user is: '+ currentUser);
                 done(null, currentUser);
             }
             else {
