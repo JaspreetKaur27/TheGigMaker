@@ -28,8 +28,9 @@ router.get('/google/redirect', passport.authenticate('google'), (req,res) => {
         var LocalStorage = require('node-localstorage').LocalStorage;
         localStorage = new LocalStorage('./scratch');
       }
+     
        
-      localStorage.setItem('user', req.user);
+      localStorage.setItem('user', JSON.stringify(req.user));
     //   console.log(localStorage.getItem('user'), "this is local storage!!!!!!!");
 
    

@@ -40,6 +40,16 @@ class Dashboard extends Component {
     API.getUserObject()
     .then(res => {
         // console.log(res);
+
+         localStorage.setItem('user', res);
+
+       var user =  localStorage.getItem('user');
+      
+        // console.log(Object.values(user));
+        
+        var userObject = res.data;
+
+
         this.setState({
           user: res.data
 
@@ -98,6 +108,9 @@ class Dashboard extends Component {
     return (
       <div>
         <Navbar>
+        <a className="navbar-brand">
+           <h1> {this.state.user.username} </h1>
+          </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
           </a>

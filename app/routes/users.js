@@ -57,9 +57,11 @@ router.get("/user-object", function (req, res){
     //   }
     
     //   console.log(localStorage.getItem('myFirstKey'));
+    var user = JSON.parse(localStorage.getItem('user'));
+    // let user = localStorage.getItem('user');
 
-    let user = localStorage.getItem('user');
-    
+    // console.log(typeof(user));
+    console.log("local storage " + user.username);
     res.json(user);
 
 });
