@@ -6,7 +6,7 @@ const api = {
     },
 
     getdbProjects: () => {
-        return axios.get('projects/all')
+        return axios.get('/projects/all')
     },
 
 
@@ -21,10 +21,6 @@ const api = {
 
     googleLogin: () => {
         return axios.get('/api/auth/google/redirect');
-    },
-
-    getProfile: () => {
-        return axios.get('/api/get-dbuser');
     }
 }
 

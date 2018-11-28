@@ -92,8 +92,8 @@ class AddProject extends Component {
       const imageUrl = this.state.imageUrl
       const amount = this.state.amount
       const userId = this.state.user._id
-   
-      API.createProject({
+
+      const userInput ={
         title,
         description,
         location,
@@ -102,7 +102,9 @@ class AddProject extends Component {
         imageUrl,
         amount,
         userId
-      })
+      }
+   
+      API.createProject(userInput)
       .then(res => {
         console.log(res);
         window.location.href = "/dashboard";

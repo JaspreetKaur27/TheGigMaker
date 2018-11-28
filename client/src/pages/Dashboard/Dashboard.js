@@ -14,7 +14,7 @@ class Dashboard extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
-    this.getUser = this.getUser.bind(this);
+    //this.getUser = this.getUser.bind(this);
     this.getUserObject = this.getUserObject.bind(this);
 
     this.state = {
@@ -32,7 +32,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.getAllSaved();
-    this.getUser();
+    //this.getUser();
   };
 
   getUserObject = () => {
@@ -69,17 +69,6 @@ class Dashboard extends Component {
     this.setState({ show: false });
   }
 
-  getUser = () => {
-    API.getProfile()
-    .then(res => {
-        console.log(res);
-        this.setState({
-          user: res.data
-        })
-    }).catch(err => console.log(err));
-  }
-  
-  
   getAllSaved = () => {
     API.getdbProjects()
       .then(res => {
@@ -102,7 +91,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    //const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
       <div>
         <Navbar>
@@ -162,7 +151,7 @@ class Dashboard extends Component {
               </Container>
             </Tab>
           </Tabs>
-          {/* <Modal
+          <Modal
             {...this.props}
             show={this.state.show}
             id={this.state.saved._id}
@@ -189,7 +178,7 @@ class Dashboard extends Component {
             <Modal.Footer>
               <Button onClick={this.handleHide}>Close</Button>
             </Modal.Footer>
-          </Modal> */}
+          </Modal>
         </Container>
       </div>
     );
