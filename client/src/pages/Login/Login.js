@@ -5,7 +5,7 @@ import Dashboard from '../Dashboard';
 import API from "../../utils/API";
 import Navbar from "../../components/Navbar";
 import "./Login.css"
-{/*npm install React Bootstrap Library use this command $ npm install react-bootstrap*/ }
+
 class Login extends Component {
 
     constructor(props) {
@@ -61,12 +61,13 @@ class Login extends Component {
                     <div className="main-container" >
                         <Carousel>
                             <Carousel.Item>
-                                <img height={200} alt="office-img" src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img height={200} alt="office-img" src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550&w=940" />
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
                                     <p className="subtitle"><b>theGigMaker</b> is a web-based application that allows
-                        <p>users to find short-term gigs based on their hobbies or specialities.</p>
+                        users to find short-term gigs based on their hobbies or specialities.
+                        <p></p>
                                         <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
                                     </p>
                                 </div>
@@ -74,7 +75,7 @@ class Login extends Component {
                             </Carousel.Item>
 
                             <Carousel.Item>
-                                <img height={200} alt="office-img" src="https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img height={940}  alt="office-img" src="https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&h=550&w=940" />
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
@@ -87,7 +88,7 @@ class Login extends Component {
                             </Carousel.Item>
                             
                             <Carousel.Item>
-                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/374016/pexels-photo-374016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550&w=840" />
+                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/374016/pexels-photo-374016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550&w=940" />
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
@@ -100,7 +101,7 @@ class Login extends Component {
                             </Carousel.Item>
 
                             <Carousel.Item>
-                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1243522/pexels-photo-1243522.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
