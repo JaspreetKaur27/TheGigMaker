@@ -108,42 +108,6 @@ router.post("/create", function (req, res) {
 
 
 
-// all the projects contain the User id (gigmaker)
-// front end passport sends project Id and User ID
-// The gigmaker get a request in the projects updated gigster arrays
-
-
-// need gigmaker userId 
-// need gigster userId
-
-router.put("/collab-pending", function (req, res) {
-    var query = {};
-
-    if (req.body.projectId) {
-        query._id = req.body.projectId
-    }
-    var query = req.body;
-    console.log(req.body)
-
-    Project.findOneAndUpdate({ _id: query.projectId }, { $push: { gigster: query } }, { new: true })
-        .then(project => {
-
-            res.status(200).json(project);
-        })
-    // userId was passed from the front end
-    // .then(dbProject => {
-    //     Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
-    //         console.log(user);
-    //         if (err) throw err;
-
-    //         console.log("user" + user.username + "want to collab on project" + saved_project.title + saved_project._id);
-
-    //         // returns the User profile to then be sent to the original gigmaker
-    //         res.redirect(user);
-
-    //     }
-    // })
-});
 
 
 // delete a project by Id (creator)
@@ -186,6 +150,14 @@ router.put("/update", function (req, res) {
 
 
 //projectId and user Id aka (gigster ID)
+// all the projects contain the User id (gigmaker)
+// front end passport sends project Id and User ID
+// The gigmaker get a request in the projects updated gigster arrays
+
+
+// need gigmaker userId 
+// need gigster userId
+
 router.post("/collab-pending", function (req, res) {
 
 
@@ -194,7 +166,7 @@ router.post("/collab-pending", function (req, res) {
     }
 // notifications the user sends a small paragraph of why they liked they are suited to participate
 
-    Project.findOneAndUpdate({_id: query.projectId }, { $push: { gigster:{ userId:query.userId, approved:false} } }, { new: true })
+    Project.findOneAndUpdate({_id: query.projectId }, { $push: { gigster:{ userId:query.userId, approved:false, notifications:query.notifications} } }, { new: true })
         .then(doc =>  {
 
             console.log("doc collab-pending" + doc);

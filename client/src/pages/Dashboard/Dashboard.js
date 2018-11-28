@@ -15,7 +15,7 @@ class Dashboard extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.localStorage = this.localStorage.bind(this);
+    this.getUserObject = this.getUserObject.bind(this);
 
     this.state = {
       key: 1,
@@ -26,23 +26,37 @@ class Dashboard extends Component {
     };
   }
 
+  componentWillMount(){
+    this.getUserObject();
+  }
+
   componentDidMount() {
     this.getAllSaved();
     this.getUser();
-    this.localStorage();
-
   };
 
-  localStorage() {
-    // if (localStorage === "undefined" || localStorage === null) {
-    //   var LocalStorage = require('node-localstorage').LocalStorage;
-    //   localStorage = new LocalStorage('./scratch');
-    var user = localStorage.getItem('user');
+  getUserObject = () => {
+    API.getUserObject()
+    .then(res => {
+        // console.log(res);
+
+         localStorage.setItem('user', res);
+
+       var user =  localStorage.getItem('user');
       
-      console.log(user , "local storage");
+        // console.log(Object.values(user));
+        
+        var userObject = res.data;
 
-    // }
+
+        this.setState({
+          user: res.data
+
+        })
+        console.log(this.state.user._id)
+    }).catch(err => console.log(err));
   };
+
   handleSelect(key) {
     this.setState({ key });
   }
@@ -92,6 +106,9 @@ class Dashboard extends Component {
     return (
       <div>
         <Navbar>
+        <a className="navbar-brand" href="/dashboard">
+           <h1>{this.state.user.username}</h1> 
+          </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
           </a>

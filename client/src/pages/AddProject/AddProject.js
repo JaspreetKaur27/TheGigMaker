@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
 import Navbar from "../../components/Navbar";
+import {userObject} from "../Dashboard";
 
 class AddProject extends Component {
 
@@ -24,9 +25,34 @@ class AddProject extends Component {
         imageUrl: "",
         message: "",
         loading: false,
-        amount: null
+        amount: Number,
+        user : []
       }
     }
+
+    
+  componentWillMount(){
+    this.getUserObject();
+  }
+
+    
+  getUserObject = () => {
+    API.getUserObject()
+    .then(res => {
+        console.log(res);
+
+         localStorage.setItem('user', res);
+
+       var user =  localStorage.getItem('user');
+        this.setState({
+          user: res.data
+
+        })
+
+
+        console.log(this.state.user._id);
+    }).catch(err => console.log(err));
+  };
 
     handleChange = ({startDate, endDate}) => {
       startDate = startDate || this.state.startDate
@@ -57,6 +83,7 @@ class AddProject extends Component {
 
       e.preventDefault();
 
+
       const title = this.state.title
       const description = this.state.description
       const location = this.state.location
@@ -64,6 +91,7 @@ class AddProject extends Component {
       const endDate = this.state.endDate
       const imageUrl = this.state.imageUrl
       const amount = this.state.amount
+      const userId = this.state.user._id
    
       API.createProject({
         title,
@@ -72,7 +100,8 @@ class AddProject extends Component {
         startDate,
         endDate,
         imageUrl,
-        amount
+        amount,
+        userId
       })
       .then(res => {
         console.log(res);
@@ -109,6 +138,7 @@ class AddProject extends Component {
     }
   
     render() {
+
       return (
         <div>
         <Navbar>
