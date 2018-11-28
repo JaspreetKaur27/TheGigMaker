@@ -48,10 +48,11 @@
 }
 
 .carousel {
+    position: absolute;
+    top: 0;
     width:100%;
-   background-size: cover;
-
- 
+    background-size: cover;
+    z-index:-10; 
   }
 
 .carousel-indicators li {

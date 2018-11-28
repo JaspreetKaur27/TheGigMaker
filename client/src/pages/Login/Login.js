@@ -56,6 +56,8 @@ class Login extends Component {
                     <Switch>
                         <Route exact path="/dashboard" component={Dashboard} />
                     </Switch>
+
+                    
                     <div className="main-container" >
                         <Carousel>
                             <Carousel.Item>
@@ -98,7 +100,7 @@ class Login extends Component {
                             </Carousel.Item>
 
                             <Carousel.Item>
-                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1068523/pexels-photo-1068523.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1243522/pexels-photo-1243522.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
                                 <Carousel.Caption>
                                 <div className="site-background" >
                                     <h1 className="title">Welcome to theGigMaker!</h1>
