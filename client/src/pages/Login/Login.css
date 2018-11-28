@@ -3,44 +3,59 @@
  
 }
 .title{
-    color: #4FA0D9;
+    color: white;
     font-weight: bold;
     font-size: 75px;
     stroke: 10px white;
-    text-shadow:white 0 0 10px;
+    text-shadow: lightgrey 0 0 10px;
     opacity: 0%;
+    top: 10%; 
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .subtitle{
-    color: #4FA0D9;
-    text-shadow: white 0 0 10px;
+    color:white;
+    text-shadow: black 0 0 10px;
     font-size: 26px;
     opacity: 0%;
+    top: 10%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+    margin: auto;
 }
 
+.main-container{
+    height: 100%;
+    width: 100%;
+}
 .site-background{
-    background: white;
+    background: transparent;
    /*background: url("https://clip2art.com/images/sky-clipart-background-8.jpg");*/
-    background-size: auto 100%;
+    /* background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: right bottom;
     padding: 20px;
     animation: float 4s infinite;
     z-index: 5;
     width: 100%;
-    height: 100%;
+    height: 100%; */
 }
 
 .carousel {
     width:100%;
-    height:100%;
+   background-size: cover;
+
+ 
   }
 
 .carousel-indicators li {
     display: inline-block;
     width: 10px;
     height: 10px;
-    margin: 20px;
+    margin: 10px;
     text-indent: 0;
     cursor: pointer;
     border: none;
@@ -51,6 +66,10 @@
 .carousel-indicators .active {
     width: 10px;
     height: 10px;
-    margin: 20px;
+    margin: 10px;
     background-color: #4FA0D9;
+}
+
+.img {
+     background-size: cover;
 }

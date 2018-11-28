@@ -56,32 +56,58 @@ class Login extends Component {
                     <Switch>
                         <Route exact path="/dashboard" component={Dashboard} />
                     </Switch>
-
-                    <div className="site-background" >
-                        <h1 className="title">Welcome to theGigMaker!</h1>
-                        <p className="subtitle"><b>theGigMaker</b> is a web-based application that allows
-                        <p>users to find short-term gigs based on their hobbies or specialities.</p>
-                            <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
-                        </p>
-                    </div>
                     <div className="main-container" >
-
                         <Carousel>
                             <Carousel.Item>
-
-                                <img width={10000} height={200} alt="office-img" src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img height={200} alt="office-img" src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <Carousel.Caption>
+                                <div className="site-background" >
+                                    <h1 className="title">Welcome to theGigMaker!</h1>
+                                    <p className="subtitle"><b>theGigMaker</b> is a web-based application that allows
+                        <p>users to find short-term gigs based on their hobbies or specialities.</p>
+                                        <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                                    </p>
+                                </div>
+                                </Carousel.Caption>
                             </Carousel.Item>
-                            <Carousel.Item>
-                                <img width={10000} height={200} alt="office-img" src="https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
 
+                            <Carousel.Item>
+                                <img height={200} alt="office-img" src="https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <Carousel.Caption>
+                                <div className="site-background" >
+                                    <h1 className="title">Welcome to theGigMaker!</h1>
+                                    <p className="subtitle"><b>Step One: </b> Create or join a gig.
+                     <p></p>
+                                        <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                                    </p>
+                                </div>
+                                </Carousel.Caption>
                             </Carousel.Item>
+                            
                             <Carousel.Item>
-                                <img width={10000} height={200} alt="office-img" src="https://images.pexels.com/photos/374016/pexels-photo-374016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
-
+                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/374016/pexels-photo-374016.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550&w=840" />
+                                <Carousel.Caption>
+                                <div className="site-background" >
+                                    <h1 className="title">Welcome to theGigMaker!</h1>
+                                    <p className="subtitle"><b>Step Two: </b>Read or write project descriptions.
+                                    <p></p>
+                                        <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                                    </p>
+                                </div>
+                                </Carousel.Caption>
                             </Carousel.Item>
 
                             <Carousel.Item>
-                                <img width={10000} height={200} alt="office-img" src="https://images.pexels.com/photos/1181646/pexels-photo-1181646.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <img  height={200} alt="office-img" src="https://images.pexels.com/photos/1181646/pexels-photo-1181646.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                                <Carousel.Caption>
+                                <div className="site-background" >
+                                    <h1 className="title">Welcome to theGigMaker!</h1>
+                                    <p className="subtitle"><b>Step Three: </b> Start collaborating.
+                                    <p></p>
+                                        <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                                    </p>
+                                </div>
+                                </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>
 
