@@ -86,8 +86,10 @@ class Dashboard extends Component {
       .then(res => {
         console.log(res);
         this.setState({
-          saved: res.data
+          saved: res.data.search
+
         });
+        console.log(this.state.saved);
         console.log(this.state.saved.length);
       })
       .catch(err => console.log(err));
@@ -103,7 +105,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    // const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
       <div>
         <Navbar>
@@ -143,14 +145,14 @@ class Dashboard extends Component {
             </Tab>
             <Tab eventKey={3} title="Other Projects">
               <Container>
-                {/* <Row>
+                <Row>
                   {this.state.saved.length ? (
                     <Column>
                       {this.state.saved.map((saved) => (
                         <Thumbnail>
-                          <Image src={saved.userInput.imageUrl} thumbnail />
-                          <h5>{saved.userInput.title}</h5>
-                          <p>Location: {saved.userInput.location}</p>
+                          <Image src={saved.imageUrl} thumbnail />
+                          <h5>{saved.title}</h5>
+                          <p>Location: {saved.location}</p>
                           <Button onClick={() => this.handleShow(saved._id)}>Read More</Button>
                         </Thumbnail>
                       ))}
@@ -159,11 +161,11 @@ class Dashboard extends Component {
                       <h3>No projects </h3>
                     )}
 
-                </Row> */}
+                </Row>
               </Container>
             </Tab>
           </Tabs>
-          {/* <Modal
+          <Modal
             {...this.props}
             show={this.state.show}
             id={this.state.saved._id}
@@ -172,12 +174,12 @@ class Dashboard extends Component {
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-lg">
-                {showItem && <p key={showItem._id}>{showItem.userInput.title}</p>}
+                {showItem && <p key={showItem._id}>{showItem.title}</p>}
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {showItem && <div>
-                <p key={showItem._id}>{showItem.userInput.description}</p>
+                <p key={showItem._id}>{showItem.description}</p>
 
                 <FormBtn onClick={() => { this.collabproject.bind(this) }}>Collaborate?</FormBtn>
                 <br></br>
@@ -190,7 +192,7 @@ class Dashboard extends Component {
             <Modal.Footer>
               <Button onClick={this.handleHide}>Close</Button>
             </Modal.Footer>
-          </Modal> */}
+          </Modal>
         </Container>
       </div>
     );
