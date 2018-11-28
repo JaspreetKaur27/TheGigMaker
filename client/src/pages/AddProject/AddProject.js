@@ -7,6 +7,8 @@ import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
+import Navbar from "../../components/Navbar";
+import {userObject} from "../Dashboard";
 
 class AddProject extends Component {
 
@@ -23,9 +25,42 @@ class AddProject extends Component {
         imageUrl: "",
         message: "",
         loading: false,
-        amount: null
+        amount: Number,
+        user : []
       }
     }
+
+    
+  componentWillMount(){
+    this.getUserObject();
+  }
+
+    
+  getUserObject = () => {
+    API.getUserObject()
+    .then(res => {
+        console.log(res);
+
+         localStorage.setItem('user', res);
+
+       var user =  localStorage.getItem('user');
+      
+        // console.log(Object.values(user));
+        
+    
+
+      
+
+
+        this.setState({
+          user: res.data
+
+        })
+
+
+        console.log(this.state.user._id);
+    }).catch(err => console.log(err));
+  };
 
     handleChange = ({startDate, endDate}) => {
       startDate = startDate || this.state.startDate
@@ -56,6 +91,7 @@ class AddProject extends Component {
 
       e.preventDefault();
 
+
       const title = this.state.title
       const description = this.state.description
       const location = this.state.location
@@ -63,6 +99,7 @@ class AddProject extends Component {
       const endDate = this.state.endDate
       const imageUrl = this.state.imageUrl
       const amount = this.state.amount
+      const userId = this.state.user._id
    
       const userInput = {
         title,
@@ -71,12 +108,14 @@ class AddProject extends Component {
         startDate,
         endDate,
         imageUrl,
-        amount
+        amount,
+        userId
       }
-
-      API.createProject({
-        userInput
-      })
+      console.log(userInput);
+      console.log(userId);
+      API.createProject(userInput
+  
+      )
       .then(res => {
         console.log(res);
         window.location.href = "/dashboard";
@@ -112,8 +151,20 @@ class AddProject extends Component {
     }
   
     render() {
+
       return (
         <div>
+        <Navbar>
+          <a className="navbar-brand" href="/dashboard">
+            Dashboard
+          </a>
+          <a className="navbar-brand" href="/AddProject">
+            Create New Gig
+          </a>
+          <a className="navbar-brand" href="/">
+            Logout
+          </a>
+        </Navbar>
           <Container>
             <Row>
               <Column>

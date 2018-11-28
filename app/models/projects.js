@@ -101,7 +101,7 @@
     start: Date
   },
 
-
+  amount: Number
 
 
 })

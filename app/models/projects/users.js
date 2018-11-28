@@ -1,14 +1,10 @@
 var mongoose = require("mongoose");
 
-
 // Save a reference to the Schema constructor
 var Schema = mongoose.Schema;
 
 
-
 var UserSchema = new Schema({
-
-
  
   username: {
     type: String,
@@ -22,32 +18,36 @@ var UserSchema = new Schema({
     required: "Password is Required",
   },
 
-  email : {
+  email: {
     type: String,
-    trim: true
+    unique: true,
+    // match: [/.+@.+\..+/, "Please enter a valid e-mail address"]
   },
-
+ 
   userCreated: {
     type: Date,
     default: Date.now
   },
 
+  // if collaboration is true populate the user info to the creator
+  projects: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Project"
+    }
+  ],
 
-
- 
-  projects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Project'}],
-
-
-
-  collaborations: [{ project: {type: Schema.Types.ObjectId,ref: "Collaborators"}, approved: false}]
-
-
-  
+  collaboration: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "ProjectCollaborators"
+    }
+  ]
 });
 
 
 
 var User = mongoose.model("User", UserSchema);
 
-
+// Export the User model
 module.exports = User;

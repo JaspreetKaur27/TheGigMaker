@@ -48,6 +48,25 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 
 
+
+router.get("/user-object", function (req, res){
+
+    // if (typeof localStorage === "undefined" || localStorage === null) {
+    //     var LocalStorage = require('node-localstorage').LocalStorage;
+    //     localStorage = new LocalStorage('./scratch');
+    //   }
+    
+    //   console.log(localStorage.getItem('myFirstKey'));
+    var user = JSON.parse(localStorage.getItem('user'));
+    // let user = localStorage.getItem('user');
+
+    // console.log(typeof(user));
+    console.log("local storage " + user.username);
+    res.json(user);
+
+});
+
+
 // Create User
 router.get("/create", function (req, res) {
     var query = req.body;
