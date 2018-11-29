@@ -9,14 +9,19 @@ const api = {
         return axios.get('/projects/all')
     },
 
+    getUserProjects: (UserId) => {
+        return axios.get('/users/all/' + UserId)
+    },
+
+    
 
     getUserObject: () => {
         return axios.get('users/user-object')
     },
 
 
-    collabProject: (projectId) => {
-        return axios.post('/api/project-collab-pending', projectId )
+    collabProject: (gigster) => {
+        return axios.post('/projects/collab-pending', gigster)
     },
 
     googleLogin: () => {
