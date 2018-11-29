@@ -32,6 +32,7 @@
     width: 100%;
     padding-top: -10px;
     z-index: 50px;
+    background-color: #4FA0D9;
 }
 
 .site-background{
@@ -76,4 +77,8 @@
 
 .img {
      background-size: cover;
+}
+
+body{
+    background-color: #4FA0D9;
 }
