@@ -17,7 +17,6 @@ class Dashboard extends Component {
     this.handleHide = this.handleHide.bind(this);
     this.getUserObject = this.getUserObject.bind(this);
     this.collabproject = this.collabproject.bind(this);
-    this.getUserProjects = this.getUserProjects.bind(this);
 
     this.state = {
       key: 1,
@@ -36,7 +35,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.getAllSaved();
-    this.getUserProjects();
   
   };
 
@@ -50,6 +48,18 @@ class Dashboard extends Component {
           user: res.data
         })
         console.log(this.state.user._id)
+    }).then(() => {
+      let userId = this.state.user._id;
+      API.getUserProjects(userId)
+        .then(res => {
+          console.log(res);
+          this.setState({
+            myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects))
+  
+          });
+          console.log(this.state.myprojects);
+   
+        }).catch(err => console.log(err));
     }).catch(err => console.log(err));
   };
 
@@ -75,7 +85,7 @@ class Dashboard extends Component {
 
         });
         console.log(this.state.saved);
-        console.log(this.state.saved._id);
+        
       })
       .catch(err => console.log(err));
   };
@@ -98,22 +108,6 @@ class Dashboard extends Component {
       })
       .catch(err => console.log(err));
   };
-
-  // gets you a users particular projects
-  getUserProjects = () => {
-    
-      API.getUserProjects(this.state.user)
-        .then(res => {
-          console.log(res);
-          this.setState({
-            myprojects: res.data.populatedUser
-  
-          });
-          console.log(this.state.myprojects);
-   
-        })
-        .catch(err => console.log(err));
-    };
 
   dataChange = (e) => {
     this.setState({
@@ -148,24 +142,24 @@ class Dashboard extends Component {
           >
             <Tab eventKey={1} title="My Projects">
               <Container>
-                {/* <Row>
+                <Row>
 
                   { this.state.myprojects.length ? (
                     <Column>
-                    {this.state.myprojects.map((saved) => (
+                    {this.state.myprojects.map(myprojects => myprojects.map(projects => (
                       <Thumbnail>
-                        <Image src={myprojects.imageUrl} thumbnail />
-                        <h5>{myprojects.title}</h5>
-                        <p>Location: {myprojects.location}</p>
-                        <p>Description: {myprojects.description}</p>
+                        <Image src={projects.imageUrl} thumbnail />
+                        <h5>{projects.title}</h5>
+                        <p>Location: {projects.location}</p>
+                        <p>Description: {projects.description}</p>
                         
                       </Thumbnail>
-                    ))}
+                    )))}
                   </Column>
                   )
                     : ( <h3>No Projects</h3> )}
                   
-                </Row> */}
+                </Row>
               </Container>
             </Tab>
             <Tab eventKey={2} title="My Collaborations">
