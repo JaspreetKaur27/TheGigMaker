@@ -1,17 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-
 const User = require('../models/users');
-
 const mongoose = require('mongoose')
-
-
-
-
-
-
-
 
 
 // see all user  saved Projects 
@@ -49,13 +40,13 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 
 
-router.get("/user-object", function (req, res){
+router.get("/user-object", function (req, res) {
 
     // if (typeof localStorage === "undefined" || localStorage === null) {
     //     var LocalStorage = require('node-localstorage').LocalStorage;
     //     localStorage = new LocalStorage('./scratch');
     //   }
-    
+
     //   console.log(localStorage.getItem('myFirstKey'));
     var user = JSON.parse(localStorage.getItem('user'));
     // let user = localStorage.getItem('user');
@@ -98,23 +89,17 @@ router.get("/all/:userId?", function (req, res) {
         .exec()
         .then(populatedUser => {
 
-
-
             console.log(populatedUser.projects)
 
             res.status(200).json({
                 message: "User has been found!",
 
                 populatedUser: populatedUser.map(doc => {
-                    var projectId = doc.projects.forEach(project => {
-                        
-                          
-                        
+                    
+                    // getting project Id
+                    let projectId = doc.projects.map(projectId => projectId._id)
 
-                    })
-
-                    console.log(projectId);
-
+                    console.log(doc);
 
                     return {
                         _id: doc._id,
@@ -122,8 +107,7 @@ router.get("/all/:userId?", function (req, res) {
                         email: doc.email,
                         collaborations: doc.collaborations,
                         projects: doc.projects,
-
-                        url : "http://localhost:3001/projects/all/" + doc.projects.userId
+                        url : "http://localhost:3001/projects/all/" + projectId
                     }
 
                 }),

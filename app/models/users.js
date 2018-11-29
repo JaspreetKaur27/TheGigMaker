@@ -32,9 +32,6 @@ var UserSchema = new Schema({
     default: Date.now
   },
 
-
-
- 
   projects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Project'}],
 
 

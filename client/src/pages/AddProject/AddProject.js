@@ -46,12 +46,6 @@ class AddProject extends Component {
        var user =  localStorage.getItem('user');
       
         // console.log(Object.values(user));
-        
-    
-
-      
-
-
         this.setState({
           user: res.data
 
@@ -155,6 +149,9 @@ class AddProject extends Component {
       return (
         <div>
         <Navbar>
+        <a className="navbar-brand" href="/dashboard">
+            <h3>{this.state.user.username}</h3>
+          </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
           </a>

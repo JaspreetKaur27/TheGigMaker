@@ -15,7 +15,6 @@ class Dashboard extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleHide = this.handleHide.bind(this);
-    // this.getUser = this.getUser.bind(this);
     this.getUserObject = this.getUserObject.bind(this);
     this.collabproject = this.collabproject.bind(this);
     this.getUserProjects = this.getUserProjects.bind(this);
@@ -38,26 +37,17 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getAllSaved();
     this.getUserProjects();
-    // this.getUser();
+  
   };
 
   getUserObject = () => {
     API.getUserObject()
     .then(res => {
         // console.log(res);
-
          localStorage.setItem('user', res);
-
-       var user =  localStorage.getItem('user');
-      
-        // console.log(Object.values(user));
-        
-        // var userObject = res.data;
-
-
+        var user =  localStorage.getItem('user');
         this.setState({
           user: res.data
-
         })
         console.log(this.state.user._id)
     }).catch(err => console.log(err));
@@ -75,18 +65,6 @@ class Dashboard extends Component {
     this.setState({ show: false });
   }
 
-  // getUser = () => {
-  //   API.getProfile()
-  //   .then(res => {
-  //       console.log(res);
-  //       this.setState({
-  //         user: res.data
-  //       })
-  //   }).catch(err => console.log(err));
-  // }
-
-
-
 // search all projects spits all the database projects  
   getAllSaved = () => {
     API.getdbProjects()
@@ -103,21 +81,15 @@ class Dashboard extends Component {
   };
 
   
-  
-
+//collaboration projects
   collabproject = () => {
 
-    const gigster = {
-      
+    const gigster = {    
       notifications : this.state.msg,
       userId : this.state.user,
       projectId : this.state.showId
-
     }
-
     console.log(gigster); 
-
-
     API.collabProject(gigster)
       .then(res => {
         console.log(gigster);
@@ -128,15 +100,9 @@ class Dashboard extends Component {
   };
 
   // gets you a users particular projects
-
   getUserProjects = () => {
-
     
-  
-      console.log( this.state.user);
-  
-  
-      API.getUserProjects()
+      API.getUserProjects(this.state.user)
         .then(res => {
           console.log(res);
           this.setState({
@@ -160,7 +126,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Navbar>
-        <a className="navbar-brand">
+        <a className="navbar-brand" href="/dashboard">
            <h3>{this.state.user.username}</h3> 
           </a>
           <a className="navbar-brand" href="/dashboard">
@@ -251,7 +217,7 @@ class Dashboard extends Component {
                       value={this.state.msg}
                       onChange={this.dataChange.bind(this)}
                       name="msg" 
-                      placeholder="Description (Required 1000 Characters)" 
+                      placeholder="Your Message Goes Here" 
                       required
                       >
                 </TextArea>
