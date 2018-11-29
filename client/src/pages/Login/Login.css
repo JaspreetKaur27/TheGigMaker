@@ -77,8 +77,9 @@
 
 .img {
      background-size: cover;
+     object-fit: cover;
 }
 
 body{
-    background-color: #4FA0D9;
+    background-color: #337ab7;
 }
