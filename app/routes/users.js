@@ -7,13 +7,6 @@ const User = require('../models/users');
 const mongoose = require('mongoose')
 
 
-
-
-
-
-
-
-
 // see all user  saved Projects 
 // projects
 router.get("/api/createdProjects", function (req, res) {

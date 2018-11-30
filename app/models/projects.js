@@ -59,10 +59,10 @@
   },
 
   // default gigmaker 
-  gigmaker:
+  userId:
   {
-    // type: Schema.Types.ObjectId,
-    // ref: "User"
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
 
 

@@ -40,6 +40,7 @@ router.get("/all/:projectId?", function (req, res) {
     Project.find(query)
         .then(dbProjects => {
 
+            console.log(dbProjects);
 
             if (dbProjects.length >= 1) {
 
