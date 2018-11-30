@@ -11,29 +11,12 @@ class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.getUser = this.getUser.bind(this);
         this.state = {
           isLoggedIn: false,
           user: []
         }
     
       }
-
-      componentDidMount()
-      {
-          this.getUser();
-      }
-
-      getUser = () => {
-        API.getProfile()
-        .then(res => {
-            console.log(res);
-            this.setState({
-              user: res.data
-            })
-        }).catch(err => console.log(err));
-      }
-
      
     render() {
         return (

@@ -1,9 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-
 const User = require('../models/users');
-
 const mongoose = require('mongoose')
 
 
@@ -23,8 +21,6 @@ router.get("/api/createdProjects", function (req, res) {
     });
 });
 
-
-
 // see all user collaborations 
 //collaborations
 router.get("/api/savedCollaborations", function (req, res) {
@@ -42,13 +38,13 @@ router.get("/api/savedCollaborations", function (req, res) {
 
 
 
-router.get("/user-object", function (req, res){
+router.get("/user-object", function (req, res) {
 
     // if (typeof localStorage === "undefined" || localStorage === null) {
     //     var LocalStorage = require('node-localstorage').LocalStorage;
     //     localStorage = new LocalStorage('./scratch');
     //   }
-    
+
     //   console.log(localStorage.getItem('myFirstKey'));
     var user = JSON.parse(localStorage.getItem('user'));
     // let user = localStorage.getItem('user');
@@ -103,6 +99,7 @@ router.get("/all/:userId?", function (req, res) {
 
                     console.log(doc);
 
+       
 
                     return {
                         _id: doc._id,
