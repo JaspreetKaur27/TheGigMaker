@@ -21,8 +21,6 @@ router.get("/api/createdProjects", function (req, res) {
     });
 });
 
-
-
 // see all user collaborations 
 //collaborations
 router.get("/api/savedCollaborations", function (req, res) {

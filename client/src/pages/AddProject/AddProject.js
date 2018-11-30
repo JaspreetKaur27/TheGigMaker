@@ -150,7 +150,7 @@ class AddProject extends Component {
         <div>
         <Navbar>
         <a className="navbar-brand" href="/dashboard">
-            <h3>{this.state.user.username}</h3>
+            <h4>{this.state.user.username}</h4>
           </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
