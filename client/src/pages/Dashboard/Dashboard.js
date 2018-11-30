@@ -25,7 +25,8 @@ class Dashboard extends Component {
       myprojects: [],
       saved: [],
       showId: null,
-      user: []
+      user: [],
+      collaborojects: []
     };
   }
 
@@ -42,7 +43,11 @@ class Dashboard extends Component {
     API.getUserObject()
     .then(res => {
         // console.log(res);
-         localStorage.setItem('user', res);
+        if(localStorage === null)
+        {
+          localStorage.setItem('user', res);
+        }
+        
         var user =  localStorage.getItem('user');
         this.setState({
           user: res.data
@@ -82,10 +87,8 @@ class Dashboard extends Component {
         console.log(res);
         this.setState({
           saved: res.data.search
-
         });
-        console.log(this.state.saved);
-        
+        console.log(this.state.saved);  
       })
       .catch(err => console.log(err));
   };
@@ -93,7 +96,7 @@ class Dashboard extends Component {
   
 //collaboration projects
   collabproject = () => {
-
+    console.log("response sent");
     const gigster = {    
       notifications : this.state.msg,
       userId : this.state.user,
@@ -104,9 +107,10 @@ class Dashboard extends Component {
       .then(res => {
         console.log(gigster);
         console.log(res);
-        // window.location.href = "/dashboard";
+        
       })
       .catch(err => console.log(err));
+    
   };
 
   dataChange = (e) => {
@@ -121,7 +125,7 @@ class Dashboard extends Component {
       <div>
         <Navbar>
         <a className="navbar-brand" href="/dashboard">
-           <h3>{this.state.user.username}</h3> 
+           <h4 style={{paddingBottom: "1px"}}>{this.state.user.username}</h4> 
           </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
