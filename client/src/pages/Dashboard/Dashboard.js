@@ -6,7 +6,7 @@ import Container from "../../components/Container";
 import Row from "../../components/Row";
 import API from "../../utils/API";
 import { FormBtn, TextArea } from "../../components/Form";
-import  Navbar  from "../../components/Navbar";
+import Navbar from "../../components/Navbar";
 
 class Dashboard extends Component {
   constructor(props, context) {
@@ -18,7 +18,7 @@ class Dashboard extends Component {
     // this.getUser = this.getUser.bind(this);
     this.getUserObject = this.getUserObject.bind(this);
     this.collabproject = this.collabproject.bind(this);
-    this.getUserProjects = this.getUserProjects.bind(this);
+    // this.getUserProjects = this.getUserProjects.bind(this);
 
     this.state = {
       key: 1,
@@ -31,27 +31,27 @@ class Dashboard extends Component {
     };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.getUserObject();
   }
 
   componentDidMount() {
     this.getAllSaved();
-    this.getUserProjects();
+    // this.getUserProjects();
     // this.getUser();
   };
 
   getUserObject = () => {
     API.getUserObject()
-    .then(res => {
+      .then(res => {
         // console.log(res);
 
-         localStorage.setItem('user', res);
+        localStorage.setItem('user', res);
 
-       var user =  localStorage.getItem('user');
-      
+        //  let user =  localStorage.getItem('user');
+
         // console.log(Object.values(user));
-        
+
         // var userObject = res.data;
 
 
@@ -59,8 +59,24 @@ class Dashboard extends Component {
           user: res.data
 
         })
+        // userProfile = this.state.user_id;
         console.log(this.state.user._id)
-    }).catch(err => console.log(err));
+      }).then(() => {
+
+        API.getUserProjects(this.state.user._id)
+          .then(res => {
+            console.log(res);
+            this.setState({
+              myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects))
+
+            });
+            console.log(this.state.myprojects);
+
+          })
+          .catch(err => console.log(err));
+      })
+
+      .catch(err => console.log(err));
   };
 
   handleSelect(key) {
@@ -87,8 +103,9 @@ class Dashboard extends Component {
 
 
 
-// search all projects spits all the database projects  
+  // search all projects spits all the database projects  
   getAllSaved = () => {
+
     API.getdbProjects()
       .then(res => {
         console.log(res);
@@ -97,25 +114,25 @@ class Dashboard extends Component {
 
         });
         console.log(this.state.saved);
-        console.log(this.state.saved._id);
+        // console.log(this.state.saved._id);
       })
       .catch(err => console.log(err));
   };
 
-  
-  
+
+
 
   collabproject = () => {
 
     const gigster = {
-      
-      notifications : this.state.msg,
-      userId : this.state.user,
-      projectId : this.state.showId
+
+      notifications: this.state.msg,
+      userId: this.state.user,
+      projectId: this.state.showId
 
     }
 
-    console.log(gigster); 
+    console.log(gigster);
 
 
     API.collabProject(gigster)
@@ -129,25 +146,24 @@ class Dashboard extends Component {
 
   // gets you a users particular projects
 
-  getUserProjects = () => {
+  // getUserProjects = () => {
 
-    
-  
-      console.log( this.state.user);
-  
-  
-      API.getUserProjects()
-        .then(res => {
-          console.log(res);
-          this.setState({
-            myprojects: res.data.populatedUser
-  
-          });
-          console.log(this.state.myprojects);
-   
-        })
-        .catch(err => console.log(err));
-    };
+  //   // let user =  localStorage.getItem('user');
+
+  //   console.log(this.state.user);
+
+  //     API.getUserProjects(this.state.user._id)
+  //       .then(res => {
+  //         console.log(res);
+  //         this.setState({
+  //           myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects))
+
+  //         });
+  //         console.log(this.state.myprojects);
+
+  //       })
+  //       .catch(err => console.log(err));
+  //   };
 
   dataChange = (e) => {
     this.setState({
@@ -160,8 +176,8 @@ class Dashboard extends Component {
     return (
       <div>
         <Navbar>
-        <a className="navbar-brand">
-           <h3>{this.state.user.username}</h3> 
+          <a className="navbar-brand">
+            <h3>{this.state.user.username}</h3>
           </a>
           <a className="navbar-brand" href="/dashboard">
             Dashboard
@@ -173,7 +189,7 @@ class Dashboard extends Component {
             Logout
           </a>
         </Navbar>
-        
+
         <Container>
           <Tabs
             activeKey={this.state.key}
@@ -182,24 +198,26 @@ class Dashboard extends Component {
           >
             <Tab eventKey={1} title="My Projects">
               <Container>
-                {/* <Row>
+                <Row>
 
-                  { this.state.myprojects.length ? (
+                  {this.state.myprojects.length ? (
                     <Column>
-                    {this.state.myprojects.map((saved) => (
-                      <Thumbnail>
-                        <Image src={myprojects.imageUrl} thumbnail />
-                        <h5>{myprojects.title}</h5>
-                        <p>Location: {myprojects.location}</p>
-                        <p>Description: {myprojects.description}</p>
-                        
-                      </Thumbnail>
-                    ))}
-                  </Column>
+                      {this.state.myprojects.map(myprojects => myprojects.map(projects => (
+                        <Thumbnail>
+                          <Image src={projects.imageUrl} thumbnail />
+                          <h5>{projects.title}</h5>
+                          <p>Location: {projects.location}</p>
+                          <p>Description: {projects.description}</p>
+
+                        </Thumbnail>
+                      )))}
+                    </Column>
                   )
-                    : ( <h3>No Projects</h3> )}
-                  
-                </Row> */}
+                    : (<h3>No Projects</h3>)}
+
+                </Row>
+
+
               </Container>
             </Tab>
             <Tab eventKey={2} title="My Collaborations">
@@ -245,17 +263,17 @@ class Dashboard extends Component {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-             {showItem && <label key={showItem._id}>
-                Send Message: 
+              {showItem && <label key={showItem._id}>
+                Send Message:
                 <TextArea
-                      value={this.state.msg}
-                      onChange={this.dataChange.bind(this)}
-                      name="msg" 
-                      placeholder="Description (Required 1000 Characters)" 
-                      required
-                      >
+                  value={this.state.msg}
+                  onChange={this.dataChange.bind(this)}
+                  name="msg"
+                  placeholder="Description (Required 1000 Characters)"
+                  required
+                >
                 </TextArea>
-              </label> }
+              </label>}
               <FormBtn onClick={() => this.collabproject()}>Submit</FormBtn>
               {/* {showItem && <div>
                 <p key={showItem._id}>{showItem.description}</p>
@@ -274,7 +292,7 @@ class Dashboard extends Component {
                 <Button type="button" onClick={() => { this.collabproject() }}>Collaborate?</Button>
                 {/* <Button type="button" onClick={() => this.handleShowRadioChange()}>Paid?</Button> {' '}
                 <Button type="button" onClick={() => this.handleHideRadioChange()}>Not Paid?</Button> */}
-                {/* <br></br>
+              {/* <br></br>
                 <br></br>
 
               </div>
