@@ -68,7 +68,7 @@ router.get("/user-object", function (req, res){
 
 
 // Create User
-router.get("/create", function (req, res) {
+router.post("/create", function (req, res) {
     var query = req.body;
     console.log(query);
 
@@ -98,22 +98,17 @@ router.get("/all/:userId?", function (req, res) {
         .exec()
         .then(populatedUser => {
 
-
-
             console.log(populatedUser.projects)
 
             res.status(200).json({
                 message: "User has been found!",
 
                 populatedUser: populatedUser.map(doc => {
-                    var projectId = doc.projects.forEach(project => {
-                        
-                          
-                        
+                    
+                    // getting project Id
+                    let projectId = doc.projects.map(projectId => projectId._id)
 
-                    })
-
-                    console.log(projectId);
+                    console.log(doc);
 
 
                     return {
@@ -122,8 +117,7 @@ router.get("/all/:userId?", function (req, res) {
                         email: doc.email,
                         collaborations: doc.collaborations,
                         projects: doc.projects,
-
-                        url : "http://localhost:3001/projects/all/" + doc.projects.userId
+                        url : "http://localhost:3001/projects/all/" + projectId
                     }
 
                 }),
@@ -133,7 +127,7 @@ router.get("/all/:userId?", function (req, res) {
 
             res.status(200).json({
 
-                message: "Server error user was not created",
+                message: "Server error user was not found",
                 error: err
             })
         });
