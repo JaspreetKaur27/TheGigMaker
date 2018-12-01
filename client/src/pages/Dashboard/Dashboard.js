@@ -85,9 +85,30 @@ class Dashboard extends Component {
     API.getdbProjects()
       .then(res => {
         console.log(res);
-        this.setState({
-          saved: res.data.search
-        });
+      //  const response = res.filter(filteredObj =>  filteredObj);
+      //   console.log|(response);
+
+      console.log(this.state.user._id);
+      // const response = res.data.search;
+
+      res.forEach(obj => {
+
+        if (  obj.userId === this.state.user._id){
+
+          this.setState({
+            saved: obj
+          });
+
+        }
+      })
+    //   const filterRes = response.filter(response => {
+      
+    // return (  response.userId !== this.state.user._id)
+      
+    //   }
+      // );
+
+      console.log(res);     
         console.log(this.state.saved);  
       })
       .catch(err => console.log(err));
@@ -156,7 +177,12 @@ class Dashboard extends Component {
                         <h5>{projects.title}</h5>
                         <p>Location: {projects.location}</p>
                         <p>Description: {projects.description}</p>
-                        
+                        <Button type="button" style={{float: "left"}}>Update</Button>
+                        <Button type="button" style={{float: "right"}}>Delete</Button>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+
                       </Thumbnail>
                     )))}
                   </Column>
