@@ -83,7 +83,7 @@ router.get("/all/:userId?", function (req, res) {
 
     User.find(query)
         .populate('projects')
-        // .populate('Collaborator')
+        .populate('Collaborators')
         .exec()
         .then(populatedUser => {
 

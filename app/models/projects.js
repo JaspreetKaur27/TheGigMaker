@@ -108,6 +108,6 @@
 
 
   var Project = mongoose.model("Project", ProjectSchema);
-  // var Collaborator = mongoose.model("ProjectCollaborators", collaboratorSchema);
+  var Collaborator = mongoose.model("Collaborators", collaboratorSchema);
 
-  module.exports =  Project;
+  module.exports =  {Project, Collaborator}

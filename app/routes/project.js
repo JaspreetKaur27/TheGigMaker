@@ -8,7 +8,7 @@ const db = require("../models/index");
 
 const mongoose = require('mongoose');
 
-const Project = require('../models/projects');
+const {Project} = require('../models/projects');
 const User = require('../models/users');
 
 
@@ -38,6 +38,7 @@ router.get("/all/:projectId?", function (req, res) {
 
     console.log(query);
     Project.find(query)
+        .populate('Collaborators')
         .then(dbProjects => {
 
             console.log(dbProjects);
@@ -116,11 +117,11 @@ router.post("/create", function (req, res) {
 
 
 // delete a project by Id (creator)
-router.delete("/delete", function (req, res) {
+router.delete("/delete/:projectId", function (req, res) {
 
-    console.log(req.body.projectId);
+    console.log(req.params.projectId);
 
-    Project.remove({ _id: req.body.projectId }, function (err, data) {
+    Project.remove({ _id: req.params.projectId }, function (err, data) {
         if (data) {
             res.status(200).send('project has been deleted');
         } else {
@@ -135,14 +136,18 @@ router.delete("/delete", function (req, res) {
 
 // update content (creator)
 // do we need to send back updated info?
-router.put("/update", function (req, res) {
+router.put("/update/:projectId?", function (req, res) {
 
-    console.log(req.body.projectId);
+    console.log(req.params.projectId);
 
 
-    Project.update({ _id: req.body.projectId }, function (err, data) {
+    Project.update({_id: req.params.projectId}, {new:true}, function (err, data) {
         if (data) {
-            res.status(200).json("project has been updated");
+            res.status(200).json({
+                message: "project has been updated!",
+                data : data
+
+            });
         } else {
             console.log(err);
             res.redirect("/");
