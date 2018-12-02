@@ -11,8 +11,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: false,
-            user: []
+            isLoggedIn: false
         }
     
       }
@@ -95,8 +94,6 @@ class Login extends Component {
                                 </Carousel.Caption>
                             </Carousel.Item>
                         </Carousel>
-
-
                     </div>
                 </div>
             </Router>
