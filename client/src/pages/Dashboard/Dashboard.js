@@ -181,7 +181,6 @@ class Dashboard extends Component {
                         <Button type="button" style={{float: "right"}}>Delete</Button>
                         <br></br>
                         <br></br>
-                        <br></br>
 
                       </Thumbnail>
                     )))}

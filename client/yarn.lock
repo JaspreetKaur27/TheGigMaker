@@ -6885,6 +6885,10 @@ react-overlays@^0.8.0:
     react-transition-group "^2.2.0"
     warning "^3.0.0"
 
+react-particles-js@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/react-particles-js/-/react-particles-js-2.4.2.tgz#34a4d1ea15eaebcbb068f7b6a7c43b18792fcf65"
+
 react-popper@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.0.2.tgz#0e72f338b7f15ab9f9ec884e36ae0dad78a3e301"
