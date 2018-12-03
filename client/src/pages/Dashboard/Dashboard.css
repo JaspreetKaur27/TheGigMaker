@@ -1,0 +1,25 @@
+
+
+.tab-style ul > li > a {
+    background-color: white;
+    color: #4285f4;
+}
+
+.tab-style ul > li > a:hover {
+    background-color: #b9d3f9;
+}
+
+.tab-style ul > li.active > a,
+.tab-style ul > li.active > a:hover,
+.tab-style ul > li.active > a:focus {
+    background-color:#4285f4;
+    color: white;
+}
+
+.dashbard-style 
+{
+    background-image: url("https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&h=350");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+}

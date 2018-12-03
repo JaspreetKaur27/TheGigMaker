@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Thumbnail, Image } from "react-bootstrap";
+import "./Dashboard.css";
 import { Modal, Button } from "react-bootstrap";
 import Column from "../../components/Column";
 import Container from "../../components/Container";
@@ -7,6 +8,8 @@ import Row from "../../components/Row";
 import API from "../../utils/API";
 import { FormBtn, TextArea } from "../../components/Form";
 import  Navbar  from "../../components/Navbar";
+import backimg from "../../images/dashboard-background.jpg";
+
 
 class Dashboard extends Component {
   constructor(props, context) {
@@ -101,13 +104,6 @@ class Dashboard extends Component {
 
         }
       })
-    //   const filterRes = response.filter(response => {
-      
-    // return (  response.userId !== this.state.user._id)
-      
-    //   }
-      // );
-
       console.log(res);     
         console.log(this.state.saved);  
       })
@@ -143,7 +139,7 @@ class Dashboard extends Component {
   render() {
     const showItem = this.state.saved.find(item => item._id === this.state.showId);
     return (
-      <div>
+      <div className="dashboard-style">
         <Navbar>
         <a className="navbar-brand" href="/dashboard">
            <h4 style={{paddingBottom: "1px"}}>{this.state.user.username}</h4> 
@@ -164,11 +160,12 @@ class Dashboard extends Component {
             activeKey={this.state.key}
             onSelect={this.handleSelect}
             id="controlled-tab-example"
+            className="tab-style"
           >
             <Tab eventKey={1} title="My Projects">
               <Container>
+                <br></br>
                 <Row>
-
                   { this.state.myprojects.length ? (
                     <Column>
                     {this.state.myprojects.map(myprojects => myprojects.map(projects => (
@@ -246,29 +243,6 @@ class Dashboard extends Component {
                 </TextArea>
               </label> }
               <FormBtn onClick={() => this.collabproject()}>Submit</FormBtn>
-              {/* {showItem && <div>
-                <p key={showItem._id}>{showItem.description}</p>
-                  {this.state.open ?
-                    <label>
-                      Send Message:
-                      <TextArea
-                      value={this.state.msg}
-                      onChange={this.dataChange.bind(this)}
-                      name="msg" 
-                      placeholder="Description (Required 1000 Characters)" 
-                      required
-                      ></TextArea>
-                    </label>
-                    : null}
-                <Button type="button" onClick={() => { this.collabproject() }}>Collaborate?</Button>
-                {/* <Button type="button" onClick={() => this.handleShowRadioChange()}>Paid?</Button> {' '}
-                <Button type="button" onClick={() => this.handleHideRadioChange()}>Not Paid?</Button> */}
-                {/* <br></br>
-                <br></br>
-
-              </div>
-              // } */}
-
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.handleHide}>Close</Button>
