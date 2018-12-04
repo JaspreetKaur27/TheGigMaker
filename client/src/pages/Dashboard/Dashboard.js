@@ -8,7 +8,7 @@ import Row from "../../components/Row";
 import API from "../../utils/API";
 import { FormBtn, TextArea } from "../../components/Form";
 import  Navbar  from "../../components/Navbar";
-import backimg from "../../images/dashboard-background.jpg";
+//import backimg from "../../images/dashboard-background.jpg";
 
 
 class Dashboard extends Component {
