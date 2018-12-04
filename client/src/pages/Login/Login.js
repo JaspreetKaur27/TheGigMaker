@@ -119,7 +119,7 @@ class Login extends Component {
                                     <br></br>
                                         <p className="subtitle"><b>Step Two: </b>Read or write the project description.
                                     <p></p>
-                                            <Button><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
+                                            <Button class="btn-change"><a href="http://localhost:3001/api/auth/google">Sign in with Google+</a></Button>
                                         </p>
                                     </div>
                                 </Carousel.Caption>
