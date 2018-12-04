@@ -8,7 +8,7 @@ const db = require("../models/index");
 
 const mongoose = require('mongoose');
 
-const {Project} = require('../models/projects');
+const Project = require('../models/projects');
 const User = require('../models/users');
 
 
@@ -37,37 +37,53 @@ router.get("/all/:projectId?", function (req, res) {
     }
 
     console.log(query);
+
     Project.find(query)
-        .populate('Collaborators')
+        .populate('gigster')
+        .exec()
+
         .then(dbProjects => {
 
-            console.log(dbProjects);
+            console.log('herro' + dbProjects);
 
-            if (dbProjects.length >= 1) {
+            res.status(200).json({
+                message: "Project(s) has been found!",
+                data : dbProjects
 
-                res.status(200).json({
-                    message: 'Search has been succesful!',
-                    search: dbProjects
-                });
+                // populatedProject: dbProjects.map(doc => {
 
-            } else {
+                    
 
-                res.status(404).json({
-                    message: "Project doesnt exist",
+                //     // getting project Id
+                //     // let projectId = doc.projects.map(projectId => projectId._id)
+
+               
+
+                //     console.log(doc);
+
+                //     return {
+
+                //         gigster: doc.gigster,
+                //         _id: doc._id,
+                //         userId: doc.userId,
+                //         notifications: doc.gigster.notifications,
+                //         approved: doc.gigster.approved,
+                //         projectId: doc.gigster.projectId,
+                //         url : "http://localhost:3001/projects/all/" + doc._id
+                //     }
+
 
                 })
-
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: "Project was not found",
-                error: err
             })
-        })
-});
+                .catch(err => {
+                    res.status(500).json({
+                        message: "Project was not found",
+                        error: err
+                    })
+                })
+        });
 
-
+// });
 
 //logined user
 //passport gives you the user ID to be referenced later, need to send a key of UserID
@@ -141,11 +157,11 @@ router.put("/update/:projectId?", function (req, res) {
     console.log(req.params.projectId);
 
 
-    Project.update({_id: req.params.projectId}, {new:true}, function (err, data) {
+    Project.update({ _id: req.params.projectId }, { new: true }, function (err, data) {
         if (data) {
             res.status(200).json({
                 message: "project has been updated!",
-                data : data
+                data: data
 
             });
         } else {

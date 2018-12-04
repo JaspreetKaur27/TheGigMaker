@@ -82,14 +82,19 @@ router.get("/all/:userId?", function (req, res) {
     }
 
     User.find(query)
-        .populate('projects')
-        .populate('Collaborators')
+        .populate([{path:'projects',
+        populate:{path:'gigster'}}, {path:'collaborations',
+        populate:{path:'gigster'}
+
+    }])
+        
+        // .populate('collaborations')
         .exec()
         .then(populatedUser => {
 
             console.log(populatedUser.projects)
 
-            res.status(200).json({
+            res.status(200).json    ({
                 message: "User has been found!",
 
                 populatedUser: populatedUser.map(doc => {

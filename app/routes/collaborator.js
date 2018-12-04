@@ -7,7 +7,9 @@ const db = require("../models/index");
 
 const mongoose = require('mongoose');
 
-const { Project, Collaborator } = require('../models/projects');
+const Project = require('../models/projects');
+
+const Collaborator = require('../models/collaborator')
 
 const User = require('../models/users');
 
@@ -18,29 +20,33 @@ const User = require('../models/users');
 
 router.post("/collab-pending", function (req, res) {
 
-
+        
     if (req.body.projectId) {
         var query = req.body
+
+
+        console.log(query);
     }
     // notifications the user sends a small paragraph of why they liked they are suited to participate
 
     Collaborator.create(query).then(collaborator => {
 
+        console.log("collaborator obj" + collaborator);
+        console.log("project Id Test" + req.body.projectId);
+
+        // populate not being retrieved by the user model , have to populate another user schema collaborations to retrieve 
+        //gigster Id
+        Project.findOneAndUpdate({ _id: req.body.projectId }, { $push: { gigster: collaborator._id } }, { new: true })
+            .then(dbCollaborator => {
+
+                res.json(dbCollaborator); 
 
 
-
-        Project.findOneAndUpdate({ _id: query.projectId }, { $push: { gigster:  collaborator } }, { new: true })
-            .then(doc => {
-
-                console.log("doc collab-pending" + doc);
-
-
-                User.findByIdAndUpdate({ _id: collaborator.userId }, { $push: { collaborations: { _id: query.projectId, approved: false } } })
+                User.findByIdAndUpdate({ _id: collaborator.userId }, { $push: { collaborations: { _id: query.projectId} } })
                     .then(gigsterCollaborator => {
 
                         console.log(gigsterCollaborator);
                     })
-
 
                 res.status(200).json({
 
@@ -48,67 +54,90 @@ router.post("/collab-pending", function (req, res) {
                     url: "head back to see all projects !http://localhost:3001/projects/all",
                     collaboration: doc
 
-
                 });
 
-              
-            });
+            })
+            })
+            .catch(err => {
 
-
-    })
+                res.status(500).json({
+    
+                    message: "Project was not created succesfully please try again",
+                    error: err
+                });
+    
+            });   
 });
+
+//collaborators get all
+
+
 
 //gigmaker approves gigster
 // projectID
 // gigsterID
 // appproved : true
 // activate Trello?
-router.post("/collab-approval", function (req, res) {
-    if (req.body.gigsterId) {
-        var query = req.body
+router.post("/collab-approval/:id", function (req, res) {
+    var query ={};
+    
+    if (req.params.id) {
+        query._id = req.params.id
     }
 
-    Collaborator.findOneAndUpdate(query).then(collaborator => {
+    console.log(query);
 
-    Project.findOneAndUpdate({ _id: query.projectId }, { gigster: { userId: query.gigsterId, approved: query.approved } })
-        .then(gigster => {
+    Collaborator.findByIdAndUpdate({_id : query._id},{$set:{approved:true}},{new:true}).then(collaborator => {
 
-            console.log(gigster);
+        console.log(collaborator);
 
-            // the gigster collaboration array is updated with the project Id that he is participating
-            // As well as he is array is turned to approved True
+     
 
-            User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
-                .then(gigsterCollaborator => {
+        // Project.findOneAndUpdate({ _id: collaborator.projectId }, { gigster: collaborator })
+        //     .then(gigster => {
 
-                    console.log(gigsterCollaborator);
-                })
+        //         console.log(gigster);
 
-            res.status(200).json({
+        //         // the gigster collaboration array is updated with the project Id that he is participating
+        //         // As well as he is array is turned to approved True
 
-                message: "You have approved the following gigster to participate in your project!",
-                gigster: gigster
+        //         User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
+        //             .then(gigsterCollaborator => {
 
+        //                 console.log(gigsterCollaborator);
+        //             })
+
+                res.status(200).json({
+
+                    message: "You have approved the following gigster to participate in your project!",
+                    gigster: collaborator
+
+                });
+
+            }).catch(err => {
+                res.status(500).json({
+                    message: "Approval was not sent, please try again",
+                    error: err
+                });
             });
-
-        }).catch(err => {
-            res.status(500).json({
-                message: "Approval was not sent, please try again",
-                error: err
-            });
-        });
 
     });
-});
+// });
 
 
 
 
-router.post("/collab-deny", function (req, res) {
-    if (req.body.gigsterId) {
-        var query = req.body
+//projectId
+//delete gigster
+router.post("/collab-deny/:id", function (req, res) {
+    var query = {};
+    if (req.params.id) {
+        query._id = req.params.id
     }
-    Collaborator.findByIdAndRemove({ _id: query.p })
+
+    console.log("deny" +  req.params.id );
+
+    Collaborator.findByIdAndDelete({ _id: query._id})
         .then(gigster => {
 
 

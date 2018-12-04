@@ -37,10 +37,17 @@ var UserSchema = new Schema({
     }
   ],
 
-  collaboration: [
+  gigster: [
     {
       type: Schema.Types.ObjectId,
-      ref: "ProjectCollaborators"
+      ref: "Collaborator"
+    }
+  ],
+
+  collaborations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Project"
     }
   ]
 });
