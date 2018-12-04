@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./keys');
-const User = require('../app/models/user-model');
+const User = require('../app/models/users');
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -31,7 +31,7 @@ passport.use(
 
             if (currentUser) {
                 //already have a user
-                console.log('user is: '+ currentUser);
+                // console.log('user is: '+ currentUser);
                 done(null, currentUser);
             }
             else {

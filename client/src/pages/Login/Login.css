@@ -1,3 +1,7 @@
+body{
+    height: 100%
+}
+
 .frost-banner{
     background:white;
  
@@ -5,110 +9,95 @@
 .title{
     color: white;
     font-weight: bold;
-    font-size: 500%;
+
+    font-size: 60px;
     stroke: 10px white;
-    text-shadow:black 0 0 10px;
+    text-shadow: black 0 0 10px;
     opacity: 0%;
-    /* top: 1%; 
-    position: relative;*/
-    transform: translateY(-50%); 
-    position: fixed;
-    
+    position: relative;
+    transform: translateY(-50%);
+    margin-top: 20%;
+    padding-right: 50px;
+
 }
 /*title at 75px and subtitle 26px*/
 .subtitle{
     color:white;
     text-shadow: black 0 0 10px;
-    font-size: 200%;
+
+    font-size: 22px;
     opacity: 0%;
     position: relative;
-    transform: translateY(10%);
-
-    /* position: relative;
-    top: 10%;
-    transform: translateY(-260%); */
-
+    transform: translateY(-50%); 
+    margin: auto;
+    padding-top: 0px;
 }
 
 .main-container{
-    height: 10%;
-    width: 80%;
-    padding-top: -10px;
-    z-index: 50px;
-    background-color: #4FA0D9;
-}
-
-.site-background{
-    background: transparent;
-   /*background: url("https://clip2art.com/images/sky-clipart-background-8.jpg");*/
-    /* background-size: auto 100%;
-    background-repeat: no-repeat;
-    background-position: right bottom;
-    padding: 20px;
-    animation: float 4s infinite;
-    z-index: 5;
-    width: 100%;
-    height: 100%; */
-}
-
-.carousel {
-    position: absolute;
-    top: 0;
-    /* width: 100%;
-    height: 50px; */
-    /* background-size: cover; */
-    z-index:-10; 
-  }
-
-.right.carousel-control, .left.carousel-control {
-    opacity: 0;
-}
-
-.carousel-inner{
-    height: 600px; 
-    margin:auto; 
-} 
-/* 
-.img-fluid{
-    max-width: 100%;
     height: auto;
-} */
+    width: 90%;
+    padding-top: 10%;
+    padding-left: 15%;
 
-.carousel-img{
-    height: 656px;
-    width: 100%;
-} 
-
-.carousel-caption{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    z-index: 50px;
+    
 }
 
-.carousel-indicators li {
+
+*, *:before, *:after {
+    box-sizing: border-box;
+  }
+  .g-sign-in-button {
+
+    margin: 10px;
     display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 10px;
-    text-indent: 0;
+    width: 240px;
+    height: 50px;
+    background-color: #4285f4;
+    color: #fff;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+    transition: background-color .218s, border-color .218s, box-shadow .218s;
+    align-content: center;
+  }
+  .g-sign-in-button:hover {
     cursor: pointer;
-    border: none;
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.5);    
-}
-.carousel-indicators .active {
-    width: 10px;
-    height: 10px;
-    margin: 10px;
-    background-color: #4FA0D9;
-}
-/* 
-.img {
-     background-size: cover;
-     object-fit: cover;
-} */
 
-body{
-    background-color: #337ab7;
-}
+    -webkit-box-shadow: 0 0 3px 3px rgba(66,133,244,.3);
+    box-shadow: 0 0 3px 3px rgba(66,133,244,.3);
+  }
+  .g-sign-in-button:active {
+    background-color: #3367D6;
+    transition: background-color 0.2s;
+  }
+  .g-sign-in-button .content-wrapper {
+    height: 100%;
+    width: 100%;
+    border: 1px solid transparent;
+  }
+  .g-sign-in-button img {
+      width: 18px;
+      height: 18px;
+  }
+  .g-sign-in-button .logo-wrapper {
+     padding: 15px;
+     background:#fff;
+     width: 48px;
+     height: 100%;
+     border-radius: 1px; 
+     display: inline-block;
+  }
+  .g-sign-in-button .text-container {
+      font-family: Roboto,arial,sans-serif;
+      font-weight: 500;
+      letter-spacing: .21px;
+      font-size: 16px;
+      line-height: 48px;
+      vertical-align: top;
+      border: none;
+      display: inline-block;
+      text-align: center;
+      color: white;
+      width: 180px;
+     
+  }

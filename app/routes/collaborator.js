@@ -34,12 +34,6 @@ router.post("/collab-pending", function (req, res) {
                     res.status(" Collaboration pending");
                 });
 
-
-
-
-
-
-
             // userId was passed from the front end
             // .then(dbProject => {
             //     Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {

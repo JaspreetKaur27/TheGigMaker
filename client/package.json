@@ -5,10 +5,14 @@
   "dependencies": {
     "axios": "^0.18.0",
     "moment": "^2.22.2",
+    "node-localstorage": "^1.3.1",
     "react": "^16.6.0",
+    "react-background-slider": "^1.2.0",
+    "react-background-slideshow": "^1.0.4",
     "react-bootstrap": "^0.32.4",
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.6.0",
+    "react-particles-js": "^2.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1"
   },
@@ -27,6 +31,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-
   "proxy": "http://localhost:3001/"
 }
