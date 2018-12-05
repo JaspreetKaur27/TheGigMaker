@@ -57,7 +57,7 @@ router.get("/user-object", function (req, res) {
 
 
 // Create User
-router.get("/create", function (req, res) {
+router.post("/create", function (req, res) {
     var query = req.body;
     console.log(query);
 
@@ -82,14 +82,16 @@ router.get("/all/:userId?", function (req, res) {
     }
 
     User.find(query)
-        .populate('projects')
-        // .populate('Collaborator')
+        .populate([{path:'projects',
+        populate:{path:'gigster'}}, {path:'collaborations'}])
+        
+        // .populate('collaborations')
         .exec()
         .then(populatedUser => {
 
             console.log(populatedUser.projects)
 
-            res.status(200).json({
+            res.status(200).json    ({
                 message: "User has been found!",
 
                 populatedUser: populatedUser.map(doc => {
@@ -98,6 +100,8 @@ router.get("/all/:userId?", function (req, res) {
                     let projectId = doc.projects.map(projectId => projectId._id)
 
                     console.log(doc);
+
+       
 
                     return {
                         _id: doc._id,
@@ -115,7 +119,7 @@ router.get("/all/:userId?", function (req, res) {
 
             res.status(200).json({
 
-                message: "Server error user was not created",
+                message: "Server error user was not found",
                 error: err
             })
         });

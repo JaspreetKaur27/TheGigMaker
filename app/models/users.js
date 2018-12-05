@@ -36,8 +36,9 @@ var UserSchema = new Schema({
 
 
 
-  collaborations: [{ project: {type: Schema.Types.ObjectId,ref: "Collaborators"}, approved: false}]
+  collaborations: [{type: mongoose.Schema.Types.ObjectId, ref: "Collaborator"}]
 
+  // {approved:Boolean}
 
   
 });

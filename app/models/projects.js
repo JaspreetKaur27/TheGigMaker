@@ -2,21 +2,21 @@
 
   const Schema = mongoose.Schema;
 
-  const collaboratorSchema = new Schema({
+  // const collaboratorSchema = new Schema({
 
-    //Todo change the useId name to gigsterId for confusion purposes
+  //   //Todo change the useId name to gigsterId for confusion purposes
 
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    },
-    approved: false,
-    notifications :[ {
-      type: String,
-      trim: true
+  //   userId: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "User"
+  //   },
+  //   approved: false,
+  //   notifications :[ {
+  //     type: String,
+  //     trim: true
   
-    }],
-  });
+  //   }],
+  // });
 
   var ProjectSchema = new Schema({
 
@@ -68,7 +68,7 @@
 
 
   // 0 to many gigsters
-  gigster: [collaboratorSchema],
+  gigster: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collaborator'}],
 // [{user_id: 1, approved: false}, {user_id: 2, approved: true}]
 
 
@@ -108,6 +108,6 @@
 
 
   var Project = mongoose.model("Project", ProjectSchema);
-  // var Collaborator = mongoose.model("ProjectCollaborators", collaboratorSchema);
+  // var Collaborator = mongoose.model("Collaborators", collaboratorSchema);
 
-  module.exports =  Project;
+  module.exports =  Project

@@ -52,6 +52,7 @@ class Dashboard extends Component {
         this.setState({
           user: res.data
         })
+        // userProfile = this.state.user_id;
         console.log(this.state.user._id)
       }).then(() => {
         let userId = this.state.user._id;
@@ -82,6 +83,7 @@ class Dashboard extends Component {
 
   // search all projects spits all the database projects  
   getAllSaved = () => {
+
     API.getdbProjects()
       .then(res => {
         console.log(res.data.search);
