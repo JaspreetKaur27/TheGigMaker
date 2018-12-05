@@ -40,8 +40,8 @@ router.post("/collab-pending", function (req, res) {
             .then(dbCollaborator=> {
 
                 console.log("db collaborator " + dbCollaborator);
-             
-                User.findOneAndUpdate({ _id: req.body.userId }, { $push: { collaborations:  req.body.projectId } },{new:true})
+                // req.body.projectId 
+                User.findOneAndUpdate({ _id: req.body.userId }, { $push: { collaborations: collaborator._id } },{new:true})
                     .then(gigsterCollaborator => {
 
                         console.log(gigsterCollaborator);
@@ -94,19 +94,14 @@ router.post("/collab-approval/:id", function (req, res) {
 
      
 
-        // Project.findOneAndUpdate({ _id: collaborator.projectId }, { gigster: collaborator })
-        //     .then(gigster => {
+                // the gigster collaboration array is updated with the project Id that he is participating
+                // As well as he is array is turned to approved True
 
-        //         console.log(gigster);
+                User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
+                    .then(gigsterCollaborator => {
 
-        //         // the gigster collaboration array is updated with the project Id that he is participating
-        //         // As well as he is array is turned to approved True
-
-        //         User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
-        //             .then(gigsterCollaborator => {
-
-        //                 console.log(gigsterCollaborator);
-        //             })
+                        console.log(gigsterCollaborator);
+                    })
 
                 res.status(200).json({
 
