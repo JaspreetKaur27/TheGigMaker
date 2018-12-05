@@ -19,6 +19,7 @@ class Dashboard extends Component {
     this.collabproject = this.collabproject.bind(this);
 
     this.state = {
+      isAuthenticated: false,
       key: 1,
       show: false,
       msg: '',
@@ -135,8 +136,8 @@ class Dashboard extends Component {
 
     return (
       <div>
-
-        <Navbar inverse collapseOnSelect className="navbar">
+        { !this.state.isAuthenticated ? 
+        (<Navbar inverse collapseOnSelect className="navbar">
           <Navbar.Header>
             <Navbar.Brand>
               <a href="/dashboard" style={{color: "white", textDecoration: "none"}}>Welcome, {this.state.user.username}</a>
@@ -156,7 +157,10 @@ class Dashboard extends Component {
               </NavItem>
             </Nav>
           </Navbar.Collapse>
-        </Navbar>
+        </Navbar>):
+        (
+          window.location.href("/")
+        )}
         
         <div className="dashboard-style">
           <Container>
