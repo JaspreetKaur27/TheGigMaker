@@ -127,9 +127,9 @@ router.post("/collab-approval/:id", function (req, res) {
 //_id generic Id generated from the instance of the collaboration to delete from the gimaker array of gigsters
 // UserId of the gigster
 //delete gigster by its unique notification request not by all of its user Id project participation
-router.post("/collab-deny", function (req, res) {
+router.post("/collab-deny/:_id", function (req, res) {
     
-    if (req.body._id) {
+    if (req.params._id) {
        var query = req.body
     }
 
@@ -137,12 +137,12 @@ router.post("/collab-deny", function (req, res) {
 
     // delete _id self generated from the instance of the gigster schema
 
-    Collaborator.deleteMany({_id: query._id}).then(() => {
+    Collaborator.deleteMany({_id: req.params._id}).then( gigster => {
 
         
-    User.findOneAndUpdate({_id:query.userId}, {$pull:{collaborations: query.projectId}})
+    // User.findOneAndUpdate({_id:query.userId}, {$pull:{collaborations: query.projectId}})
     
-    .then(gigster => {
+    // .then(gigster => {
 
         // User.remove({collaborations:{_id : req.params._id} })
         // .then(deletedGigster => {
@@ -152,7 +152,7 @@ router.post("/collab-deny", function (req, res) {
         // console.log("gigster is here" + gigster);
 
  
-    });
+    // });
 
 
  

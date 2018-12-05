@@ -16,6 +16,11 @@ const collaboratorSchema = new Schema({
     ref: "Project"
     
   },
+
+  gihub: {
+    type: String
+  },
+  
   approved: false,
   notifications :[ {
     type: String,
