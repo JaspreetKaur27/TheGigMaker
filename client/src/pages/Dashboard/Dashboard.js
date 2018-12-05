@@ -150,7 +150,7 @@ class Dashboard extends Component {
 
   render() {
     const showItem = this.state.saved.find(item => item._id === this.state.showId);
-    const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
+    const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.showId))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     // console.log(this.state.showId)
     console.log(showMyProject)
@@ -249,12 +249,16 @@ class Dashboard extends Component {
                 </Grid>
               </Tab>
             </Tabs>
+            {/* all projects AKA MODEL 1 */}
+          
             <Modal
               {...this.props}
+              // this activates it to show based if show = true in the state
               show={this.state.show}
               id={this.state.saved._id}
               onHide={this.handleHide}
               dialogClassName="custom-modal"
+              className="model-1"
             >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
@@ -313,22 +317,23 @@ class Dashboard extends Component {
               </Modal.Footer>
             </Modal>
 
-            {/* check gigter request */}
-            {/* <Modal
+            {/* check gigter request AKA MODEL2*/}
+             <Modal
               {...this.props}
               show={this.state.show}
               id={this.state.myprojects._id}
               onHide={this.handleHide}
               dialogClassName="custom-modal"
+              className = "model-2"
             >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
-                  {/* {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>} */}
-                {/* </Modal.Title>
-              </Modal.Header> */}
-              {/* <Modal.Body> */}
-                {/* {showMyProject && <label key={showMyProject._id}> */}
-                {/* <label>
+                  {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>} 
+                 </Modal.Title>
+              </Modal.Header> 
+               <Modal.Body> 
+                 {showMyProject && <label key={showMyProject._id}> 
+           
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
@@ -338,13 +343,13 @@ class Dashboard extends Component {
                     </ListGroupItem>
                   </ListGroup>
                 </label>
-                {/* } */}
-                {/* <FormBtn>Submit</FormBtn>
+                 }
+                 <FormBtn>Submit</FormBtn>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
               </Modal.Footer>
-            </Modal> */}
+            </Modal> 
 
           </Container>
         </div>
