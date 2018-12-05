@@ -17,6 +17,7 @@ class Dashboard extends Component {
     this.handleHide = this.handleHide.bind(this);
     this.getUserObject = this.getUserObject.bind(this);
     this.collabproject = this.collabproject.bind(this);
+    this.getAllSaved = this.getAllSaved.bind(this);
 
     this.state = {
       isAuthenticated: false,
@@ -34,10 +35,13 @@ class Dashboard extends Component {
 
   componentWillMount() {
     this.getUserObject();
+    
   }
 
   componentDidMount() {
-    this.getAllSaved();
+
+    // this.getAllSaved();
+
 
   };
 
@@ -63,10 +67,14 @@ class Dashboard extends Component {
             this.setState({
               myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects))
 
-            });
+            })
             console.log(this.state.myprojects);
 
           }).catch(err => console.log(err));
+      }).then(()=> {
+          // console.log(this.state.user._id)
+        this.getAllSaved(this.state.user._id);
+        
       }).catch(err => console.log(err));
   };
 
@@ -83,11 +91,34 @@ class Dashboard extends Component {
   }
 
   // search all projects spits all the database projects  
-  getAllSaved = () => {
+  getAllSaved = (userId) => {
+    console.log(userId)
 
+    let id = userId.toString();
+
+    console.log(id);
     API.getdbProjects()
       .then(res => {
-      
+        console.log(res.data.data);
+        //  const response = res.filter(filteredObj =>  filteredObj);
+        let response =  res.data.data;
+
+        console.log(response);
+
+
+        let newArray = response.filter(obj => obj.userId !== id )
+
+        console.log(newArray)
+
+        this.setState({
+          saved: newArray
+        });
+        //console.log(response);  
+        console.log(this.state.user._id);
+        //const response = res.data.search;
+
+
+        console.log(res);
         console.log(this.state.saved);
       })
       .catch(err => console.log(err));
@@ -118,8 +149,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const showItem = this.state.saved.filter(item => item._id === this.state.showId);
-   // const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
+    const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     // console.log(this.state.showId)
     //console.log(showMyProject)
