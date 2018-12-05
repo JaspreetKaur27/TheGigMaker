@@ -37,35 +37,52 @@ router.get("/all/:projectId?", function (req, res) {
     }
 
     console.log(query);
+
     Project.find(query)
+        .populate('gigster')
+        .exec()
         .then(dbProjects => {
 
+            console.log('herro' + dbProjects);
 
-            if (dbProjects.length >= 1) {
+            res.status(200).json({
+                message: "Project(s) has been found!",
+                data : dbProjects
 
-                res.status(200).json({
-                    message: 'Search has been succesful!',
-                    search: dbProjects
-                });
+                // populatedProject: dbProjects.map(doc => {
 
-            } else {
+                    
 
-                res.status(404).json({
-                    message: "Project doesnt exist",
+                //     // getting project Id
+                //     // let projectId = doc.projects.map(projectId => projectId._id)
+
+               
+
+                //     console.log(doc);
+
+                //     return {
+
+                //         gigster: doc.gigster,
+                //         _id: doc._id,
+                //         userId: doc.userId,
+                //         notifications: doc.gigster.notifications,
+                //         approved: doc.gigster.approved,
+                //         projectId: doc.gigster.projectId,
+                //         url : "http://localhost:3001/projects/all/" + doc._id
+                //     }
+
 
                 })
-
-            }
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: "Project was not found",
-                error: err
             })
-        })
-});
+                .catch(err => {
+                    res.status(500).json({
+                        message: "Project was not found",
+                        error: err
+                    })
+                })
+        });
 
-
+// });
 
 //logined user
 //passport gives you the user ID to be referenced later, need to send a key of UserID
@@ -115,11 +132,11 @@ router.post("/create", function (req, res) {
 
 
 // delete a project by Id (creator)
-router.delete("/delete", function (req, res) {
+router.delete("/delete/:projectId", function (req, res) {
 
-    console.log(req.body.projectId);
+    console.log(req.params.projectId);
 
-    Project.remove({ _id: req.body.projectId }, function (err, data) {
+    Project.remove({ _id: req.params.projectId }, function (err, data) {
         if (data) {
             res.status(200).send('project has been deleted');
         } else {
@@ -134,14 +151,18 @@ router.delete("/delete", function (req, res) {
 
 // update content (creator)
 // do we need to send back updated info?
-router.put("/update", function (req, res) {
+router.put("/update/:projectId?", function (req, res) {
 
-    console.log(req.body.projectId);
+    console.log(req.params.projectId);
 
 
-    Project.update({ _id: req.body.projectId }, function (err, data) {
+    Project.update({ _id: req.params.projectId }, { new: true }, function (err, data) {
         if (data) {
-            res.status(200).json("project has been updated");
+            res.status(200).json({
+                message: "project has been updated!",
+                data: data
+
+            });
         } else {
             console.log(err);
             res.redirect("/");
@@ -162,53 +183,6 @@ router.put("/update", function (req, res) {
 // need gigmaker userId 
 // need gigster userId
 
-router.post("/collab-pending", function (req, res) {
-
-
-    if (req.body.projectId) {
-     var query = req.body
-    }
-// notifications the user sends a small paragraph of why they liked they are suited to participate
-
-    Project.findOneAndUpdate({_id: query.projectId }, { $push: { gigster:{ userId:query.userId, approved:false, notifications:query.notifications} } }, { new: true })
-        .then(doc =>  {
-
-            console.log("doc collab-pending" + doc);
-    
-
-            User.findByIdAndUpdate({_id : query.userId}, {$push:{collaborations:{_id :query.projectId, approved : false}}})
-            .then(gigsterCollaborator =>{
-    
-                console.log(gigsterCollaborator);
-            })
-        
-
-            res.status(200).json({
-                
-                message: "The Gigmaker has been notified!, ",
-                url : "head back to see all projects !http://localhost:3001/projects/all",
-                collaboration: doc
-                
-            
-            });
-
-            // User.findOneAndUpdate({ _id: dbProject.userId }, { $push: { collaborations: collaborator } })
-        });
-    
-    // userId was passed from the front end
-    // .then(dbProject => {
-    //     Project.findOneandUpdate({ _id: query.userId }, { $push: { collaboration: saved_project._id } }), function (err, user) {
-    //         console.log(user);
-    //         if (err) throw err;
-
-    //         console.log("user" + user.username + "want to collab on project" + saved_project.title + saved_project._id);
-
-    //         // returns the User profile to then be sent to the original gigmaker
-    //         res.redirect(user);
-
-    //     }
-    // })
-});
 
 
 
@@ -217,47 +191,6 @@ router.post("/collab-pending", function (req, res) {
 
 
 
-
-//gigmaker approves gigster
-// projectID
-// gigsterID
-// appproved : true
-// activate Trello?
-router.post("/collab-approval", function (req, res) {
-
-    if (req.body.gigsterId) {
-        var query = req.body
-       }
-
-        Project.findOneAndUpdate({_id : query.projectId}, {gigster:{userId : query.gigsterId, approved:query.approved}})
-        .then( gigster => {
-
-            console.log(gigster);
-
-        // the gigster collaboration array is updated with the project Id that he is participating
-        // As well as he is array is turned to approved True
-
-        User.findByIdAndUpdate({_id : query.gigsterId}, {$set:{collaborations:{_id :gigster, approved : true}}})
-        .then(gigsterCollaborator =>{
-
-            console.log(gigsterCollaborator);
-        })
-    
-
-        res.status(200).json({
-
-            message: "You have approved the following gigster to participate in your project!",
-            gigster: gigster
-
-        });
-
-    }).catch( err => {
-        res.status(500).json({
-            message: "Approval was not sent, please try again",
-            error : err
-        });
-    });
-});
 
 
 
