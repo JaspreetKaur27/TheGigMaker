@@ -25,7 +25,7 @@ router.post("/collab-pending", function (req, res) {
         var query = req.body
 
 
-        console.log(query);
+        // console.log(query);
     }
     // notifications the user sends a small paragraph of why they liked they are suited to participate
 
@@ -37,26 +37,26 @@ router.post("/collab-pending", function (req, res) {
         // populate not being retrieved by the user model , have to populate another user schema collaborations to retrieve 
         //gigster Id
         Project.findOneAndUpdate({ _id: req.body.projectId }, { $push: { gigster: collaborator._id } }, { new: true })
-            .then(dbCollaborator => {
+            .then(dbCollaborator=> {
 
-                res.json(dbCollaborator); 
-
-
-                User.findByIdAndUpdate({ _id: collaborator.userId }, { $push: { collaborations: { _id: query.projectId} } })
+                console.log("db collaborator " + dbCollaborator);
+             
+                User.findOneAndUpdate({ _id: req.body.userId }, { $push: { collaborations:  req.body.projectId } },{new:true})
                     .then(gigsterCollaborator => {
 
                         console.log(gigsterCollaborator);
-                    })
+               
 
                 res.status(200).json({
 
                     message: "The Gigmaker has been notified!, ",
                     url: "head back to see all projects !http://localhost:3001/projects/all",
-                    collaboration: doc
+                    collaboration: gigsterCollaborator
 
                 });
 
             })
+
             })
             .catch(err => {
 
@@ -69,15 +69,16 @@ router.post("/collab-pending", function (req, res) {
             });   
 });
 
+});
 //collaborators get all
 
 
 
 //gigmaker approves gigster
-// projectID
-// gigsterID
-// appproved : true
-// activate Trello?
+// uses unique the identifier _id of that specific collaboration request
+
+
+
 router.post("/collab-approval/:id", function (req, res) {
     var query ={};
     
@@ -128,21 +129,46 @@ router.post("/collab-approval/:id", function (req, res) {
 
 
 //projectId
-//delete gigster
-router.post("/collab-deny/:id", function (req, res) {
-    var query = {};
-    if (req.params.id) {
-        query._id = req.params.id
+//_id generic Id generated from the instance of the collaboration to delete from the gimaker array of gigsters
+// UserId of the gigster
+//delete gigster by its unique notification request not by all of its user Id project participation
+router.post("/collab-deny", function (req, res) {
+    
+    if (req.body._id) {
+       var query = req.body
     }
 
-    console.log("deny" +  req.params.id );
+    console.log( query );
 
-    Collaborator.findByIdAndDelete({ _id: query._id})
-        .then(gigster => {
+    // delete _id self generated from the instance of the gigster schema
+
+    Collaborator.deleteMany({_id: query._id}).then(() => {
+
+        
+    User.findOneAndUpdate({_id:query.userId}, {$pull:{collaborations: query.projectId}})
+    
+    .then(gigster => {
+
+        // User.remove({collaborations:{_id : req.params._id} })
+        // .then(deletedGigster => {
+
+          res.json( gigster  );
+
+        // console.log("gigster is here" + gigster);
+
+ 
+    });
+
+
+ 
 
 
 
-            res.json({ data: gigster + "gigster has been deleted!" });
+            // });
+
+
+
+           
 
             // the gigster collaboration array is changed to deny with the project Id that he is participating
 
@@ -166,7 +192,7 @@ router.post("/collab-deny/:id", function (req, res) {
                 error: err
             });
         });
-});
+    });
 
 
 

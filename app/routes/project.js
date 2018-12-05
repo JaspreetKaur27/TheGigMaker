@@ -41,7 +41,6 @@ router.get("/all/:projectId?", function (req, res) {
     Project.find(query)
         .populate('gigster')
         .exec()
-
         .then(dbProjects => {
 
             console.log('herro' + dbProjects);

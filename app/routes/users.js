@@ -82,11 +82,8 @@ router.get("/all/:userId?", function (req, res) {
     }
 
     User.find(query)
-        .populate([{path:'projects',
-        populate:{path:'gigster'}}, {path:'collaborations',
-        populate:{path:'gigster'}
-
-    }])
+        .populate({path:'projects',
+        populate:{path:'gigster'}})
         
         // .populate('collaborations')
         .exec()

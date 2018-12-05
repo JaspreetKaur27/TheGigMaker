@@ -48,6 +48,9 @@ var UserSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Project"
+    },
+    {
+      approved: false
     }
   ]
 });
