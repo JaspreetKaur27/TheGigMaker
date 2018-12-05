@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { TextArea, Input, FormBtn } from "../../components/Form";
-import Column from "../../components/Column";
+import  { Navbar, Nav, NavItem } from "react-bootstrap";
 import Container from "../../components/Container";
-import Row from "../../components/Row";
 import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
-import Navbar from "../../components/Navbar";
 import { userObject } from "../Dashboard";
 import Particles from "react-particles-js";
 
@@ -146,23 +144,35 @@ class AddProject extends Component {
 
     return (
       <div>
-        <Navbar>
-          <a className="navbar-brand" href="/dashboard">
-            <h4>{this.state.user.username}</h4>
-          </a>
-          <a className="navbar-brand" href="/dashboard">
-            Dashboard
-          </a>
-          <a className="navbar-brand" href="/AddProject">
-            Create New Gig
-          </a>
-          <a className="navbar-brand" href="/">
-            Logout
-          </a>
+
+      <Navbar inverse collapseOnSelect className="navbar">
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="/dashboard" style={{color: "white", textDecoration: "none"}}>Welcome, {this.state.user.username}</a>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav pullRight>
+              <NavItem href="/dashboard">
+                Dashboard
+              </NavItem>
+              <NavItem href="/AddProject">
+                AddProject
+              </NavItem>
+              <NavItem href="/">
+                Logout
+              </NavItem>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
+
+
+        
         <Container>
           <div className="col-md-6 col-md-offset-3">
             <form onSubmit={this.createProject.bind(this)} >
+              <h3 style={{fontWeight: "bold"}}>Enter Project Information</h3>
               <label>
                 Title:
                     <Input
@@ -186,7 +196,7 @@ class AddProject extends Component {
                   rows="8"
                   cols="120"
                   type="text"
-                  maxLength="2000"
+                  maxLength="1000"
                   required
                 />
               </label>
@@ -205,6 +215,7 @@ class AddProject extends Component {
               <br></br>
               <label>
                 Start Date:
+                <br></br>
                   <DatePicker
                   className="rounded p-1"
                   selected={this.state.startDate}
@@ -212,15 +223,14 @@ class AddProject extends Component {
                   startDate={this.state.startDate}
                   endDate={this.state.endDate}
                   onChange={this.handleStart}
-                  placeholderText="Start Date"
+                  placeholderText="MM/DD/YYYY"
                   required
-                  style={{ float: "left" }}
-                  size="100"
                 />
               </label>
               <br></br>
               <label>
                 End Date:
+                <br></br>
                   <DatePicker
                   className="rounded p-1"
                   selected={this.state.endDate}
@@ -228,10 +238,8 @@ class AddProject extends Component {
                   startDate={this.state.startDate}
                   endDate={this.state.endDate}
                   onChange={this.handleEnd}
-                  placeholderText="End Date"
+                  placeholderText="MM/DD/YYYY"
                   required
-                  style={{ float: "right" }}
-                  size="100"
                 />
               </label>
               <br></br>

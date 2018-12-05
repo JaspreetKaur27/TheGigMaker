@@ -1,4 +1,6 @@
-
+body {
+    background-color: #333;
+}
 
 .tab-style ul > li > a {
     background-color: white;
@@ -16,10 +18,49 @@
     color: white;
 }
 
+.navbar a
+{
+    color: white;
+    text-decoration: none;
+}
 .dashbard-style 
 {
     background-image: url("https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&h=350");
     background-size: cover;
     background-repeat: no-repeat;
     height: auto;
+}
+
+.flexContainer
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    width: 100%;
+    margin: 4px;
+}      
+
+.flexThumbnail
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    width: 100%;
+    margin: 4px;
+}
+
+@media screen and (max-width: 768px){
+    .flexContainer{
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 667px){
+    .flexContainer{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
 }
