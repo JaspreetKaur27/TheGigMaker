@@ -155,6 +155,8 @@ router.put("/update/:projectId?", function (req, res) {
 
     console.log(req.params.projectId);
 
+    var query = req.body;
+
 
     Project.update({ _id: req.params.projectId }, { new: true }, function (err, data) {
         if (data) {
