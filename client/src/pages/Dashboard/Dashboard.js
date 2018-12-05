@@ -87,19 +87,7 @@ class Dashboard extends Component {
 
     API.getdbProjects()
       .then(res => {
-        console.log(res.data.search);
-        //  const response = res.filter(filteredObj =>  filteredObj);
-        //console.log(response);  
-        console.log(this.state.user._id);
-        //const response = res.data.search;
-        res.forEach(obj => {
-          if (obj.userId !== this.state.user._id) {
-            this.setState({
-              saved: obj
-            });
-          }
-        })
-        console.log(res);
+      
         console.log(this.state.saved);
       })
       .catch(err => console.log(err));
@@ -130,11 +118,11 @@ class Dashboard extends Component {
   }
 
   render() {
-    const showItem = this.state.saved.find(item => item._id === this.state.showId);
-    const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
-    const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
+    const showItem = this.state.saved.filter(item => item._id === this.state.showId);
+   // const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
+    //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     // console.log(this.state.showId)
-    console.log(showMyProject)
+    //console.log(showMyProject)
 
     return (
       <div>
@@ -236,7 +224,7 @@ class Dashboard extends Component {
               id={this.state.saved._id}
               onHide={this.handleHide}
               dialogClassName="custom-modal"
-            >
+            > 
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
                   {showItem && <p key={showItem._id}>{showItem.title}</p>}
@@ -263,7 +251,7 @@ class Dashboard extends Component {
 
             {/* //render myproject to update */}
 
-            <Modal
+            {/* <Modal
               {...this.props}
               show={this.state.show}
               id={this.state.myprojects._id}
@@ -292,10 +280,10 @@ class Dashboard extends Component {
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
               </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
             {/* check gigter request */}
-            <Modal
+            {/* <Modal
               {...this.props}
               show={this.state.show}
               id={this.state.myprojects._id}
@@ -305,11 +293,11 @@ class Dashboard extends Component {
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
                   {/* {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>} */}
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
+                {/* </Modal.Title>
+              </Modal.Header> */}
+              {/* <Modal.Body> */}
                 {/* {showMyProject && <label key={showMyProject._id}> */}
-                <label>
+                {/* <label>
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
@@ -320,12 +308,12 @@ class Dashboard extends Component {
                   </ListGroup>
                 </label>
                 {/* } */}
-                <FormBtn>Submit</FormBtn>
+                {/* <FormBtn>Submit</FormBtn>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
               </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
           </Container>
         </div>
