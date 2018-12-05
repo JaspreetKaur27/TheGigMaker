@@ -18,16 +18,23 @@ class Dashboard extends Component {
     this.getUserObject = this.getUserObject.bind(this);
     this.collabproject = this.collabproject.bind(this);
     this.getAllSaved = this.getAllSaved.bind(this);
+    this.handleShowUpdate = this.handleShowUpdate.bind(this);
+    this.handleShowGigsters = this.handleShowGigsters.bind(this);
+    this.handleGigHide = this.handleGigHide.bind(this);
+    this.handleUpdateHide = this.handleUpdateHide.bind(this);
 
     this.state = {
       isAuthenticated: false,
       key: 1,
       show: false,
+      showupdate: false,
+      showgigsters: false,
       msg: '',
       myprojects: [],
       saved: [],
       showId: null,
-      myid: null,
+      updateid: null,
+      gigid: null,
       user: [],
       collaborojects: []
     };
@@ -85,9 +92,23 @@ class Dashboard extends Component {
   handleShow = (id) => {
     this.setState({ show: true, showId: id });
   }
+  handleShowUpdate = (id) => {
+    this.setState({  updateid: id, showupdate: true });
+  }
+  handleShowGigsters = (id) => {
+    this.setState({ gigid: id, showgigsters: true });
+  }
 
   handleHide = () => {
     this.setState({ show: false });
+  }
+
+  handleUpdateHide = () => {
+    this.setState({ showupdate: false });
+  }
+
+  handleGigHide = () => {
+    this.setState({ showgigsters: false });
   }
 
   // search all projects spits all the database projects  
@@ -150,10 +171,10 @@ class Dashboard extends Component {
 
   render() {
     const showItem = this.state.saved.find(item => item._id === this.state.showId);
-    const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
+    const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.updateid))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     // console.log(this.state.showId)
-    //console.log(showMyProject)
+    console.log(showMyProject)
 
     return (
       <div>
@@ -204,11 +225,11 @@ class Dashboard extends Component {
                             <h5>{myprojects.title}</h5>
                             <p>Location: {myprojects.location}</p>
                             <p>Description: {myprojects.description}</p>
-                            <Button type="button" onClick={() => this.handleShow(myprojects._id)} style={{ float: "left" }}>Update</Button>
+                            <Button type="button" onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
                             <Button type="button" style={{ float: "right" }}>Delete</Button>
                             <br></br>
                             <br></br>
-                            <Button type="button" onClick={() => this.handleShow(myprojects._id)}>Requests From Collaborations</Button>
+                            <Button type="button" onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</Button>
                           </Thumbnail>
                         )))}
 
@@ -282,11 +303,11 @@ class Dashboard extends Component {
 
             {/* //render myproject to update */}
 
-            {/* <Modal
+            <Modal
               {...this.props}
-              show={this.state.show}
+              show={this.state.showupdate}
               id={this.state.myprojects._id}
-              onHide={this.handleHide}
+              onHide={this.handleUpdateHide}
               dialogClassName="custom-modal"
             >
               <Modal.Header closeButton>
@@ -309,26 +330,26 @@ class Dashboard extends Component {
                 <FormBtn>Submit</FormBtn>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={this.handleHide}>Close</Button>
+                <Button onClick={this.handleUpdateHide}>Close</Button>
               </Modal.Footer>
             </Modal> */}
 
             {/* check gigter request */}
-            {/* <Modal
+            <Modal
               {...this.props}
-              show={this.state.show}
+              show={this.state.showgigsters}
               id={this.state.myprojects._id}
-              onHide={this.handleHide}
+              onHide={this.handleGigHide}
               dialogClassName="custom-modal"
             >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
-                  {/* {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>} */}
-                {/* </Modal.Title>
-              </Modal.Header> */}
-              {/* <Modal.Body> */}
-                {/* {showMyProject && <label key={showMyProject._id}> */}
-                {/* <label>
+                 {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>}
+                 </Modal.Title>
+              </Modal.Header> 
+              <Modal.Body> 
+             {showMyProject && <label key={showMyProject._id}> 
+                 
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
@@ -338,13 +359,13 @@ class Dashboard extends Component {
                     </ListGroupItem>
                   </ListGroup>
                 </label>
-                {/* } */}
-                {/* <FormBtn>Submit</FormBtn>
+             }
+               
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={this.handleHide}>Close</Button>
+                <Button onClick={this.handleGigHide}>Close</Button>
               </Modal.Footer>
-            </Modal> */}
+            </Modal>
 
           </Container>
         </div>
