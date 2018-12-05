@@ -97,11 +97,11 @@ router.post("/collab-approval/:id", function (req, res) {
                 // the gigster collaboration array is updated with the project Id that he is participating
                 // As well as he is array is turned to approved True
 
-                User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
-                    .then(gigsterCollaborator => {
+                // User.findByIdAndUpdate({ _id: query.gigsterId }, { $set: { collaborations: { _id: gigster, approved: true } } })
+                //     .then(gigsterCollaborator => {
 
-                        console.log(gigsterCollaborator);
-                    })
+                //         console.log(gigsterCollaborator);
+                //     })
 
                 res.status(200).json({
 
