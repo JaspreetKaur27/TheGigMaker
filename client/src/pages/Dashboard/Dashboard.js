@@ -17,8 +17,10 @@ class Dashboard extends Component {
     this.handleHide = this.handleHide.bind(this);
     this.getUserObject = this.getUserObject.bind(this);
     this.collabproject = this.collabproject.bind(this);
+    this.getAllSaved = this.getAllSaved.bind(this);
 
     this.state = {
+      isAuthenticated: false,
       key: 1,
       show: false,
       msg: '',
@@ -33,10 +35,13 @@ class Dashboard extends Component {
 
   componentWillMount() {
     this.getUserObject();
+    
   }
 
   componentDidMount() {
-    this.getAllSaved();
+
+    // this.getAllSaved();
+
 
   };
 
@@ -62,10 +67,14 @@ class Dashboard extends Component {
             this.setState({
               myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects))
 
-            });
+            })
             console.log(this.state.myprojects);
 
           }).catch(err => console.log(err));
+      }).then(()=> {
+          // console.log(this.state.user._id)
+        this.getAllSaved(this.state.user._id);
+        
       }).catch(err => console.log(err));
   };
 
@@ -82,22 +91,33 @@ class Dashboard extends Component {
   }
 
   // search all projects spits all the database projects  
-  getAllSaved = () => {
+  getAllSaved = (userId) => {
+    console.log(userId)
 
+    let id = userId.toString();
+
+    console.log(id);
     API.getdbProjects()
       .then(res => {
-        console.log(res.data.search);
+        console.log(res.data.data);
         //  const response = res.filter(filteredObj =>  filteredObj);
+        let response =  res.data.data;
+
+        console.log(response);
+
+
+        let newArray = response.filter(obj => obj.userId !== id )
+
+        console.log(newArray)
+
+        this.setState({
+          saved: newArray
+        });
         //console.log(response);  
         console.log(this.state.user._id);
         //const response = res.data.search;
-        res.forEach(obj => {
-          if (obj.userId !== this.state.user._id) {
-            this.setState({
-              saved: obj
-            });
-          }
-        })
+
+
         console.log(res);
         console.log(this.state.saved);
       })
@@ -131,14 +151,14 @@ class Dashboard extends Component {
   render() {
     const showItem = this.state.saved.find(item => item._id === this.state.showId);
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
-    const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
+    //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     // console.log(this.state.showId)
     console.log(showMyProject)
 
     return (
       <div>
-
-        <Navbar inverse collapseOnSelect className="navbar">
+        { !this.state.isAuthenticated ? 
+        (<Navbar inverse collapseOnSelect className="navbar">
           <Navbar.Header>
             <Navbar.Brand>
               <a href="/dashboard" style={{color: "white", textDecoration: "none"}}>Welcome, {this.state.user.username}</a>
@@ -158,7 +178,10 @@ class Dashboard extends Component {
               </NavItem>
             </Nav>
           </Navbar.Collapse>
-        </Navbar>
+        </Navbar>):
+        (
+          window.location.href("/")
+        )}
         
         <div className="dashboard-style">
           <Container>
@@ -291,7 +314,7 @@ class Dashboard extends Component {
             </Modal>
 
             {/* check gigter request */}
-            <Modal
+            {/* <Modal
               {...this.props}
               show={this.state.show}
               id={this.state.myprojects._id}
@@ -301,11 +324,11 @@ class Dashboard extends Component {
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
                   {/* {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>} */}
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
+                {/* </Modal.Title>
+              </Modal.Header> */}
+              {/* <Modal.Body> */}
                 {/* {showMyProject && <label key={showMyProject._id}> */}
-                <label>
+                {/* <label>
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
@@ -316,12 +339,12 @@ class Dashboard extends Component {
                   </ListGroup>
                 </label>
                 {/* } */}
-                <FormBtn>Submit</FormBtn>
+                {/* <FormBtn>Submit</FormBtn>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
               </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
           </Container>
         </div>
