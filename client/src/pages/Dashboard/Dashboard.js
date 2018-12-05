@@ -171,9 +171,9 @@ class Dashboard extends Component {
 
   render() {
     const showItem = this.state.saved.find(item => item._id === this.state.showId);
-    const showMyProject = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.updateid))
+    const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
-    // console.log(this.state.showId)
+   //console.log(this.state.updateid)
     console.log(showMyProject)
 
     return (
