@@ -4,6 +4,8 @@
 
 TheGigMaker project aims to connect users together and collaborate on potential projects of interest. In other words, the GigMaker is a “gig bank” of sorts. Users find projects or create their own. For example, if someone wants to develop their web development skills you can create a gig focused on web development.  
 
+<a href="">Live Preview Here [add heroku]</a>
+
 <h3>Technical Details:</h3>
 
 TheGigMaker is a web application following the MERN framework. 
@@ -30,6 +32,3 @@ If users need help with anything project-related, please use the project descrip
 Any suggestions? Please contact the main contributors and developers. 
 Project was originally created from a "Create React App" seed file. 
 </p>
-
-
-<a href="">Live Preview Here [add heroku]</a>
