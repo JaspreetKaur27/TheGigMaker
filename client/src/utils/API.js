@@ -18,7 +18,7 @@ const api = {
     },
 
     collabProject: (gigster) => {
-        return axios.post('/projects/collab-pending', gigster)
+        return axios.post('/collaborators/collab-pending', gigster)
     }
 }
 
