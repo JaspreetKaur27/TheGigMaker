@@ -22,11 +22,14 @@ If users need help with anything project-related, please use the project descrip
 * Google Sign In OAuth (using Passport)
 
 <h3>Libraries Used:</h3>
+
 * Materialize 
 
 
+<p>
 Any suggestions? Please contact the main contributors and developers. 
+Project was originally created from a "Create React App" seed file. 
+</p>
 
-Project was originally created from a "Create React App" seed file
 
 <a href="">Live Preview Here [add heroku]</a>
