@@ -7,8 +7,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { userObject } from "../Dashboard";
-import Particles from "react-particles-js";
+
 
 
 const labStyle ={
@@ -38,9 +37,6 @@ class AddProject extends Component {
 
     
   }
-
-  
-
 
   componentWillMount() {
     this.getUserObject();
@@ -128,9 +124,7 @@ class AddProject extends Component {
     }
     console.log(userInput);
     console.log(userId);
-    API.createProject(userInput
-
-    )
+    API.createProject(userInput)
       .then(res => {
         console.log(res);
         window.location.href = "/dashboard";
