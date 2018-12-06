@@ -44,16 +44,11 @@ router.post("/collab-pending", function (req, res) {
                 User.findOneAndUpdate({ _id: req.body.userId }, { $push: { collaborations: collaborator._id } },{new:true})
                     .then(gigsterCollaborator => {
 
+
                         console.log(gigsterCollaborator);
                
 
-                res.status(200).json({
-
-                    message: "The Gigmaker has been notified!, ",
-                    url: "head back to see all projects !http://localhost:3001/projects/all",
-                    collaboration: gigsterCollaborator
-
-                });
+                res.status(200).json( [dbCollaborator]);
 
             })
 
