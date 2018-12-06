@@ -23,6 +23,7 @@ class Dashboard extends Component {
     this.handleGigHide = this.handleGigHide.bind(this);
     this.handleUpdateHide = this.handleUpdateHide.bind(this);
     this.approveProject = this.approveProject.bind(this);
+    this.deleteProject = this.deleteProject.bind(this);
 
     this.state = {
       isAuthenticated: false,
@@ -46,7 +47,8 @@ class Dashboard extends Component {
       endDate: null,
       imageUrl: "",
       message: "",
-      amount: Number
+      amount: Number,
+      deleteId: null
     };
   }
 
@@ -94,6 +96,13 @@ class Dashboard extends Component {
     this.setState({ showgigsters: false });
   }
 
+  handleDeleteID  = (id) => {
+    this.setState({
+      deleteId: id
+    })
+    this.deleteProject();
+  }
+
   getUserObject = () => {
     API.getUserObject()
       .then(res => {
@@ -116,8 +125,7 @@ class Dashboard extends Component {
           .then(res => {
             console.log(res);
             this.setState({
-              myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects)),
-              collabprojects: res.data.populatedUser.map(collaborations => collaborations.collaborations.map(collaborations => collaborations))
+              myprojects: res.data.populatedUser.map(projects => projects.projects.map(projects => projects))
 
             })
             console.log(this.state.myprojects);
@@ -216,6 +224,13 @@ class Dashboard extends Component {
     API.approveProject(id).then(res => {
       console.log(res);
     })
+  };
+
+  deleteProject = () => {
+    //let pId = this.state.showId;
+    const deleteIdProject = this.state.deleteId;
+    console.log(deleteIdProject);
+    API.deleteProject(deleteIdProject).then(res => console.log("deleted Successfully"));
   }
 
   dataChange = (e) => {
@@ -235,28 +250,6 @@ class Dashboard extends Component {
 
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     const showGigProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.gigid))
-
-    // const collaborationProjectId = this.state.collabprojects.map(collabprojects => collabprojects.map(collabprojects => collabprojects.projectId));
-
-    // const renderCollab = this.state.collabprojects.map(collabprojects => collabprojects.filter(collabprojects => collabprojects.projectId));
-
-    // const savedProjects = this.state.saved.map(projects => projects.gigster.filter(gigster => gigster.projectId)); 
-    //const renderCollabProjects = this.state.saved.find(item => item._id);
-
-
-    // const collaborationProjects = savedProjects._id === renderCollab.projectId ;
-
-
-    
-
-
-    
-    // console.log(renderCollab);  
-
-    // console.log(savedProjects);
-   
-    //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
-    //console.log(this.state.updateid)
     console.log(showMyProject)
 
     console.log(showMyProject.map(project => project.map(project => project.title)));
@@ -268,7 +261,7 @@ class Dashboard extends Component {
           (<Navbar inverse collapseOnSelect className="navbar">
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/dashboard" style={{ color: "white", textDecoration: "none"}}>Welcome, {this.state.user.username}</a>
+                <a href="/dashboard" style={{ color: "white", textDecoration: "none", hover: "color: '#009999'"}}>Welcome, {this.state.user.username}</a>
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
@@ -287,7 +280,8 @@ class Dashboard extends Component {
             </Navbar.Collapse>
           </Navbar>) :
           (
-            window.location.href("/")
+            window.location.href("/"),
+            localStorage.removeItem('user')
           )}
 
         <div className="dashboard-style">
@@ -311,23 +305,24 @@ class Dashboard extends Component {
                             <h5>{myprojects.title}</h5>
                             <p>Location: {myprojects.location}</p>
                             <p>Description: {myprojects.description}</p>
-                            <Button onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
-                            <Button type="button" style={{ float: "right" }}>Delete</Button>
+                            <button className="btn" onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</button>
+                            <br></br>
+                            <button className="btn" onClick={() => this.handleDeleteID(myprojects._id)} style={{ float: "right"}}>Delete</button>
                             <br></br>
                             <br></br>
-                            <Button onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</Button>
+                            <button className="btn" onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</button>
                           </Thumbnail>
                         )))}
 
                       </div>
-                    ) : (<h3>No Projects</h3>)}
+                    ) : (<h3 style={{color: "white"}}>You Haven't Created any Gig yet. </h3>)}
                   </Row>
                 </Grid>
               </Tab>
               <Tab eventKey={2} title="My Collaborations">
                 <Grid>
                   <Row>
-                    {this.state.collabprojects.length ? (
+                    {this.state.collabprojects ? (
                       <div className="flexContainer">
                         {this.state.collabprojects.map(myprojects =>  (
                           <Thumbnail className="flexThumbnail">
@@ -342,7 +337,7 @@ class Dashboard extends Component {
                         ))}
 
                       </div>
-                    ) : (<h3>No Projects</h3>)}
+                    ) : (<h3 style={{color: "white"}}>No Collaborations made yet</h3>)}
                   </Row>
                 </Grid>
               </Tab>
@@ -443,6 +438,8 @@ class Dashboard extends Component {
                   </div>
                 ))}
                 <FormBtn>Submit</FormBtn>
+                <br></br>
+                <br></br>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleUpdateHide}>Close</Button>

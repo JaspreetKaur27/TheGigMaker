@@ -27,6 +27,11 @@ body {
     color: white;
     text-decoration: none;
 }
+
+.navbar a:focus
+{
+    color: #009999
+}
 .dashbard-style 
 {
     background-image: url("https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&h=350");
@@ -49,6 +54,15 @@ body {
     justify-content: center;
     width: 100%;
 
+}
+
+.btn 
+{
+    height: 20px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    transform: translateY(-10px);
 }
 
 .flexContainer
