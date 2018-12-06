@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import { TextArea, Input, FormBtn } from "../../components/Form";
-import  { Navbar, Nav, NavItem } from "react-bootstrap";
+import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Container from "../../components/Container";
 import Button from "../../components/Button";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { userObject } from "../Dashboard";
 import Particles from "react-particles-js";
+
+
+const labStyle ={
+  fontSize: "15px", 
+  color:"#45A29E" 
+}
+
 
 class AddProject extends Component {
 
@@ -27,7 +35,11 @@ class AddProject extends Component {
       amount: Number,
       user: []
     }
+
+    
   }
+
+  
 
 
   componentWillMount() {
@@ -79,6 +91,17 @@ class AddProject extends Component {
     })
   }
 
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  }
+
+  
+  handleLocationChange = address => {
+    this.setState({ location: address });
+  };
   createProject = (e) => {
 
     e.preventDefault();
@@ -145,15 +168,15 @@ class AddProject extends Component {
     return (
       <div>
 
-      <Navbar inverse collapseOnSelect className="navbar">
+        <Navbar inverse collapseOnSelect className="navbar">
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/dashboard" style={{color: "white", textDecoration: "none"}}>Welcome, {this.state.user.username}</a>
+              <a href="/dashboard" style={{ color: "white", textDecoration: "none" }}>Welcome, {this.state.user.username}</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
-            <Nav pullRight>
+            <Nav pullRight className="nav-style">
               <NavItem href="/dashboard">
                 Dashboard
               </NavItem>
@@ -168,12 +191,12 @@ class AddProject extends Component {
         </Navbar>
 
 
-        
+
         <Container>
           <div className="col-md-6 col-md-offset-3">
             <form onSubmit={this.createProject.bind(this)} >
-              <h3 style={{fontWeight: "bold"}}>Enter Project Information</h3>
-              <label>
+              <h3 style={{ fontWeight: "bold", fontSize: "35px", color: "#66fcf1", textShadow:"1px 2px #004d4d" }}>Enter Project Information</h3>
+              <label style={labStyle}>
                 Title:
                     <Input
                   value={this.state.title}
@@ -186,13 +209,13 @@ class AddProject extends Component {
                 />
               </label>
               <br></br>
-              <label>
+              <label style={labStyle}>
                 Description:
                     <TextArea
                   value={this.state.description}
                   onChange={this.dataChange.bind(this)}
                   name="description"
-                  placeholder="Description (Required, maximum 2000 Characters)"
+                  placeholder="Description (Required, maximum 1000 Characters)"
                   rows="8"
                   cols="120"
                   type="text"
@@ -201,22 +224,56 @@ class AddProject extends Component {
                 />
               </label>
               <br></br>
-              <label>
+              <label style={labStyle}>
                 Location:
-                    <Input
+
+                <PlacesAutocomplete
                   value={this.state.location}
-                  onChange={this.dataChange.bind(this)}
-                  name="location"
-                  placeholder="Address or Postal Code (Required)"
-                  required
-                  size="100"
-                />
+                  onChange={this.handleLocationChange.bind(this)}
+                  onSelect={this.handleSelect.bind(this)}
+                  
+                >
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div>
+                      <input
+                        {...getInputProps({
+                          placeholder: 'Enter Postal Code',
+                          className: 'location-search-input',
+                        })}
+                      />
+
+                      <div className="autocomplete-dropdown-container">
+                        {loading && <div>Loading...</div>}
+                        {suggestions.map(suggestion => {
+                          const className = suggestion.active
+                            ? 'suggestion-item--active'
+                            : 'suggestion-item';
+                          // inline style for demonstration purpose
+                          const style = suggestion.active
+                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, {
+                                className,
+                                style,
+                              })}
+                            >
+                              <span>{suggestion.description}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </PlacesAutocomplete>
               </label>
               <br></br>
-              <label>
+              <br></br>
+              <label style={labStyle}>
                 Start Date:
                 <br></br>
-                  <DatePicker
+                <DatePicker
                   className="rounded p-1"
                   selected={this.state.startDate}
                   selectsStart
@@ -228,10 +285,11 @@ class AddProject extends Component {
                 />
               </label>
               <br></br>
-              <label>
+              <br></br>
+              <label style={labStyle}>
                 End Date:
                 <br></br>
-                  <DatePicker
+                <DatePicker
                   className="rounded p-1"
                   selected={this.state.endDate}
                   selectsEnd
@@ -243,7 +301,8 @@ class AddProject extends Component {
                 />
               </label>
               <br></br>
-              <label>
+              <br></br>
+              <label style={labStyle}>
                 Image:
                     <Input
                   name="imageUrl"
@@ -255,7 +314,7 @@ class AddProject extends Component {
               </label>
               <br></br>
               <div>
-                <label>
+                <label style={labStyle}>
                   <h4>Compensation: </h4>
                   {
                     this.state.show ?
