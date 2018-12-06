@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import API from "../../utils/API";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import "./AddProject.css";
 
 
 
@@ -329,7 +330,7 @@ class AddProject extends Component {
                 </label>
               </div>
               <br></br>
-              <FormBtn>
+              <FormBtn className="btnSubmit">
                 Post
               </FormBtn>
             </form>

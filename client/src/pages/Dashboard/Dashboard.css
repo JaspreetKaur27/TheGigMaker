@@ -27,6 +27,11 @@ body {
     color: white;
     text-decoration: none;
 }
+
+.navbar a:focus
+{
+    color: #009999
+}
 .dashbard-style 
 {
     background-image: url("https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&h=350");
