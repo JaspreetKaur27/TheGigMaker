@@ -177,21 +177,24 @@ class Dashboard extends Component {
     API.collabProject(gigster)
       .then(res => {
         // not doing anything with the response
-        console.log(gigster);
+  
         console.log(res);
+
+        console.log(res.data);
+
         //let response = res.data.collaboration.collaborations;
         let userID = this.state.user._id;
         console.log(userID);
 
-      
-        //console.log(response)
-        if(res === this.state.saved._id){
-          this.setState({
-            collabprojects: this.state.saved
+
+          this.setState({ 
+
+            collabprojects : res.data
+
+
           })
+        
           console.log(this.state.collabprojects);
-        }
-      
         
       })
       .catch(err => console.log(err));
@@ -222,15 +225,35 @@ class Dashboard extends Component {
   };
 
   render() {
+
+
+ 
+
+
+
     let showItem = this.state.saved.find(item => item._id === this.state.showId);
 
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     const showGigProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.gigid))
 
-    const renderCollab = this.state.collabprojects.map(collabprojects => collabprojects.map(collabprojects => collabprojects));
+    // const collaborationProjectId = this.state.collabprojects.map(collabprojects => collabprojects.map(collabprojects => collabprojects.projectId));
+
+    // const renderCollab = this.state.collabprojects.map(collabprojects => collabprojects.filter(collabprojects => collabprojects.projectId));
+
+    // const savedProjects = this.state.saved.map(projects => projects.gigster.filter(gigster => gigster.projectId)); 
     //const renderCollabProjects = this.state.saved.find(item => item._id);
+
+
+    // const collaborationProjects = savedProjects._id === renderCollab.projectId ;
+
+
     
-    console.log(renderCollab);  
+
+
+    
+    // console.log(renderCollab);  
+
+    // console.log(savedProjects);
    
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     //console.log(this.state.updateid)
@@ -306,7 +329,7 @@ class Dashboard extends Component {
                   <Row>
                     {this.state.collabprojects.length ? (
                       <div className="flexContainer">
-                        {this.state.myprojects.map(myprojects => myprojects.map(myprojects => (
+                        {this.state.collabprojects.map(myprojects =>  (
                           <Thumbnail className="flexThumbnail">
                             <Image src={myprojects.imageUrl} thumbnail />
                             <h5>{myprojects.title}</h5>
@@ -316,7 +339,7 @@ class Dashboard extends Component {
                             <br></br>
 
                           </Thumbnail>
-                        )))}
+                        ))}
 
                       </div>
                     ) : (<h3>No Projects</h3>)}
