@@ -24,6 +24,10 @@ const api = {
     approveProject: (gigsterId)  =>
     {
         return axios.post(`/collaborators/collab-approval/${gigsterId}`);
+    }, 
+
+    deleteProject: (projectId) => {
+        return axios.post(`/projects/delete/${projectId}`);
     }
 }
 
