@@ -56,6 +56,15 @@ body {
 
 }
 
+.btn 
+{
+    height: 20px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    transform: translateY(-10px);
+}
+
 .flexContainer
 {
     display: flex;

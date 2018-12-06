@@ -250,28 +250,6 @@ class Dashboard extends Component {
 
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     const showGigProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.gigid))
-
-    // const collaborationProjectId = this.state.collabprojects.map(collabprojects => collabprojects.map(collabprojects => collabprojects.projectId));
-
-    // const renderCollab = this.state.collabprojects.map(collabprojects => collabprojects.filter(collabprojects => collabprojects.projectId));
-
-    // const savedProjects = this.state.saved.map(projects => projects.gigster.filter(gigster => gigster.projectId)); 
-    //const renderCollabProjects = this.state.saved.find(item => item._id);
-
-
-    // const collaborationProjects = savedProjects._id === renderCollab.projectId ;
-
-
-    
-
-
-    
-    // console.log(renderCollab);  
-
-    // console.log(savedProjects);
-   
-    //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
-    //console.log(this.state.updateid)
     console.log(showMyProject)
 
     console.log(showMyProject.map(project => project.map(project => project.title)));
@@ -327,11 +305,12 @@ class Dashboard extends Component {
                             <h5>{myprojects.title}</h5>
                             <p>Location: {myprojects.location}</p>
                             <p>Description: {myprojects.description}</p>
-                            <Button onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
-                            <Button onClick={() => this.handleDeleteID(myprojects._id)} style={{ float: "right"}}>Delete</Button>
+                            <button className="btn" onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</button>
+                            <br></br>
+                            <button className="btn" onClick={() => this.handleDeleteID(myprojects._id)} style={{ float: "right"}}>Delete</button>
                             <br></br>
                             <br></br>
-                            <Button onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</Button>
+                            <button className="btn" onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</button>
                           </Thumbnail>
                         )))}
 
