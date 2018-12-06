@@ -9,7 +9,7 @@ TheGigMaker project aims to connect users together and collaborate on potential 
 <h3>Technical Details:</h3>
 
 TheGigMaker is a web application following the MERN framework. 
-New users can sign in with their google mail account and begin searching for projects to collaborate on (as a gigster) or create own your project (as a gigmaster) and find potential team mates. 
+New users can sign in with their Google email account and begin searching for projects to collaborate on (as a gigster) or create own your project (as a gigmaster) and find potential team mates. 
 If users need help with anything project-related, please use the project description to find the contact information for the project lead gigmaster. 
 
 <h3>Technology Used:</h3>
