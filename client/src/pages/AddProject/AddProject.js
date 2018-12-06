@@ -308,7 +308,7 @@ class AddProject extends Component {
                   name="imageUrl"
                   onChange={this.dataChange.bind(this)}
                   value={this.state.imageUrl}
-                  type="text" placeholder="Enter Image URL" required
+                  type="url" placeholder="Enter Image URL" required
                   size="100"
                 />
               </label>
@@ -337,7 +337,7 @@ class AddProject extends Component {
               <br></br>
               <FormBtn>
                 Post
-                  </FormBtn>
+              </FormBtn>
             </form>
 
             {this.loadOrShowMsg()}

@@ -37,7 +37,7 @@ class Dashboard extends Component {
       updateid: null,
       gigid: null,
       user: [],
-      collaborojects: [],
+      collabprojects: [],
       title: "",
       description: "",
       location: "",
@@ -50,14 +50,14 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    this.getUserObject();
+    //this.getUserObject();
     
   }
 
   componentDidMount() {
 
-    // this.getAllSaved();
-
+ // this.getAllSaved();
+ this.getUserObject();
 
   };
 
@@ -66,6 +66,41 @@ class Dashboard extends Component {
       [e.target.name]: e.target.value
     })
   }
+
+  handleSelect(key) {
+    this.setState({ key });
+  }
+
+  handleShow = (id) => {
+    this.setState({ show: true, showId: id });
+  }
+  handleShowUpdate = (id) => {
+    this.setState({ showupdate: true, updateid: id });
+  }
+  handleShowGigsters = (id) => {
+    this.setState({ gigid: id, showgigsters: true });
+  }
+
+  handleHide = () => {
+    this.setState({ show: false });
+  }
+
+  handleUpdateHide = () => {
+    this.setState({ showupdate: false });
+  }
+
+  handleGigHide = () => {
+    this.setState({ showgigsters: false });
+  }
+
+  sendRequest = (e) => {
+    e.preventDefault();
+
+    let gitlink = this.state.github;
+
+    
+  }
+
 
   getUserObject = () => {
     API.getUserObject()
@@ -100,39 +135,14 @@ class Dashboard extends Component {
       }).catch(err => console.log(err));
   };
 
-  handleSelect(key) {
-    this.setState({ key });
-  }
-
-  handleShow = (id) => {
-    this.setState({ show: true, showId: id });
-  }
-  handleShowUpdate = (id) => {
-    this.setState({  updateid: id, showupdate: true });
-  }
-  handleShowGigsters = (id) => {
-    this.setState({ gigid: id, showgigsters: true });
-  }
-
-  handleHide = () => {
-    this.setState({ show: false });
-  }
-
-  handleUpdateHide = () => {
-    this.setState({ showupdate: false });
-  }
-
-  handleGigHide = () => {
-    this.setState({ showgigsters: false });
-  }
 
   // search all projects spits all the database projects  
   getAllSaved = (userId) => {
     console.log(userId)
 
-    let id = userId.toString();
+    // let id = userId.toString();
 
-    console.log(id);
+    // console.log(id);
     API.getdbProjects()
       .then(res => {
         console.log(res.data.data);
@@ -142,7 +152,7 @@ class Dashboard extends Component {
         console.log(response);
 
 
-        let newArray = response.filter(obj => obj.userId !== id )
+        let newArray = response.filter(obj => obj.userId !== userId )
 
         console.log(newArray)
 
@@ -183,11 +193,12 @@ class Dashboard extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-  }
+  };
 
   render() {
     let showItem = this.state.saved.find(item => item._id === this.state.showId);
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
+    const showGigProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.gigid))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
    //console.log(this.state.updateid)
     console.log(showMyProject)
@@ -210,7 +221,7 @@ class Dashboard extends Component {
               <NavItem href="/AddProject">
                 AddProject
               </NavItem>
-              <NavItem href="/">
+              <NavItem href="http://localhost:3001/api/auth/logout">
                 Logout
               </NavItem>
             </Nav>
@@ -257,7 +268,23 @@ class Dashboard extends Component {
               <Tab eventKey={2} title="My Collaborations">
                 <Grid>
                   <Row>
-                    <h3>No Projects</h3>
+                  {this.state.myprojects.length ? (
+                      <div className="flexContainer">
+                        {this.state.myprojects.map(myprojects => myprojects.map(myprojects => (
+                          <Thumbnail className="flexThumbnail">
+                            <Image src={myprojects.imageUrl} thumbnail />
+                            <h5>{myprojects.title}</h5>
+                            <p>Location: {myprojects.location}</p>
+                            <p>Description: {myprojects.description}</p>
+                            <Button onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
+                            <Button type="button" style={{ float: "right" }}>Delete</Button>
+                            <br></br>
+                            
+                          </Thumbnail>
+                        )))}
+
+                      </div>
+                    ) : (<h3>No Projects</h3>)}
                   </Row>
                 </Grid>
               </Tab>
@@ -266,7 +293,6 @@ class Dashboard extends Component {
                   <Row>
                     {this.state.saved.length ? (
                       <div className="flexContainer">
-
                         {this.state.saved.map((saved) => (
                           <Thumbnail className="flexThumbnail">
                             <Image src={saved.imageUrl} thumbnail />
@@ -347,10 +373,9 @@ class Dashboard extends Component {
                   Title:
                 <Input 
                 name="title"
-                value={project.title.toString()}
+                value={JSON.stringify(project.title)}
                 onChange={this.dataUpdate.bind(this)}
-                />
-                  
+                />            
                 </label>}
                 </div>
                 ))}
@@ -359,7 +384,7 @@ class Dashboard extends Component {
               <Modal.Footer>
                 <Button onClick={this.handleUpdateHide}>Close</Button>
               </Modal.Footer>
-            </Modal> */}
+            </Modal> 
 
             {/* check gigter request */}
             <Modal
@@ -370,22 +395,21 @@ class Dashboard extends Component {
               dialogClassName="custom-modal"
             >
               <Modal.Header closeButton>
-              {showMyProject.map(project => project.map(project =>
+              {showGigProject.map(project => project.map(project =>
                  <Modal.Title id="contained-modal-title-lg">
-
-                   {showMyProject && <p key={project._id}>{project.title}</p>}
+                   {showGigProject && <p key={project._id}>{project.title}</p>}
                  </Modal.Title>
                ))}
               </Modal.Header> 
               <Modal.Body> 
-              {showMyProject.map(project => project.map(project =>
+              {showGigProject.map(project => project.map(project =>
               <div>
-             {project && <label key={project._id}>    
+             {showGigProject && <label key={project._id}>    
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
-                      <p>{project._id}</p>
-                      {project.gigster.notifications}
+                     <p> {project.gigster.map(gigster => gigster.notifications)}</p>
+                      <p>{project.gigster.map(gigster => gigster.github)}</p>
                     <span><Button type="button">Approve</Button>
                         <Button type="button">Decline</Button></span>
                     </ListGroupItem>
