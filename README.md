@@ -11,14 +11,20 @@ New users can sign in with their google mail account and begin searching for pro
 If users need help with anything project-related, please use the project description to find the contact information for the project lead gigmaster. 
 
 Technology Used:
-* MongoDB
+* MongoDB with Mongoose ORM
 * Express
-* React
+* ReactJS
 * Node.js
 
-* Bootstrap
+Libraries Used:
+* Materialize 
+
+Authentication:
+* Google Sign In OAuth (using Passport Google Oauth)
 
 
 Any suggestions? Please contact the main contributors and developers. 
+
+Project used the seed from Create React App
 
 <a href="">Live Preview Here [add heroku]</a>
