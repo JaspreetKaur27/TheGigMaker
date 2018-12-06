@@ -3,7 +3,7 @@ import { Tabs, Tab, Thumbnail, Image, Grid, Row, Col, Modal, Button, ListGroup, 
 import "./Dashboard.css";
 import Container from "../../components/Container";
 import API from "../../utils/API";
-import { FormBtn, TextArea } from "../../components/Form";
+import { FormBtn, TextArea, Input } from "../../components/Form";
 // import Navbar from "../../components/Navbar";
 //import backimg from "../../images/dashboard-background.jpg";
 
@@ -30,13 +30,22 @@ class Dashboard extends Component {
       showupdate: false,
       showgigsters: false,
       msg: '',
+      github:'',
       myprojects: [],
       saved: [],
       showId: null,
       updateid: null,
       gigid: null,
       user: [],
-      collaborojects: []
+      collaborojects: [],
+      title: "",
+      description: "",
+      location: "",
+      startDate: null,
+      endDate: null,
+      imageUrl: "",
+      message: "",
+      amount: Number
     };
   }
 
@@ -51,6 +60,12 @@ class Dashboard extends Component {
 
 
   };
+
+  dataUpdate = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 
   getUserObject = () => {
     API.getUserObject()
@@ -152,7 +167,8 @@ class Dashboard extends Component {
     const gigster = {
       notifications: this.state.msg,
       userId: this.state.user,
-      projectId: this.state.showId
+      projectId: this.state.showId,
+      github: this.state.github
     }
     console.log(gigster);
     API.collabProject(gigster)
@@ -170,7 +186,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const showItem = this.state.saved.find(item => item._id === this.state.showId);
+    let showItem = this.state.saved.find(item => item._id === this.state.showId);
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
    //console.log(this.state.updateid)
@@ -211,13 +227,13 @@ class Dashboard extends Component {
               onSelect={this.handleSelect}
               id="controlled-tab-example"
               className="tab-style"
+              bsStyle="pills"
             >
               <Tab eventKey={1} title="My Projects">
                 <Grid>
                   <br></br>
                   <Row>
                     {this.state.myprojects.length ? (
-
                       <div className="flexContainer">
                         {this.state.myprojects.map(myprojects => myprojects.map(myprojects => (
                           <Thumbnail className="flexThumbnail">
@@ -225,17 +241,15 @@ class Dashboard extends Component {
                             <h5>{myprojects.title}</h5>
                             <p>Location: {myprojects.location}</p>
                             <p>Description: {myprojects.description}</p>
-                            <Button type="button" onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
+                            <Button onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
                             <Button type="button" style={{ float: "right" }}>Delete</Button>
                             <br></br>
                             <br></br>
-                            <Button type="button" onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</Button>
+                            <Button onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</Button>
                           </Thumbnail>
                         )))}
 
                       </div>
-
-
                     ) : (<h3>No Projects</h3>)}
                   </Row>
                 </Grid>
@@ -293,6 +307,13 @@ class Dashboard extends Component {
                     required
                   >
                   </TextArea>
+                  <Input
+                  value={this.state.github}
+                  onChange={this.dataChange.bind(this)}
+                  type="url"
+                  placeholder="Github Profile"
+                  name="github"
+                  required/>
                 </label>}
                 <FormBtn onClick={() => this.collabproject()}>Submit</FormBtn>
               </Modal.Body>
@@ -311,22 +332,28 @@ class Dashboard extends Component {
               dialogClassName="custom-modal"
             >
               <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-lg">
-                  {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>}
-                </Modal.Title>
+              {showMyProject.map(project => project.map(project =>
+                 <Modal.Title id="contained-modal-title-lg">
+
+                   {showMyProject && <p key={project._id}>{project.title}</p>}
+                 </Modal.Title>
+               ))}
               </Modal.Header>
               <Modal.Body>
-                {showMyProject && <label key={showMyProject._id}>
-                  Send Message:
-                <TextArea
-                    value={this.state.msg}
-                    onChange={this.dataChange.bind(this)}
-                    name="msg"
-                    placeholder="Your Message Goes Here"
-                    required
-                  >
-                  </TextArea>
+              {showMyProject.map(project => project.map(project =>
+                
+                <div>
+                {showMyProject && <label key={project._id}>
+                  Title:
+                <Input 
+                name="title"
+                value={project.title.toString()}
+                onChange={this.dataUpdate.bind(this)}
+                />
+                  
                 </label>}
+                </div>
+                ))}
                 <FormBtn>Submit</FormBtn>
               </Modal.Body>
               <Modal.Footer>
@@ -343,23 +370,29 @@ class Dashboard extends Component {
               dialogClassName="custom-modal"
             >
               <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-lg">
-                 {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>}
+              {showMyProject.map(project => project.map(project =>
+                 <Modal.Title id="contained-modal-title-lg">
+
+                   {showMyProject && <p key={project._id}>{project.title}</p>}
                  </Modal.Title>
+               ))}
               </Modal.Header> 
               <Modal.Body> 
-             {showMyProject && <label key={showMyProject._id}> 
-                 
+              {showMyProject.map(project => project.map(project =>
+              <div>
+             {project && <label key={project._id}>    
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
-                      Hi I am Jaspreet Kaur
+                      <p>{project._id}</p>
+                      {project.gigster.notifications}
                     <span><Button type="button">Approve</Button>
                         <Button type="button">Decline</Button></span>
                     </ListGroupItem>
                   </ListGroup>
                 </label>
              }
+             </div>))}
                
               </Modal.Body>
               <Modal.Footer>
