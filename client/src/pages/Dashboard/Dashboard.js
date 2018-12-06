@@ -42,7 +42,7 @@ class Dashboard extends Component {
 
   componentWillMount() {
     this.getUserObject();
-    
+
   }
 
   componentDidMount() {
@@ -78,10 +78,10 @@ class Dashboard extends Component {
             console.log(this.state.myprojects);
 
           }).catch(err => console.log(err));
-      }).then(()=> {
-          // console.log(this.state.user._id)
+      }).then(() => {
+        // console.log(this.state.user._id)
         this.getAllSaved(this.state.user._id);
-        
+
       }).catch(err => console.log(err));
   };
 
@@ -93,7 +93,7 @@ class Dashboard extends Component {
     this.setState({ show: true, showId: id });
   }
   handleShowUpdate = (id) => {
-    this.setState({  updateid: id, showupdate: true });
+    this.setState({ updateid: id, showupdate: true });
   }
   handleShowGigsters = (id) => {
     this.setState({ gigid: id, showgigsters: true });
@@ -122,12 +122,12 @@ class Dashboard extends Component {
       .then(res => {
         console.log(res.data.data);
         //  const response = res.filter(filteredObj =>  filteredObj);
-        let response =  res.data.data;
+        let response = res.data.data;
 
         console.log(response);
 
 
-        let newArray = response.filter(obj => obj.userId !== id )
+        let newArray = response.filter(obj => obj.userId !== id)
 
         console.log(newArray)
 
@@ -173,37 +173,76 @@ class Dashboard extends Component {
     const showItem = this.state.saved.find(item => item._id === this.state.showId);
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
-   //console.log(this.state.updateid)
+    //console.log(this.state.updateid)
+
+    
+    
+    
+    
+    this.state.myprojects.forEach(myprojects => {
+
+      console.log(myprojects);
+
+      myprojects.forEach(myproject => {
+
+        console.log(myproject.title);
+        
+
+        if (myproject._id === this.state.updateid) {
+
+         
+          console.log("test " + myproject.title);
+
+        }
+
+        
+
+        
+      })
+
+      
+    
+    }
+
+    );
+
+   
+    // myprojects.find(myprojects => myprojects._id == this.state.updateid));
+
+
     console.log(showMyProject)
+
+    console.log(showMyProject.map(project => project.map(project => project.title)));
+
 
     return (
       <div>
-        { !this.state.isAuthenticated ? 
-        (<Navbar inverse collapseOnSelect className="navbar">
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="/dashboard" style={{color: "white", textDecoration: "none"}}>Welcome, {this.state.user.username}</a>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav pullRight>
-              <NavItem href="/dashboard">
-                Dashboard
+        {!this.state.isAuthenticated ?
+          (<Navbar inverse collapseOnSelect className="navbar">
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="/dashboard" style={{ color: "white", textDecoration: "none" }}>Welcome, {this.state.user.username}</a>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
+                <NavItem href="/dashboard">
+                  Dashboard
               </NavItem>
-              <NavItem href="/AddProject">
-                AddProject
+                <NavItem href="/AddProject">
+                  AddProject
               </NavItem>
-              <NavItem href="/">
-                Logout
+                <NavItem href="/">
+                  Logout
               </NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>):
-        (
-          window.location.href("/")
-        )}
-        
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>) :
+          (
+            window.location.href("/")
+          )}
+
         <div className="dashboard-style">
           <Container>
             <Tabs
@@ -271,7 +310,7 @@ class Dashboard extends Component {
               </Tab>
             </Tabs>
             {/* all projects AKA MODEL 1 */}
-          
+
             <Modal
               {...this.props}
               // this activates it to show based if show = true in the state
@@ -279,7 +318,7 @@ class Dashboard extends Component {
               id={this.state.saved._id}
               onHide={this.handleHide}
               dialogClassName="custom-modal"
-            > 
+            >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
                   {showItem && <p key={showItem._id}>{showItem.title}</p>}
@@ -314,9 +353,12 @@ class Dashboard extends Component {
               dialogClassName="custom-modal"
             >
               <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-lg">
-                  {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>}
-                </Modal.Title>
+                {showMyProject.map(project => project.map(project => 
+                  <Modal.Title id="contained-modal-title-lg">
+
+                    {showMyProject && <p key={project._id}>{project.title}</p>}
+                  </Modal.Title>
+                ))}
               </Modal.Header>
               <Modal.Body>
                 {showMyProject && <label key={showMyProject._id}>
@@ -344,16 +386,17 @@ class Dashboard extends Component {
               id={this.state.myprojects._id}
               onHide={this.handleGigHide}
               dialogClassName="custom-modal"
-              className = "model-2"
+              className="model-2"
             >
               <Modal.Header closeButton>
+
                 <Modal.Title id="contained-modal-title-lg">
-                 {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>}
-                 </Modal.Title>
-              </Modal.Header> 
-              <Modal.Body> 
-             {showMyProject && <label key={showMyProject._id}> 
-                 
+                  {showMyProject && <p key={showMyProject._id}>{showMyProject.title}</p>}
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {showMyProject && <label key={showMyProject._id}>
+
                   List of Gigster's
                 <ListGroup>
                     <ListGroupItem>
@@ -363,8 +406,8 @@ class Dashboard extends Component {
                     </ListGroupItem>
                   </ListGroup>
                 </label>
-             }
-               
+                }
+
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleGigHide}>Close</Button>
