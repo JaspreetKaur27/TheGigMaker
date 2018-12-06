@@ -30,5 +30,14 @@ If users need help with anything project-related, please use the project descrip
 
 <p>
 Any suggestions? Please contact the main contributors and developers. 
-Project was originally created from a "Create React App" seed file. 
+
+<h3>Team Members:</h3>
+
+* <a href="https://github.com/MJ3132">Martin</a>
+* <a href="https://github.com/JaspreetKaur27">Jaspreet</a>
+* <a href="https://github.com/jessalynchen">Jess</a>
+
+
+
+Project was created from a "Create React App" seed file. 
 </p>
