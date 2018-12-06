@@ -205,6 +205,9 @@ class Dashboard extends Component {
     
     
     
+    // let test1 = this.state.myprojects[pro]
+
+    let id = "";
     
     this.state.myprojects.forEach(myprojects => {
 
@@ -212,28 +215,26 @@ class Dashboard extends Component {
 
       myprojects.forEach(myproject => {
 
-        console.log(myproject.title);
-        
+        console.log(myproject.gigster);
 
-        if (myproject._id === this.state.updateid) {
+        myproject.gigster.forEach(myproject => {
 
-         
-          console.log("test " + myproject.title);
+           console.log(myproject._id);
 
-        }
+           id = myproject._id
+        })
+        // if (myproject._id === this.state.updateid) {
 
-        
+        //   console.log("test " + myproject.title);
 
-        
+        // }
+
       })
-
-      
-    
     }
 
     );
 
-   
+   console.log(id);
     // myprojects.find(myprojects => myprojects._id == this.state.updateid));
 
 
