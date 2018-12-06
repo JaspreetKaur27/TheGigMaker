@@ -57,7 +57,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-var db = process.env.MONGODB_URI || "mongodb://localhost/gigmaker";
+var db = keys.mongodb.dbURI || "mongodb://localhost/gigmaker";
 
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 *1000,
