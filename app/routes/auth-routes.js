@@ -9,7 +9,7 @@ router.get('/login', (req, res) => {
 router.get('/logout', (req, res) => {
     // handle with passport
     req.logout();
-    res.redirect('/');
+    res.redirect('http://localhost:3000/');
 });
 
 
