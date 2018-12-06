@@ -51,7 +51,7 @@ router.post("/collab-pending", function (req, res) {
 
                     message: "The Gigmaker has been notified!, ",
                     url: "head back to see all projects !http://localhost:3001/projects/all",
-                    collaboration: gigsterCollaborator
+                    collaboration: dbCollaborator
 
                 });
 
