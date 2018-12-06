@@ -11,12 +11,14 @@ New users can sign in with their google mail account and begin searching for pro
 If users need help with anything project-related, please use the project description to find the contact information for the project lead gigmaster. 
 
 <h3>Technology Used:</h3>
+
 * MongoDB with Mongoose ORM
 * Express
 * ReactJS
 * Node.js
 
 <h3>Authentication Packages:</h3>
+
 * Google Sign In OAuth (using Passport)
 
 <h3>Libraries Used:</h3>
