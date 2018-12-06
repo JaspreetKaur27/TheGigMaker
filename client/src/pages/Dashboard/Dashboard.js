@@ -163,7 +163,7 @@ class Dashboard extends Component {
 
   //collaboration projects
   collabproject = () => {
-    console.log("response sent");
+    console.log("response sent")
     const gigster = {
       notifications: this.state.msg,
       userId: this.state.user,
@@ -405,6 +405,7 @@ class Dashboard extends Component {
 
             {/* check gigter request */}
             <Modal
+
               {...this.props}
               show={this.state.showgigsters}
               id={this.state.myprojects._id}
@@ -428,7 +429,7 @@ class Dashboard extends Component {
                 <ListGroup>
                     <ListGroupItem>
                       <p>{project._id}</p>
-                      {project.gigster.notifications}
+                      {project.title}
                     <span><Button type="button">Approve</Button>
                         <Button type="button">Decline</Button></span>
                     </ListGroupItem>
