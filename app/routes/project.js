@@ -136,24 +136,36 @@ router.delete("/delete/:projectId", function (req, res) {
 
     console.log(req.params.projectId);
 
-    Project.remove({ _id: req.params.projectId }, function (err, data) {
-        if (data) {
-            res.status(200).send('project has been deleted');
-        } else {
-            console.log(err);
-            res.redirect("/");
+    Project.deleteOne({ _id: req.params.projectId }, function (err, data) {
+     
+            res.status(200).json({
+                
+                message:'project has been deleted',
+                data: data
+        
+        
+        })
+    })
+        .catch(err => {
 
-        }
+            res.status(500).json({
+
+                message: "Project was not deleted succesfully please try again",
+                error: err
+            });
 
     });
-});
 
+
+});
 
 // update content (creator)
 // do we need to send back updated info?
 router.put("/update/:projectId?", function (req, res) {
 
     console.log(req.params.projectId);
+
+    var query = req.body;
 
 
     Project.update({ _id: req.params.projectId }, { new: true }, function (err, data) {

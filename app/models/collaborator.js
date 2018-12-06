@@ -17,16 +17,21 @@ const collaboratorSchema = new Schema({
     
   },
 
-  gihub: {
+  // projectTitle : {
+  //   type: String
+  // },
+
+  github: {
     type: String
   },
   
   approved: false,
-  notifications :[ {
+
+  notifications :{
     type: String,
     trim: true
 
-  }],
+  },
 });
 
 

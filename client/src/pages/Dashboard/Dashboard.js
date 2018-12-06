@@ -174,7 +174,7 @@ class Dashboard extends Component {
 
   //collaboration projects
   collabproject = () => {
-    console.log("response sent");
+    console.log("response sent")
     const gigster = {
       notifications: this.state.msg,
       userId: this.state.user,
@@ -185,13 +185,25 @@ class Dashboard extends Component {
     API.collabProject(gigster)
       .then(res => {
         // not doing anything with the response
-        console.log(gigster);
+  
         console.log(res);
+
+        console.log(res.data);
+
         //let response = res.data.collaboration.collaborations;
-        this.setState({
-          collabprojects: res
-        })
-        console.log(this.state.collabprojects);
+        let userID = this.state.user._id;
+        console.log(userID);
+
+
+          this.setState({ 
+
+            collabprojects : res.data
+
+
+          })
+        
+          console.log(this.state.collabprojects);
+        
       })
       .catch(err => console.log(err));
   };
@@ -228,17 +240,42 @@ class Dashboard extends Component {
   };
 
   render() {
+
+
+ 
+
+
+
     let showItem = this.state.saved.find(item => item._id === this.state.showId);
 
     const showMyProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.updateid))
     const showGigProject = this.state.myprojects.map(myprojects => myprojects.filter(myprojects => myprojects._id === this.state.gigid))
 
-    // const renderCollab = this.state.collabprojects.map(collabprojects => collabprojects.map(collabprojects => collabprojects));
-    // //const renderCollabProjects = this.state.saved.find(item => item._id);
+    // const collaborationProjectId = this.state.collabprojects.map(collabprojects => collabprojects.map(collabprojects => collabprojects.projectId));
+
+    // const renderCollab = this.state.collabprojects.map(collabprojects => collabprojects.filter(collabprojects => collabprojects.projectId));
+
+    // const savedProjects = this.state.saved.map(projects => projects.gigster.filter(gigster => gigster.projectId)); 
+    //const renderCollabProjects = this.state.saved.find(item => item._id);
+
+
+    // const collaborationProjects = savedProjects._id === renderCollab.projectId ;
+
+
+    
+
+
+    
     // console.log(renderCollab);  
+
+    // console.log(savedProjects);
+   
     //const showRequests = this.state.myprojects.map(myprojects => myprojects.find(myprojects => myprojects._id === this.state.showId))
     //console.log(this.state.updateid)
     console.log(showMyProject)
+
+    console.log(showMyProject.map(project => project.map(project => project.title)));
+
 
     return (
       <div>   
@@ -308,7 +345,7 @@ class Dashboard extends Component {
                   <Row>
                     {this.state.collabprojects ? (
                       <div className="flexContainer">
-                        {this.state.collabprojects.map(myprojects => (
+                        {this.state.collabprojects.map(myprojects =>  (
                           <Thumbnail className="flexThumbnail">
                             <Image src={myprojects.imageUrl} thumbnail />
                             <h5>{myprojects.title}</h5>
@@ -347,8 +384,11 @@ class Dashboard extends Component {
                 </Grid>
               </Tab>
             </Tabs>
+            {/* all projects AKA MODEL 1 */}
+
             <Modal
               {...this.props}
+              // this activates it to show based if show = true in the state
               show={this.state.show}
               id={this.state.saved._id}
               onHide={this.handleHide}
@@ -429,11 +469,13 @@ class Dashboard extends Component {
 
             {/* check gigter request */}
             <Modal
+
               {...this.props}
               show={this.state.showgigsters}
               id={this.state.myprojects._id}
               onHide={this.handleGigHide}
               dialogClassName="custom-modal"
+              className="model-2"
             >
               <Modal.Header closeButton>
                 {showGigProject.map(project => project.map(project =>
