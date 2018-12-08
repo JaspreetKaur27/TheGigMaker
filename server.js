@@ -64,9 +64,6 @@ app.use("/collaborators",collaboratorsRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 
-  app.get('*', (req, res)=> {
-    res.sendFile(path.resolve(__dirname, "client", "index.html"));
-  })
 }
 
 
@@ -97,15 +94,15 @@ app.get("*", (req, res) => {
 });
 
 
-app.listen(PORT, function () {
-  mongoose.connect(db, function(err){
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Mongodb connection succesful!");
-    }
+mongoose.connect( process_env.MONGODB_URI || db,
 
-  });
+  {
+    useMongoClient : true
+  }
+);
+
+app.listen(PORT, function () {
+  
 
   console.log("App running on port " + PORT + "!");
 });
