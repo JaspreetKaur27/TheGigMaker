@@ -94,7 +94,7 @@ app.get("*", (req, res) => {
 });
 
 
-mongoose.connect( process_env.MONGODB_URI || db,
+mongoose.connect( process.env.MONGODB_URI || db,
 
   {
     useMongoClient : true
