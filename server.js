@@ -58,11 +58,16 @@ app.use((req, res, next) => {
 app.use("/projects", projectRoutes);
 app.use("/users", userRoutes);
 app.use("/collaborators",collaboratorsRoutes);
+app.use('/api/auth', authRoutes);
 
 
 // // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
+  
 
 }
 
@@ -83,15 +88,12 @@ app.use(passport.session());
 
 //auth routes
 
-app.use('/api/auth', authRoutes);
+
 
 
 // Send every other request to the React app
 // Define any API routes before this runs
 // yarn build connects the back end with the front end
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
 
 
 mongoose.connect( process.env.MONGODB_URI || db,
