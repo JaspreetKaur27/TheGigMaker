@@ -305,12 +305,12 @@ class Dashboard extends Component {
                             <h5>{myprojects.title}</h5>
                             <p>Location: {myprojects.location}</p>
                             <p>Description: {myprojects.description}</p>
-                            <button className="btn" onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</button>
+                            <Button className="btn" onClick={() => this.handleShowUpdate(myprojects._id)} style={{ float: "left" }}>Update</Button>
                             <br></br>
-                            <button className="btn" onClick={() => this.handleDeleteID(myprojects._id)} style={{ float: "right"}}>Delete</button>
+                            <Button className="btn" onClick={() => this.handleDeleteID(myprojects._id)} style={{ float: "right"}}>Delete</Button>
                             <br></br>
                             <br></br>
-                            <button className="btn" onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</button>
+                            <Button className="btn" onClick={() => this.handleShowGigsters(myprojects._id)}>Requests From Collaborations</Button>
                           </Thumbnail>
                         )))}
 

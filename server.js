@@ -51,13 +51,26 @@ app.use((req, res, next) => {
   next();
 });
 
+
+//routes
+
+
+app.use("/projects", projectRoutes);
+app.use("/users", userRoutes);
+app.use("/collaborators",collaboratorsRoutes);
+
+
 // // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+
+  app.get('*', (req, res)=> {
+    res.sendFile(path.resolve(__dirname, "client", "index.html"));
+  })
 }
 
 
-var db = keys.mongodb.dbURI || "mongodb://localhost/gigmaker";
+var db =  "mongodb://localhost/gigmaker";
 
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 *1000,
@@ -69,12 +82,6 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//routes
-
-
-app.use("/projects", projectRoutes);
-app.use("/users", userRoutes);
-app.use("/collaborators",collaboratorsRoutes);
 
 
 //auth routes

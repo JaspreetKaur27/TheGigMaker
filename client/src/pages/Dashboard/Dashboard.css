@@ -58,11 +58,13 @@ body {
 
 .btn 
 {
-    height: 20px;
+ 
     padding: 10px;
-    font-size: 15px;
+    font-size: 12px;
+    padding-top: 2px;
     text-align: center;
     transform: translateY(-10px);
+    
 }
 
 .flexContainer
@@ -85,6 +87,7 @@ body {
     height: 450px;
     overflow: auto;
     margin: 3px;
+    border:2px solid #009999;
 }
 
 @media screen and (max-width: 800px){
