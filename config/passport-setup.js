@@ -16,9 +16,10 @@ passport.deserializeUser((id, done) => {
 passport.use(
     new GoogleStrategy({
         // options for google strategy
-        callbackURL: '/api/auth/google/redirect',
+        callbackURL: 'https://thegigmaker.herokuapp.com' + '/api/auth/google/redirect',
         clientID: keys.google.clientID,
-        clientSecret: keys.google.clientSecret
+        clientSecret: keys.google.clientSecret, 
+        proxy:true
     }, (acessToken, refreshToken, profile, done) => {
         // passport callback function
         // console.log("passport callback function fired");
