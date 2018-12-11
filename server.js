@@ -96,11 +96,15 @@ app.use(passport.session());
 // yarn build connects the back end with the front end
 
 
-mongoose.connect( process.env.MONGODB_URI || db,
+mongoose.connect( process.env.MONGODB_URI || db,function (err,res){
 
-  {
-    useMongoClient : true
+  if (res){
+    console.log("connected to MongoDb!")
+  } else {
+    console.log(err);
   }
+}
+
 );
 
 app.listen(PORT, function () {

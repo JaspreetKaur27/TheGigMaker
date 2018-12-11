@@ -97,6 +97,8 @@ class Dashboard extends Component {
   }
 
   handleDeleteID  = (id) => {
+
+    console.log(id)
     this.setState({
       deleteId: id
     })
