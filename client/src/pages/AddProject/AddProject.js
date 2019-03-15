@@ -35,8 +35,6 @@ class AddProject extends Component {
       amount: Number,
       user: []
     }
-
-    
   }
 
   componentWillMount() {
