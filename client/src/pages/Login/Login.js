@@ -26,7 +26,9 @@ class Login extends Component {
                 users to find short-term gigs based on their hobbies or specialities.
                         </p>
                     <div className='g-sign-in-button'>
+
                         <a href="	http://localhost:3001/api/auth/google">
+
                             <div className="content-wrapper">
                                 <div className='logo-wrapper'>
                                     <img src='https://developers.google.com/identity/images/g-logo.png' alt="Google Logo" />
